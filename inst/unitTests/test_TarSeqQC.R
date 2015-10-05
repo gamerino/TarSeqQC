@@ -312,6 +312,12 @@ test_pileupCounts<-function(){
 }
 ##Test buildFeaturePanel
 test_buildFeaturePanel<-function(){
+    library(BiocParallel)
+    if (.Platform$OS.type != "windows")
+        BPPARAM <- MulticoreParam(2)
+    else
+        BPPARAM <- SerialParam()
+ 
     data(ampliPanel, package="TarSeqQC")
     setBamFile(ampliPanel)<-system.file("extdata", "mybam.bam", 
         package="TarSeqQC", mustWork=TRUE)
@@ -319,7 +325,8 @@ test_buildFeaturePanel<-function(){
         package="TarSeqQC", mustWork=TRUE)
     setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa", 
         package="TarSeqQC", mustWork=TRUE)
-    myFeaturePanel<-buildFeaturePanel(ampliPanel)
+
+    myFeaturePanel<-buildFeaturePanel(ampliPanel, BPPARAM=BPPARAM)
     checkEquals(class(myFeaturePanel)[1], "GRanges", 
         msg="buildFeaturePanel returned object type: OK.") 
     checkTrue(all(colnames(mcols(myFeaturePanel)) %in% c("gene", 
