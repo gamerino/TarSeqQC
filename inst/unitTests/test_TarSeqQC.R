@@ -2,6 +2,8 @@
 # library("RUnit")
 # library("TarSeqQC")
 # library("Rsamtools")
+library(BiocParallel)
+
 ##-----------------------------------------------------------------------------
 ##TargetExperiment-class Tests 
 ##-----------------------------------------------------------------------------
@@ -303,7 +305,7 @@ test_pileupCounts<-function(){
         OK.")
     checkEquals(dim(myCounts), c(2165,12), 
         msg="pileupCounts returned data.frame dimension: OK.")
-        
+ 
     auxData<-unique(as.character(myCounts[,"which_label"]))
     strsplit(auxData, ":")[1]
     checkTrue(all(unique(sapply(1:length(auxData),function(x){ strsplit(
@@ -312,7 +314,6 @@ test_pileupCounts<-function(){
 }
 ##Test buildFeaturePanel
 test_buildFeaturePanel<-function(){
-    library(BiocParallel)
     if (.Platform$OS.type != "windows")
         BPPARAM <- MulticoreParam(2)
     else
@@ -351,106 +352,106 @@ test_summarizePanel<-function(){
     checkTrue(all(names(myGenePanel) %in% names(getGenePanel(ampliPanel))), 
         msg="summarizePanel returned GRanges names: OK.")
 }
-## Test plot
-test_plot<-function(){
-    data(ampliPanel, package="TarSeqQC")
-    g<-plot(ampliPanel)
-    checkTrue(is.ggplot(g), msg="returned plot type: OK.")
-    checkEquals(dim(g$data), c(40,11), msg="returned plot data dimension: OK.")
-}
-## Test plotAttrExpl
-test_plotAttrExpl<-function(){
-    data(ampliPanel, package="TarSeqQC")
-    g<-plotAttrExpl(ampliPanel)
-    checkTrue(is.ggplot(g), msg="returned plot type: OK.")
-    checkEquals(dim(g$data), c(29,1), msg="returned plot data dimension: OK.")
-}
-## Test plotFeatPerform
-test_plotFeatPerform<-function(){
-    data(ampliPanel, package="TarSeqQC")
-    g<-plotFeatPerform(ampliPanel)
-    checkTrue(class(g)[1] == "gg" , msg="returned plot type: OK.")
-}
-## Test plotFeature
-test_plotFeature<-function(){
-    data(ampliPanel, package="TarSeqQC")
-    setBamFile(ampliPanel)<-system.file("extdata", "mybam.bam", 
-        package="TarSeqQC", mustWork=TRUE)
-    setBedFile(ampliPanel)<-system.file("extdata", "mybed.bed", 
-        package="TarSeqQC", mustWork=TRUE)
-    setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa", 
-        package="TarSeqQC", mustWork=TRUE)
-    checkException(plotFeature(ampliPanel, featureID="nopresent"), 
-        msg="Testing feature ID: OK.", silent=TRUE)
-    featureID<-"AMPL20"
-    checkTrue(featureID %in% names(getFeaturePanel(ampliPanel)),
-        msg="featureID present in the featurePanel: OK.")
-    g<-plotFeature(ampliPanel, featureID)
-    checkTrue(is.ggplot(g), msg="returned plot type: OK.")
-    checkEquals(dim(g$data), c(63,12), msg="returned plot data dimension: OK.")
-}
-## Test plotGeneAttrPerFeat
-test_plotGeneAttrPerFeat<-function(){
-    data(ampliPanel, package="TarSeqQC")
-    checkException(plotGeneAttrPerFeat(ampliPanel, geneID="nopresent"), 
-        msg="Testing gene ID: OK.", silent=TRUE)
-    geneID<-"gene1"
-    checkTrue(geneID %in% names(getGenePanel(ampliPanel)),
-        msg="geneID present in the featurePanel: OK.")
-    g<-plotGeneAttrPerFeat(ampliPanel, geneID)
-    checkTrue(is.ggplot(g), msg="returned plot type: OK.")
-    checkEquals(dim(g$data), c(1,11), msg="returned plot data dimension: OK.")
-}
-## Test plotNtdPercentage
-test_plotNtdPercentage<-function(){
-    data(ampliPanel, package="TarSeqQC")
-    setBamFile(ampliPanel)<-system.file("extdata", "mybam.bam", 
-        package="TarSeqQC", mustWork=TRUE)
-    setBedFile(ampliPanel)<-system.file("extdata", "mybed.bed", 
-        package="TarSeqQC", mustWork=TRUE)
-    setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa", 
-        package="TarSeqQC", mustWork=TRUE)
-    checkException(plotNtdPercentage(ampliPanel, featureID="nopresent"), 
-        msg="Testing feature ID: OK.", silent=TRUE)
-    featureID<-"AMPL20"
-    checkTrue(featureID %in% names(getFeaturePanel(ampliPanel)),
-        msg="featureID present in the featurePanel: OK.")
-    g<-plotNtdPercentage(ampliPanel, featureID)
-    checkTrue(is.ggplot(g), msg="returned plot type: OK.")
-    checkEquals(dim(g$data), c(252,3), msg="returned plot data dimension: OK.")
-}
-## Test plotRegion
-test_plotRegion<-function(){
-    data(ampliPanel, package="TarSeqQC")
-    setBamFile(ampliPanel)<-system.file("extdata", "mybam.bam", 
-        package="TarSeqQC", mustWork=TRUE)
-    setBedFile(ampliPanel)<-system.file("extdata", "mybed.bed", 
-        package="TarSeqQC", mustWork=TRUE)
-    setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa", 
-        package="TarSeqQC", mustWork=TRUE)
-    region<-c(4500,6000)
-    seqname<-"chr10"
-    checkException(plotRegion(ampliPanel), 
-        msg="Testing function calling: OK.", silent=TRUE)
-    checkException(plotRegion(ampliPanel, seqname="chr0"), 
-        msg="Testing function calling: OK.", silent=TRUE)
-    checkException(plotRegion(ampliPanel, seqname="chr10"), 
-        msg="Testing function calling: OK.", silent=TRUE)
-    checkTrue(seqname %in% levels(seqnames(getBedFile(ampliPanel))),
-        msg="seqname present in the featurePanel: OK.")
-    g<-plotRegion(ampliPanel, region, seqname)
-    checkTrue(is.ggplot(g), msg="returned plot type: OK.")
-    checkEquals(dim(g$data), c(1501,12), 
-        msg="returned plot data dimension: OK.")
-}
-## Test xlsx report creation
-test_reportCreation<-function(){
-    data(ampliPanel, package="TarSeqQC")
-    imageFile<-system.file("extdata", "plot.pdf", package="TarSeqQC",
-        mustWork=TRUE)
-    buildReport(ampliPanel, imageFile=imageFile, file="test.xlsx")        
-    checkTrue(file.exists("test.xlsx"), msg="Xlsx file creation: OK.")
-}
+#### Test plot
+##test_plot<-function(){
+##    data(ampliPanel, package="TarSeqQC")
+##    g<-plot(ampliPanel)
+##    checkTrue(is.ggplot(g), msg="returned plot type: OK.")
+##    checkEquals(dim(g$data), c(40,11), msg="returned plot data dimension: OK.")
+##}
+#### Test plotAttrExpl
+##test_plotAttrExpl<-function(){
+##    data(ampliPanel, package="TarSeqQC")
+##    g<-plotAttrExpl(ampliPanel)
+##    checkTrue(is.ggplot(g), msg="returned plot type: OK.")
+##    checkEquals(dim(g$data), c(29,1), msg="returned plot data dimension: OK.")
+##}
+#### Test plotFeatPerform
+##test_plotFeatPerform<-function(){
+##    data(ampliPanel, package="TarSeqQC")
+##    g<-plotFeatPerform(ampliPanel)
+##    checkTrue(class(g)[1] == "gg" , msg="returned plot type: OK.")
+##}
+#### Test plotFeature
+##test_plotFeature<-function(){
+##    data(ampliPanel, package="TarSeqQC")
+##    setBamFile(ampliPanel)<-system.file("extdata", "mybam.bam", 
+##        package="TarSeqQC", mustWork=TRUE)
+##    setBedFile(ampliPanel)<-system.file("extdata", "mybed.bed", 
+##        package="TarSeqQC", mustWork=TRUE)
+##    setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa", 
+##        package="TarSeqQC", mustWork=TRUE)
+##    checkException(plotFeature(ampliPanel, featureID="nopresent"), 
+##        msg="Testing feature ID: OK.", silent=TRUE)
+##    featureID<-"AMPL20"
+##    checkTrue(featureID %in% names(getFeaturePanel(ampliPanel)),
+##        msg="featureID present in the featurePanel: OK.")
+##    g<-plotFeature(ampliPanel, featureID)
+##    checkTrue(is.ggplot(g), msg="returned plot type: OK.")
+##    checkEquals(dim(g$data), c(63,12), msg="returned plot data dimension: OK.")
+##}
+#### Test plotGeneAttrPerFeat
+##test_plotGeneAttrPerFeat<-function(){
+##    data(ampliPanel, package="TarSeqQC")
+##    checkException(plotGeneAttrPerFeat(ampliPanel, geneID="nopresent"), 
+##        msg="Testing gene ID: OK.", silent=TRUE)
+##    geneID<-"gene1"
+##    checkTrue(geneID %in% names(getGenePanel(ampliPanel)),
+##        msg="geneID present in the featurePanel: OK.")
+##    g<-plotGeneAttrPerFeat(ampliPanel, geneID)
+##    checkTrue(is.ggplot(g), msg="returned plot type: OK.")
+##    checkEquals(dim(g$data), c(1,11), msg="returned plot data dimension: OK.")
+##}
+#### Test plotNtdPercentage
+##test_plotNtdPercentage<-function(){
+##    data(ampliPanel, package="TarSeqQC")
+##    setBamFile(ampliPanel)<-system.file("extdata", "mybam.bam", 
+##        package="TarSeqQC", mustWork=TRUE)
+##    setBedFile(ampliPanel)<-system.file("extdata", "mybed.bed", 
+##        package="TarSeqQC", mustWork=TRUE)
+##    setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa", 
+##        package="TarSeqQC", mustWork=TRUE)
+##    checkException(plotNtdPercentage(ampliPanel, featureID="nopresent"), 
+##        msg="Testing feature ID: OK.", silent=TRUE)
+##    featureID<-"AMPL20"
+##    checkTrue(featureID %in% names(getFeaturePanel(ampliPanel)),
+##        msg="featureID present in the featurePanel: OK.")
+##    g<-plotNtdPercentage(ampliPanel, featureID)
+##    checkTrue(is.ggplot(g), msg="returned plot type: OK.")
+##    checkEquals(dim(g$data), c(252,3), msg="returned plot data dimension: OK.")
+##}
+#### Test plotRegion
+##test_plotRegion<-function(){
+##    data(ampliPanel, package="TarSeqQC")
+##    setBamFile(ampliPanel)<-system.file("extdata", "mybam.bam", 
+##        package="TarSeqQC", mustWork=TRUE)
+##    setBedFile(ampliPanel)<-system.file("extdata", "mybed.bed", 
+##        package="TarSeqQC", mustWork=TRUE)
+##    setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa", 
+##        package="TarSeqQC", mustWork=TRUE)
+##    region<-c(4500,6000)
+##    seqname<-"chr10"
+##    checkException(plotRegion(ampliPanel), 
+##        msg="Testing function calling: OK.", silent=TRUE)
+##    checkException(plotRegion(ampliPanel, seqname="chr0"), 
+##        msg="Testing function calling: OK.", silent=TRUE)
+##    checkException(plotRegion(ampliPanel, seqname="chr10"), 
+##        msg="Testing function calling: OK.", silent=TRUE)
+##    checkTrue(seqname %in% levels(seqnames(getBedFile(ampliPanel))),
+##        msg="seqname present in the featurePanel: OK.")
+##    g<-plotRegion(ampliPanel, region, seqname)
+##    checkTrue(is.ggplot(g), msg="returned plot type: OK.")
+##    checkEquals(dim(g$data), c(1501,12), 
+##        msg="returned plot data dimension: OK.")
+##}
+#### Test xlsx report creation
+##test_reportCreation<-function(){
+##    data(ampliPanel, package="TarSeqQC")
+##    imageFile<-system.file("extdata", "plot.pdf", package="TarSeqQC",
+##        mustWork=TRUE)
+##    buildReport(ampliPanel, imageFile=imageFile, file="test.xlsx")        
+##    checkTrue(file.exists("test.xlsx"), msg="Xlsx file creation: OK.")
+##}
 
 ##-----------------------------------------------------------------------------
 ##Test functions
