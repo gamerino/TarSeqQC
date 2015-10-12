@@ -54,6 +54,7 @@ The resulting graph can be busy and might be better off saved.
 see full example in \code{\link{TargetExperiment-class}}
 }
 \examples{
+if(interactive()){
 ## Loading the TargetExperiment object
 data(ampliPanel, package="TarSeqQC")
 # Definition of the interval extreme values
@@ -61,7 +62,6 @@ attributeThres<-c(0,1,50,200,500, Inf)
 
 ## Plot panel overview
 g<-plot(ampliPanel, attributeThres, chrLabels =TRUE)
-if(interactive()){
 g
 }
 }

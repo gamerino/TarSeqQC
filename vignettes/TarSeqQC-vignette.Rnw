@@ -873,7 +873,7 @@ file: './mybam.bam'
 \end{Schunk}
 
 To solve the previous error, you should do:
-<<using TarSeqQC example data>>=
+<<using TarSeqQC example data, eval=FALSE>>=
 
 setBamFile(ampliPanel)<-system.file("extdata", "mybam.bam", package="TarSeqQC",
                                     mustWork=TRUE)
@@ -881,7 +881,7 @@ setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa",
                                     package="TarSeqQC", mustWork=TRUE)
 @
 and then:
-<<pileupCounts using TarSeqQC example data>>=
+<<pileupCounts using TarSeqQC example data, eval=FALSE>>=
 setFeaturePanel<-buildFeaturePanel(ampliPanel)
 @
 

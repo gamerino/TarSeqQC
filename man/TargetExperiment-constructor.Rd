@@ -45,6 +45,7 @@ after constructor calling.
 see full example in \code{\link{TargetExperiment-class}}
 }
 \examples{
+if (interactive()) {
 ## Defining bam file, bed file and fasta file names and paths
 bamFile<-system.file("extdata", "mybam.bam", package="TarSeqQC",
 mustWork=TRUE)
@@ -62,6 +63,7 @@ attribute<-"coverage"
 ##Calling the constructor
 object<-TargetExperiment(bedFile, bamFile, fastaFile, attribute=attribute,
 feature=feature)
+}
 }
 \author{
 Gabriela A. Merino \email{gmerino@bdmg.com.ar}, Cristobal Fresno

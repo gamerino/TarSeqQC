@@ -35,6 +35,7 @@ nucleotide in each position for a selected feature.
 see full example in \code{\link{TargetExperiment-class}}
 }
 \examples{
+if(interactive()){
 ## loading TargetExperiment object
 data(ampliPanel, package="TarSeqQC")
 ## Defining bam file, bed file and fasta file names and paths
@@ -45,7 +46,6 @@ setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa",
 # Exploring the nucleotide percentages compositions of the read counts for a
 # particular amplicon
 g<-plotNtdPercentage(ampliPanel,featureID="AMPL20")
-if(interactive()){
 g
 }
 }

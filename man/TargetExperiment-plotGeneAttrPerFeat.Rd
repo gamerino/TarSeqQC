@@ -30,6 +30,7 @@ with heights according to its attribute value.
 see full example in \code{\link{TargetExperiment-class}}
 }
 \examples{
+if(interactive()){
 ## Loading the TargetExperiment object
 data(ampliPanel, package="TarSeqQC")
 
@@ -38,7 +39,6 @@ g<-plotGeneAttrPerFeat(ampliPanel, geneID="gene4")
 # Adjust text size
 g<-g+theme(title=element_text(size=16), axis.title=element_text(size=16),
 legend.text=element_text(size=14))
-if(interactive()){
 g
 }
 }

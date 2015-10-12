@@ -48,6 +48,7 @@ according to its attribute value. If complete is set as TRUE, two bar plots
 see full example in \code{\link{TargetExperiment-class}}
 }
 \examples{
+if(interactive()){
 ## Loading the TargetExperiment object
 data(ampliPanel, package="TarSeqQC")
 
@@ -57,7 +58,6 @@ attributeThres<-c(0,1,50,200,500, Inf)
 # Plot panel overview in a feature performance plot
 g<-plotFeatPerform(ampliPanel, attributeThres=attributeThres, log=FALSE,
 featureLabs=TRUE, sepChr=TRUE, legend=TRUE)
-if(interactive()){
 g
 }
 }

@@ -44,6 +44,7 @@ according to its attribute value. If complete is set as TRUE two bar plots
 see full example in \code{\link{TargetExperiment-class}}
 }
 \examples{
+if(interactive()){
 ## loading TargetExperiment object
 data(ampliPanel, package="TarSeqQC")
 ## Defining bam file, bed file and fasta file names and paths
@@ -54,7 +55,6 @@ setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa",
 
 # Exploring the read count profile for a particular amplicon
 g<-plotFeature(ampliPanel, featureID="AMPL20")
-if(interactive()){
 g
 }
 }

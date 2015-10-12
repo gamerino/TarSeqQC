@@ -41,13 +41,13 @@ geom_violin method.
 see full example in \code{\link{TargetExperiment-class}}
 }
 \examples{
+if(interactive()){
 ## Loading the TargetExperiment object
 data(ampliPanel, package="TarSeqQC")
 
 # Attribute boxplot and density plot exploration
 g<-plotAttrExpl(ampliPanel,level="feature",join=TRUE, log=FALSE, color="blue")
 # x11(type="cairo")
-if(interactive()){
 g
 }
 }

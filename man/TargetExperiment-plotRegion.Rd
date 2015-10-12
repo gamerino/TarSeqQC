@@ -47,6 +47,7 @@ each genomic position.
 see full example in \code{\link{TargetExperiment-class}}
 }
 \examples{
+if(interactive()){
 ## loading TargetExperiment object
 data(ampliPanel, package="TarSeqQC")
 ## Defining bam file, bed file and fasta file names and paths
@@ -61,7 +62,6 @@ getRegion(ampliPanel, level="gene", ID="gene7", collapse=FALSE)
 g<-plotRegion(ampliPanel,region=c(4500,6800), seqname="chr10", SNPs=TRUE,
 xlab="", title="gene7 amplicons",size=0.5)
 # x11(type="cairo")
-if(interactive()){
 g
 }
 }
