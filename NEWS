@@ -1,0 +1,65 @@
+Changes in version 0.99.9
+----------------------------------------------------------------
+CODE
+
+    * Modifications in pileupCounts in order to consider stranded counts
+    * Changes in plot methods. arrangeGrob from gridExtra was changed by 
+    plot_grid form cowplot package.
+    * Update the package vignette.
+    
+Changes in version 0.99.8
+----------------------------------------------------------------
+CODE
+
+    * Modifications in pileupCounts and buildFeaturePanel in order to process
+    overlapped features.
+    * Wrap plotting examples.
+
+Changes in version 0.99.7
+----------------------------------------------------------------
+CODE
+
+    * Modifications in pileupCounts and buildFeaturePanel in order to process
+    overlapped features. 
+    * Modifications in bedFile building in order to remove duplicated features
+    based on duplicated start, end and chromosome definitions.
+
+Changes in version 0.99.6
+----------------------------------------------------------------
+CODE
+
+    * Definition of pileupCounts as a function instead a TargetExperiment S4
+    method.
+    * Adaptation and optimization of pileupCounts and bplapply usage in the
+    buildFeaturePanel method. 
+Changes in version 0.99.4
+----------------------------------------------------------------
+DESCRIPTION file
+
+    * Modification of the Rsatmools version dependency.
+
+Changes in version 0.99.3
+----------------------------------------------------------------
+CODE
+
+    * Modifications in buildFeaturePanel and summarizePanel for a correct 
+    implementation of parallel computing.
+
+Changes in version 0.99.2
+----------------------------------------------------------------
+CODE
+
+    * BiocParallel was used instead of parallel package for parallel computing.
+
+Changes in version 0.99.1
+----------------------------------------------------------------
+DOCUMENTATION
+
+    * The example data has been compiled using Bioconductor 3.2
+    packages.
+
+Changes in version 0.99.0
+----------------------------------------------------------------
+DOCUMENTATION
+
+    * `NEWS` file was added.

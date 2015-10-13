@@ -1,0 +1,40 @@
+Package: TarSeqQC
+Type: Package
+Version: 1.0.0
+Date: 2015-09-16
+Title: TARgeted SEQuencing Experiment Quality Control
+Author: Gabriela A. Merino, Cristobal Fresno and Elmer A. Fernandez
+Maintainer: Gabriela Merino <gmerino@bdmg.com.ar>
+Description: The package allows the representation of targeted
+        experiment in R. This is based on current packages and
+        incorporates functions to do a quality control over this kind
+        of experiments and a fast exploration of the sequenced regions.
+        An xlsx file is generated as output.
+URL: http://www.bdmg.com.ar
+License: GPL (>=2)
+Depends: R (>= 3.2.1), methods, GenomicRanges, Rsamtools (>= 1.20.4),
+        ggplot2, plyr, openxlsx
+Imports: S4Vectors, IRanges, BiocGenerics, reshape2, GenomeInfoDb,
+        BiocParallel, cowplot
+Suggests: RUnit
+Collate: 'TarSeqQC-package.R' 'TargetExperiment.R'
+        'TargetExperiment-ampliPanel.R' 'TargetExperiment-getters.R'
+        'TargetExperiment-setters.R' 'TargetExperiment-show.R'
+        'TargetExperiment-print.R' 'TargetExperiment-pileupCounts.R'
+        'TargetExperiment-buildFeaturePanel.R'
+        'TargetExperiment-summarizePanel.R'
+        'TargetExperiment-initialize.R'
+        'TargetExperiment-constructor.R'
+        'TargetExperiment-statistics.R' 'TargetExperiment-plot.R'
+        'TargetExperiment-ggplotColours.R'
+        'TargetExperiment-addStatSummSheet.R'
+        'TargetExperiment-buildReport.R'
+        'TargetExperiment-plotAttrExpl.R'
+        'TargetExperiment-plotFeatPerform.R'
+        'TargetExperiment-plotRegion.R'
+        'TargetExperiment-plotFeature.R'
+        'TargetExperiment-plotGeneAttrPerFeat.R'
+        'TargetExperiment-plotNtdPercentage.R'
+biocViews: Software, Sequencing, TargetedResequencing, QualityControl,
+        Visualization, Coverage, Alignment, DataImport
+NeedsCompilation: no
