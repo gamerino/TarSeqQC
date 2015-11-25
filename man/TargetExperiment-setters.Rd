@@ -78,70 +78,43 @@ a TargetExperiment object
 }
 \description{
 Set TargetExperiment slots, according to the given function call.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 \note{
 see full example in \code{\link{TargetExperiment-class}}
 }
 \examples{
 ## loading TargetExperiment object
-data(ampliPanel, package="TarSeqQC")
-## Defining bam file, bed file and fasta file names and paths
-setBamFile(ampliPanel)<-system.file("extdata", "mybam.bam",
-    package="TarSeqQC", mustWork=TRUE)
-setBedFile(ampliPanel)<-system.file("extdata", "mybed.bed",
-    package="TarSeqQC", mustWork=TRUE)
-setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa",
-    package="TarSeqQC", mustWork=TRUE)
-
-## Set feature slot value
-setFeature(ampliPanel)<-"amplicon"
-## Set attribute slot value
-setAttribute(ampliPanel)<-"coverage"
-## Set scanBamP slot value
-setScanBamP(ampliPanel)<-ScanBamParam()
-## Set pileupP slot value
-setPileupP(ampliPanel)<-PileupParam()
-## Set featurePanel slot value
-setFeaturePanel(ampliPanel)<-buildFeaturePanel(ampliPanel)
-## Set genePanel slot value
-setGenePanel(ampliPanel)<-summarizePanel(ampliPanel)
-## Set bedFile slot value
-setBedFile(ampliPanel)<-system.file("extdata", "mybed.bed",
-package="TarSeqQC", mustWork=TRUE)
-## Set bamFile slot value
-setBamFile(ampliPanel)<-system.file("extdata", "mybam.bam",
-package="TarSeqQC", mustWork=TRUE)
-## Set fastaFile slot value
-setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa",
-package="TarSeqQC", mustWork=TRUE)
+if (interactive()){
+    data(ampliPanel, package="TarSeqQC")
+    ## Defining bam file, bed file and fasta file names and paths
+    setBamFile(ampliPanel)<-system.file("extdata", "mybam.bam",
+        package="TarSeqQC", mustWork=TRUE)
+    setBedFile(ampliPanel)<-system.file("extdata", "mybed.bed",
+        package="TarSeqQC", mustWork=TRUE)
+    setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa",
+        package="TarSeqQC", mustWork=TRUE)
+    ## Set feature slot value
+    setFeature(ampliPanel)<-"amplicon"
+    ## Set attribute slot value
+    setAttribute(ampliPanel)<-"coverage"
+    ## Set scanBamP slot value
+    setScanBamP(ampliPanel)<-ScanBamParam()
+    ## Set pileupP slot value
+    setPileupP(ampliPanel)<-PileupParam()
+    ## Set featurePanel slot value
+    setFeaturePanel(ampliPanel)<-buildFeaturePanel(ampliPanel)
+    ## Set genePanel slot value
+    setGenePanel(ampliPanel)<-summarizePanel(ampliPanel)
+    ## Set bedFile slot value
+    setBedFile(ampliPanel)<-system.file("extdata", "mybed.bed",
+        package="TarSeqQC", mustWork=TRUE)
+    ## Set bamFile slot value
+    setBamFile(ampliPanel)<-system.file("extdata", "mybam.bam",
+        package="TarSeqQC", mustWork=TRUE)
+    ## Set fastaFile slot value
+    setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa",
+        package="TarSeqQC", mustWork=TRUE)
+}
 }
 \author{
 Gabriela A. Merino \email{gmerino@bdmg.com.ar} Cristobal Fresno

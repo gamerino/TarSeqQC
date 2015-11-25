@@ -49,22 +49,24 @@ see full example in \code{\link{TargetExperiment-class}}
 }
 \examples{
 ## Defining bam file, bed file and fasta file names and paths
-bamFile<-system.file("extdata", "mybam.bam", package="TarSeqQC",
-mustWork=TRUE)
-bedFile<-system.file("extdata", "mybed.bed", package="TarSeqQC",
-mustWork=TRUE)
-fastaFile<-system.file("extdata", "myfasta.fa", package="TarSeqQC",
-mustWork=TRUE)
+if (interactive()){
+    bamFile<-system.file("extdata", "mybam.bam", package="TarSeqQC",
+        mustWork=TRUE)
+    bedFile<-system.file("extdata", "mybed.bed", package="TarSeqQC",
+        mustWork=TRUE)
+    fastaFile<-system.file("extdata", "myfasta.fa", package="TarSeqQC",
+        mustWork=TRUE)
 
-## Creating a TargetExperiment object
+    ## Creating a TargetExperiment object
 
-# Defining feature parameter
-feature<-"amplicon"
-# Defining attribute parameter
-attribute<-"coverage"
-##Calling the constructor
-ampliPanel<-TargetExperiment(bedFile, bamFile, fastaFile, attribute=attribute,
-feature=feature)
+    ## Defining feature parameter
+    feature<-"amplicon"
+    ## Defining attribute parameter
+    attribute<-"coverage"
+    ##Calling the constructor
+    ampliPanel<-TargetExperiment(bedFile, bamFile, fastaFile, 
+        attribute=attribute, feature=feature)
+}
 }
 \author{
 Gabriela A. Merino \email{gmerino@bdmg.com.ar}, Cristobal Fresno

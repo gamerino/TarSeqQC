@@ -359,11 +359,24 @@ constructors see \Rpackage{Rsamtools} manual.
 Once you have defined the input data presented above, the \targetexperiment{} 
 constructor could be called using:\\
 
-<<constructor, echo=TRUE, results=hide>>=
+<<constructor, echo=TRUE, results=hide, eval=FALSE>>=
 BPPARAM<-bpparam()
 myPanel<-TargetExperiment(bedFile, bamFile, fastaFile, feature="amplicon", 
                         attribute="coverage", BPPARAM=BPPARAM)
 @ 
+
+<<loading TargetExperiment object, echo=FALSE>>=
+BPPARAM<-bpparam()
+data(ampliPanel, package="TarSeqQC")
+myPanel<-ampliPanel
+rm(ampliPanel)
+setBamFile(myPanel)<-system.file("extdata", "mybam.bam", package="TarSeqQC",
+                                    mustWork=TRUE)
+setFastaFile(myPanel)<-system.file("extdata", "myfasta.fa", 
+                                    package="TarSeqQC", mustWork=TRUE)
+
+@
+
 When \Rfunction(TargetExperiment) is called, some \targetexperiment{} methods
 are invoked in order to define two of the \targetexperiment{} slots. First, the
 \Rfunction{buildFeaturePanel} is internally used in order to build the
@@ -854,7 +867,7 @@ and the \fastafile. For this reason, if you use some of them, please make sure
 that the corresponding \targetexperiment{} slots have the file names well 
 defined. For example, if you wish loading the \tarseq{} example data, you can 
 do:
-<<using TarSeqQC example data>>=
+<<loading TarSeqQC example data>>=
 data(ampliPanel, package="TarSeqQC")
 ampliPanel
 @
@@ -881,7 +894,7 @@ setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa",
                                     package="TarSeqQC", mustWork=TRUE)
 @
 and then:
-<<pileupCounts using TarSeqQC example data, eval=FALSE>>=
+<<buildFeaturePanel using TarSeqQC example data, eval=FALSE>>=
 setFeaturePanel<-buildFeaturePanel(ampliPanel)
 @
 

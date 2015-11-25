@@ -1,3 +1,27 @@
+Changes in version 1.1.1
+----------------------------------------------------------------
+CODE
+
+    * In setters and initialize functions, examples were updated
+    to shorten elapsed times (only interactive). Thanks to V. Obenchain
+
+VIGNETTE
+    
+    * Elapsed times reduction using TarSeqQC data example instead of 
+    building myPanel from scratch. Thanks to V. Obenchain
+
+Changes in version 1.1.0
+----------------------------------------------------------------
+DOCUMENTATION
+
+    * Bumped version number of all packages after creation of 3.2 branch
+    
+Changes in version 1.0.0
+----------------------------------------------------------------
+DOCUMENTATION
+
+    * First release
+
 Changes in version 0.99.9
 ----------------------------------------------------------------
 CODE

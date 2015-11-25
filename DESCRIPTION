@@ -1,7 +1,7 @@
 Package: TarSeqQC
 Type: Package
-Version: 1.1.0
-Date: 2015-09-16
+Version: 1.1.1
+Date: 2015-11-25
 Title: TARgeted SEQuencing Experiment Quality Control
 Author: Gabriela A. Merino, Cristobal Fresno and Elmer A. Fernandez
 Maintainer: Gabriela Merino <gmerino@bdmg.com.ar>

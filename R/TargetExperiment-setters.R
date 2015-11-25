@@ -20,17 +20,19 @@
 #'\email{efernandez@@bdmg.com.ar}
 #'@examples
 #'## loading TargetExperiment object
-#'data(ampliPanel, package="TarSeqQC")
-#'## Defining bam file, bed file and fasta file names and paths
-#'setBamFile(ampliPanel)<-system.file("extdata", "mybam.bam", 
-#'    package="TarSeqQC", mustWork=TRUE)
-#'setBedFile(ampliPanel)<-system.file("extdata", "mybed.bed", 
-#'    package="TarSeqQC", mustWork=TRUE)
-#'setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa", 
-#'    package="TarSeqQC", mustWork=TRUE)
+#'if (interactive()){
+#'  data(ampliPanel, package="TarSeqQC")
+#'  ## Defining bam file, bed file and fasta file names and paths
+#'  setBamFile(ampliPanel)<-system.file("extdata", "mybam.bam", 
+#'      package="TarSeqQC", mustWork=TRUE)
+#'  setBedFile(ampliPanel)<-system.file("extdata", "mybed.bed", 
+#'      package="TarSeqQC", mustWork=TRUE)
+#'  setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa", 
+#'      package="TarSeqQC", mustWork=TRUE)
 #'
-#'## Set feature slot value
-#'setFeature(ampliPanel)<-"amplicon"
+#'  ## Set feature slot value
+#'  setFeature(ampliPanel)<-"amplicon"
+#'}
 setGeneric(name="setFeature<-", def=function(object, value){
     standardGeneric("setFeature<-")
 })
