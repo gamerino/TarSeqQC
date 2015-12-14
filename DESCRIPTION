@@ -1,7 +1,7 @@
 Package: TarSeqQC
 Type: Package
-Version: 1.1.1
-Date: 2015-11-25
+Version: 1.1.2
+Date: 2015-12-14
 Title: TARgeted SEQuencing Experiment Quality Control
 Author: Gabriela A. Merino, Cristobal Fresno and Elmer A. Fernandez
 Maintainer: Gabriela Merino <gmerino@bdmg.com.ar>
@@ -35,6 +35,11 @@ Collate: 'TarSeqQC-package.R' 'TargetExperiment.R'
         'TargetExperiment-plotFeature.R'
         'TargetExperiment-plotGeneAttrPerFeat.R'
         'TargetExperiment-plotNtdPercentage.R'
+        'TargetExperiment-readPercentages.R'
+        'TargetExperiment-myCounts.R'
+        'TargetExperiment-plotInOutFeatures.R'
+        'TargetExperiment-biasExploration.R'
+        'TargetExperiment-plotMetaDataExpl.R'
 biocViews: Software, Sequencing, TargetedResequencing, QualityControl,
         Visualization, Coverage, Alignment, DataImport
 NeedsCompilation: no

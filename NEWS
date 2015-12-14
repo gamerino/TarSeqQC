@@ -1,3 +1,19 @@
+Changes in version 1.1.2
+----------------------------------------------------------------
+CODE
+
+    * Changes in buildFeaturePanel in order to reduce the run time. Now, the
+    pileupCounts is not called, thus the pileup matrix is not built. Instead 
+    it, coverage and others Rsamtools and IRanges methods are used.
+    * readPercentages and plotInOutFeatures methods were added in order to
+    explore experiment efficiency.
+    * biasExploration and plotMetaDataExpl were added in order to perform bias
+    sources exploration. The first allows the gc content, feature length or 
+    other source distribution exploration. The second implement a plot in which
+    attribute distribution for each source bias quartile or group is explored. 
+
+VIGNETTE
+    * English correction and new methods incorporation
 Changes in version 1.1.1
 ----------------------------------------------------------------
 CODE

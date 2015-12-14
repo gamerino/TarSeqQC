@@ -48,35 +48,53 @@ definition=function(object,BPPARAM=bpparam()){
 #     BPPARAM2<-bpparam()
 #     bpprogressbar(BPPARAM2)<-TRUE
     bed_file<-getBedFile(object)
-#     feature_summary<-bplapply(as.list(1:length(bed_file)), 
-#     function(feature){
-#         bed_feature<-bed_file[feature]
-#         subObject<-object
-#         subObject@bedFile<-bed_feature
-#         setScanBamP(subObject)<-ScanBamParam(which=bed_feature)
-        
-    feature_counts<-pileupCounts(bed=getBedFile(object), 
-        bamFile=path(getBamFile(object)), fastaFile=path(getFastaFile(object)),
-        scanBamP=getScanBamP(object), pileupP=getPileupP(object), 
-        BPPARAM=BPPARAM)
-    features<-as.character(unique(feature_counts[,"which_label"]))
-#     remove duplicated features cased by overlapped features
-    features<-unique(do.call(c,lapply(features, function(x){
-        return(strsplit(x, split=";")[[1]])
-        })))
-    feature_summary <- bplapply(features,
-        function(x) {
-        counts <- feature_counts[feature_counts[,"which_label"] == x, "counts"] 
-        median_counts <- round(median(counts))
-        IQR_counts<-round(IQR(counts))
-        coverage<-round(mean(counts))
-        sd_coverage<-round(sd(counts))
-        return(c(medianCounts=median_counts, IQRCounts=IQR_counts,
-            coverage=coverage, sdCoverage=sd_coverage))
-        },
-        BPPARAM=BPPARAM)
-    feature_summary<-as.data.frame(do.call(rbind,feature_summary))
-    featurePanel<-getBedFile(object)  
-    mcols(featurePanel)<-cbind(mcols(bed_file), feature_summary) 
-    return(featurePanel)
+    param <- getScanBamP(object)
+    #extract GC content from Fasta File
+    aux<-scanFa(getFastaFile(object), param=bed_file)
+    gc <- round(rowSums(letterFrequency(aux, letters= c("G","C")))/width(aux),3)
+    mcols(bed_file)<-cbind(mcols(bed_file),GC=as.data.frame(gc))
+    rm(aux)
+    # ensure that only those reads overlapping targeted regions are counted
+    bamWhat(param) <-c("qname", "pos", "qwidth", "rname")
+    bamFile<-getBamFile(object)
+    aln <- scanBam(bamFile, param=param)
+    # create RangedData object
+    reads<- do.call(rbind, bplapply(1:length(aln), function(x){
+    with(aln[[x]], data.frame(pos=pos, width=qwidth, ID=qname,
+        seqnames=rname))}, BPPARAM=BPPARAM))
+    reads<-GRanges(IRanges(reads[,"pos"], width=reads[,"width"]), 
+        ID=reads[,"ID"], seqnames=reads[,"seqnames"])
+   
+#     reads<- do.call(c, bplapply(1:length(aln), function(x){
+#     with(aln[[x]], GRanges(IRanges(pos, width=qwidth), ID=qname,
+#         seqnames=rname))}, BPPARAM=BPPARAM))
+#     
+    chrs <-as.character(unique(seqnames(bed_file)))
+    
+    # compute counts of all reads
+    counts <- coverage(reads)
+    #compute statistics
+    info<-do.call(rbind,lapply(chrs, function(chr){  
+        index<-which(as.character(seqnames(bed_file)) == chr)
+    # select cromosome counts and features
+        chrCounts <- counts[[chr]]
+        featRange <- ranges(bed_file[index])
+        aux <- bplapply(featRange, function(x){
+                if(all(x <= length(chrCounts))){
+                    return(chrCounts[x])
+                }else{ return(c(0,0))}
+            }) 
+    # compute average median SD and IQR for counts per feature
+            cov <- floor(sapply(aux, mean))
+            sdcov <- floor(sapply(aux, sd))
+            medcount<-floor(sapply(aux, median))
+            iqrcount<-floor(sapply(aux, IQR))
+            return(cbind(coverage=cov, sdCoverage=sdcov,
+                medianCounts= medcount,  IQRCounts=iqrcount))
+    }))
+    
+    m<-match(names(bed_file), rownames(info))
+    mcols(bed_file)<-cbind(mcols(bed_file),as.data.frame(info[m,]))
+    return(bed_file)
 })
+

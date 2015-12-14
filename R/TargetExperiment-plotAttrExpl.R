@@ -62,10 +62,10 @@ definition=function(object,level="feature",join=TRUE, log=TRUE, color="blue"){
     y_lab<-getAttribute(object)
     attribute<-getAttribute(object)
     # computting statistics
-    mean_attr<-round(mean(df[, attribute]))
-    sd_attr<-round(sd(df[, attribute]))
-    median_attr<-round(median(df[, attribute]))
-    IQR_attr<-round(IQR(df[, attribute]))
+    mean_attr<-round(mean(df[, attribute]), digits=1)
+    sd_attr<-round(sd(df[, attribute]), digits=1)
+    median_attr<-round(median(df[, attribute]), digits=1)
+    IQR_attr<-round(IQR(df[, attribute]), digits=1)
     #if log the plot will be in log10 scale
     if(log){
         df[, attribute]<-log10(df[, attribute]+1)

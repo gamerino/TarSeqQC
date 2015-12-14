@@ -207,8 +207,6 @@ test_setGenePanel<-function(){
     data(ampliPanel, package="TarSeqQC")
     setBamFile(ampliPanel)<-system.file("extdata", "mybam.bam", 
         package="TarSeqQC", mustWork=TRUE)
-    setBedFile(ampliPanel)<-system.file("extdata", "mybed.bed", 
-        package="TarSeqQC", mustWork=TRUE)
     setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa", 
         package="TarSeqQC", mustWork=TRUE)
     #genePanel cannot be setted as a data.frame
@@ -322,16 +320,14 @@ test_buildFeaturePanel<-function(){
     data(ampliPanel, package="TarSeqQC")
     setBamFile(ampliPanel)<-system.file("extdata", "mybam.bam", 
         package="TarSeqQC", mustWork=TRUE)
-    setBedFile(ampliPanel)<-system.file("extdata", "mybed.bed", 
-        package="TarSeqQC", mustWork=TRUE)
     setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa", 
         package="TarSeqQC", mustWork=TRUE)
 
     myFeaturePanel<-buildFeaturePanel(ampliPanel, BPPARAM=BPPARAM)
     checkEquals(class(myFeaturePanel)[1], "GRanges", 
         msg="buildFeaturePanel returned object type: OK.") 
-    checkTrue(all(colnames(mcols(myFeaturePanel)) %in% c("gene", 
-        "medianCounts", "IQRCounts", "coverage", "sdCoverage")), 
+    checkTrue(all(c("gene", "medianCounts", "IQRCounts", "coverage", 
+        "sdCoverage") %in% colnames(mcols(myFeaturePanel)) ), 
         msg="buildFeaturePanel returned metadata colnames: OK.")
     checkEquals(length(myFeaturePanel), 29, 
         msg="buildFeaturePanels returned GRanges dimension: OK.")
@@ -351,6 +347,58 @@ test_summarizePanel<-function(){
         msg="summarizePanel returned GRanges dimension: OK.")
     checkTrue(all(names(myGenePanel) %in% names(getGenePanel(ampliPanel))), 
         msg="summarizePanel returned GRanges names: OK.")
+}
+##Test readPercentages
+test_readPercentages<-function(){
+    data(ampliPanel, package="TarSeqQC")
+    setBamFile(ampliPanel)<-system.file("extdata", "mybam.bam", 
+        package="TarSeqQC", mustWork=TRUE)
+    setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa", 
+        package="TarSeqQC", mustWork=TRUE)
+    readsInfo<-readPercentages(ampliPanel)
+    checkTrue(all(c("chr", "In", "Out", "InPerc", "OutPerc") %in% 
+        colnames(readsInfo)), 
+        msg="readPercentages returned colnames: OK.")
+    checkTrue((sum(readsInfo[, c("InPerc", "OutPerc")]) > 99.9 &  sum(
+        readsInfo[, c("InPerc", "OutPerc")] <= 100)), 
+        msg="Percentages calculation: OK.")
+
+}
+##Test plotInOutFeatures
+test_plotInOutFeatures<-function(){
+    data(ampliPanel, package="TarSeqQC")
+    setBamFile(ampliPanel)<-system.file("extdata", "mybam.bam", 
+        package="TarSeqQC", mustWork=TRUE)
+    setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa", 
+        package="TarSeqQC", mustWork=TRUE)
+    readsInfo<-readPercentages(ampliPanel)
+    g<-plotInOutFeatures(readsInfo)
+    checkTrue(is.ggplot(g), msg="returned plot type: OK.")
+    g<-plotInOutFeatures(ampliPanel)
+    checkTrue(is.ggplot(g), msg="returned plot type: OK.")
+    
+}
+##Test biasExploration
+test_biasExploration<-function(){
+    data(ampliPanel, package="TarSeqQC")
+    source<-"gc"
+    g<-biasExploration(ampliPanel, source=source)
+    checkTrue(is.ggplot(g), msg="returned plot type: OK.")
+    source<-"length"
+    g<-biasExploration(ampliPanel, source=source)
+    checkTrue(is.ggplot(g), msg="returned plot type: OK.")
+    
+}
+##Test plotMetaDataExpl
+test_plotMetaDataExpl<-function(){
+    data(ampliPanel, package="TarSeqQC")
+    source<-"gc"
+    g<-plotMetaDataExpl(ampliPanel, name=source)
+    checkTrue(is.ggplot(g), msg="returned plot type: OK.")
+    source<-"length"
+    g<-plotMetaDataExpl(ampliPanel, name=source)
+    checkTrue(is.ggplot(g), msg="returned plot type: OK.")
+    
 }
 #### Test plot
 ##test_plot<-function(){
@@ -376,8 +424,6 @@ test_summarizePanel<-function(){
 ##test_plotFeature<-function(){
 ##    data(ampliPanel, package="TarSeqQC")
 ##    setBamFile(ampliPanel)<-system.file("extdata", "mybam.bam", 
-##        package="TarSeqQC", mustWork=TRUE)
-##    setBedFile(ampliPanel)<-system.file("extdata", "mybed.bed", 
 ##        package="TarSeqQC", mustWork=TRUE)
 ##    setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa", 
 ##        package="TarSeqQC", mustWork=TRUE)
@@ -407,8 +453,6 @@ test_summarizePanel<-function(){
 ##    data(ampliPanel, package="TarSeqQC")
 ##    setBamFile(ampliPanel)<-system.file("extdata", "mybam.bam", 
 ##        package="TarSeqQC", mustWork=TRUE)
-##    setBedFile(ampliPanel)<-system.file("extdata", "mybed.bed", 
-##        package="TarSeqQC", mustWork=TRUE)
 ##    setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa", 
 ##        package="TarSeqQC", mustWork=TRUE)
 ##    checkException(plotNtdPercentage(ampliPanel, featureID="nopresent"), 
@@ -424,8 +468,6 @@ test_summarizePanel<-function(){
 ##test_plotRegion<-function(){
 ##    data(ampliPanel, package="TarSeqQC")
 ##    setBamFile(ampliPanel)<-system.file("extdata", "mybam.bam", 
-##        package="TarSeqQC", mustWork=TRUE)
-##    setBedFile(ampliPanel)<-system.file("extdata", "mybed.bed", 
 ##        package="TarSeqQC", mustWork=TRUE)
 ##    setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa", 
 ##        package="TarSeqQC", mustWork=TRUE)
@@ -480,9 +522,13 @@ test_summarizePanel<-function(){
 # test_summaryFeatureLev()
 # test_summaryGeneLev()
 # test_summaryIntervals()
+# test_readPercentages()
 # test_pileupCounts()
 # test_buildFeaturePanel()
 # test_summarizePanel()
+# test_plotInOutFeatures()
+# test_biasExploration()
+# test_plotMetaDataExpl()
 # test_plot()
 # test_plotAttrExpl()
 # test_plotFeatPerform()

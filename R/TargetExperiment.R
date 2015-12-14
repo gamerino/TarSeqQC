@@ -69,6 +69,14 @@
 #' \item{plotNtdPercentages}{plot nucleotide percentages for each position of
 #'  a particular feature}
 #' \item{plotRegion}{plot the reads profile for a particular genomic region}
+#' \item{readFrequencies}{calculate frequencies of reads fall in and 
+#'  out of targeted regions}
+#' \item{plotInOutFeatures}{plot frequencies of reads fall in and out of 
+#'  targeted regions}
+#' \item{biasExploration}{plot attribute distributions along groups of bias
+#'  sources}
+#' \item{plotMetaDataExpl}{plot density and box plots or frequency bar plot of
+#'  metadata columns}
 #' \item{addStatSummSheet}{internal function to add the first sheet of xlsx 
 #'  reports}
 #' \item{buildReport}{build the experiment report as an xlsx file}
@@ -132,7 +140,14 @@
 #'g<-plotAttrExpl(ampliPanel,level="feature",join=TRUE, log=FALSE, color="blue")
 #'# x11(type="cairo")
 #'g
+#'# explore amplicon length distribution
+#'plotMetaDataExpl(ampliPanel, "length", log=FALSE, join=FALSE, color=
+#'"blueviolet")
+#'# explore gene's relative frequencies
+#'plotMetaDataExpl(ampliPanel, "gene", abs=FALSE)
 #'## Deep exploration and Quality Control
+#'myfrequencies<-readFrequencies(ampliPanel)
+#'plotInOutFeatures(readFrequencies(ampliPanel))
 #'# definition of the interval extreme values
 #'attributeThres<-c(0,1,50,200,500, Inf)
 #'# plot panel overview
@@ -143,6 +158,9 @@
 #'featureLabs=TRUE, sepChr=TRUE, legend=TRUE)
 #'g
 #'
+#'# explore possible attribute bias
+#'x11(type="cairo")
+#'biasExploration(myPanel, source="gc", dens=TRUE)
 #'## Controlling low counts features
 #'# Do a frequency table for the attribute intervals
 #'summaryIntervals(ampliPanel, attributeThres)
