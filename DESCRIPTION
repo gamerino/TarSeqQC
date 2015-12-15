@@ -15,7 +15,7 @@ License: GPL (>=2)
 Depends: R (>= 3.2.1), methods, GenomicRanges, Rsamtools (>= 1.20.4),
         ggplot2, plyr, openxlsx
 Imports: S4Vectors, IRanges, BiocGenerics, reshape2, GenomeInfoDb,
-        BiocParallel, cowplot
+        BiocParallel, cowplot, Biostrings
 Suggests: RUnit
 Collate: 'TarSeqQC-package.R' 'TargetExperiment.R'
         'TargetExperiment-ampliPanel.R' 'TargetExperiment-getters.R'

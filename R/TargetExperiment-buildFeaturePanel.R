@@ -41,6 +41,7 @@ BPPARAM=bpparam()){
 #'@rdname TargetExperiment-buildFeaturePanel
 #'@importMethodsFrom BiocParallel bpmapply bplapply bpworkers bpprogressbar<-
 #'@import BiocParallel
+#'@importFrom Biostrings letterFrequency
 #'@aliases buildFeaturePanel,TargetExperiment-method
 #'@inheritParams buildFeaturePanel
 setMethod(f="buildFeaturePanel", signature="TargetExperiment",

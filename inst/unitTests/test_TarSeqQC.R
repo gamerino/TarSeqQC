@@ -348,17 +348,17 @@ test_summarizePanel<-function(){
     checkTrue(all(names(myGenePanel) %in% names(getGenePanel(ampliPanel))), 
         msg="summarizePanel returned GRanges names: OK.")
 }
-##Test readPercentages
-test_readPercentages<-function(){
+##Test readFrequencies
+test_readFrequencies<-function(){
     data(ampliPanel, package="TarSeqQC")
     setBamFile(ampliPanel)<-system.file("extdata", "mybam.bam", 
         package="TarSeqQC", mustWork=TRUE)
     setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa", 
         package="TarSeqQC", mustWork=TRUE)
-    readsInfo<-readPercentages(ampliPanel)
+    readsInfo<-readFrequencies(ampliPanel)
     checkTrue(all(c("chr", "In", "Out", "InPerc", "OutPerc") %in% 
         colnames(readsInfo)), 
-        msg="readPercentages returned colnames: OK.")
+        msg="readFrequencies returned colnames: OK.")
     checkTrue((sum(readsInfo[, c("InPerc", "OutPerc")]) > 99.9 &  sum(
         readsInfo[, c("InPerc", "OutPerc")] <= 100)), 
         msg="Percentages calculation: OK.")
@@ -371,7 +371,7 @@ test_plotInOutFeatures<-function(){
         package="TarSeqQC", mustWork=TRUE)
     setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa", 
         package="TarSeqQC", mustWork=TRUE)
-    readsInfo<-readPercentages(ampliPanel)
+    readsInfo<-readFrequencies(ampliPanel)
     g<-plotInOutFeatures(readsInfo)
     checkTrue(is.ggplot(g), msg="returned plot type: OK.")
     g<-plotInOutFeatures(ampliPanel)
@@ -522,7 +522,7 @@ test_plotMetaDataExpl<-function(){
 # test_summaryFeatureLev()
 # test_summaryGeneLev()
 # test_summaryIntervals()
-# test_readPercentages()
+# test_readFrequencies()
 # test_pileupCounts()
 # test_buildFeaturePanel()
 # test_summarizePanel()
