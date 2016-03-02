@@ -333,7 +333,7 @@ test_buildFeaturePanel<-function(){
     checkTrue(all(c("gene", "medianCounts", "IQRCounts", "coverage", 
         "sdCoverage") %in% colnames(mcols(myFeaturePanel)) ), 
         msg="buildFeaturePanel returned metadata colnames: OK.")
-    checkEquals(length(myFeaturePanel), 2, 
+    checkEquals(length(myFeaturePanel), 29, 
         msg="buildFeaturePanels returned GRanges dimension: OK.")
     checkTrue(all(names(myFeaturePanel) %in% names(getFeaturePanel(ampliPanel
         ))), msg="buildFeaturePanel returned GRanges names: OK.")
