@@ -295,19 +295,19 @@ test_pileupCounts<-function(){
     bed<-getBedFile(ampliPanel)
     fastaFile<-system.file("extdata", "myfasta.fa", 
         package="TarSeqQC", mustWork=TRUE)
-    myCounts<-pileupCounts(bed=bed, bamFile=bamFile, fastaFile=fastaFile)
+    myCounts<-pileupCounts(bed=bed[1:2], bamFile=bamFile, fastaFile=fastaFile)
     checkEquals(class(myCounts), "data.frame", 
         msg="pileupCounts returned object type: OK.") 
     checkTrue(all(c("pos", "seqnames", "which_label", "counts") %in% 
         colnames(myCounts)), msg="pileupCounts returned data.frame colnames: 
         OK.")
-    checkEquals(dim(myCounts), c(2165,12), 
+    checkEquals(dim(myCounts), c(140,12), 
         msg="pileupCounts returned data.frame dimension: OK.")
  
     auxData<-unique(as.character(myCounts[,"which_label"]))
     strsplit(auxData, ":")[1]
     checkTrue(all(unique(sapply(1:length(auxData),function(x){ strsplit(
-        auxData[x], ":")[[1]][1]})) %in% c("chr1", "chr3", "chr7", "chr10")),
+        auxData[x], ":")[[1]][1]})) %in% c("chr1")),
         msg="pileupCounts returned data.frame seqnames: OK.")
 }
 ##Test buildFeaturePanel
@@ -322,14 +322,18 @@ test_buildFeaturePanel<-function(){
         package="TarSeqQC", mustWork=TRUE)
     setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa", 
         package="TarSeqQC", mustWork=TRUE)
-
+    #read only the first 2 amplicons
+    bed<-getBedFile(ampliPanel)[1:2]
+    scanBamP<-getScanBamP(ampliPanel)
+    bamWhich(scanBamP)<-bed
+    setScanBamP(ampliPanel)<-scanBamP
     myFeaturePanel<-buildFeaturePanel(ampliPanel, BPPARAM=BPPARAM)
     checkEquals(class(myFeaturePanel)[1], "GRanges", 
         msg="buildFeaturePanel returned object type: OK.") 
     checkTrue(all(c("gene", "medianCounts", "IQRCounts", "coverage", 
         "sdCoverage") %in% colnames(mcols(myFeaturePanel)) ), 
         msg="buildFeaturePanel returned metadata colnames: OK.")
-    checkEquals(length(myFeaturePanel), 29, 
+    checkEquals(length(myFeaturePanel), 2, 
         msg="buildFeaturePanels returned GRanges dimension: OK.")
     checkTrue(all(names(myFeaturePanel) %in% names(getFeaturePanel(ampliPanel
         ))), msg="buildFeaturePanel returned GRanges names: OK.")
