@@ -316,7 +316,6 @@ test_buildFeaturePanel<-function(){
         BPPARAM <- MulticoreParam(2)
     else
         BPPARAM <- SerialParam()
- 
     data(ampliPanel, package="TarSeqQC")
     setBamFile(ampliPanel)<-system.file("extdata", "mybam.bam", 
         package="TarSeqQC", mustWork=TRUE)
@@ -409,7 +408,8 @@ test_plotMetaDataExpl<-function(){
 ##    data(ampliPanel, package="TarSeqQC")
 ##    g<-plot(ampliPanel)
 ##    checkTrue(is.ggplot(g), msg="returned plot type: OK.")
-##    checkEquals(dim(g$data), c(40,11), msg="returned plot data dimension: OK.")
+##    checkEquals(dim(g$data), c(40,11), msg="returned plot data dimension: 
+##    OK.")
 ##}
 #### Test plotAttrExpl
 ##test_plotAttrExpl<-function(){
@@ -438,7 +438,8 @@ test_plotMetaDataExpl<-function(){
 ##        msg="featureID present in the featurePanel: OK.")
 ##    g<-plotFeature(ampliPanel, featureID)
 ##    checkTrue(is.ggplot(g), msg="returned plot type: OK.")
-##    checkEquals(dim(g$data), c(63,12), msg="returned plot data dimension: OK.")
+##    checkEquals(dim(g$data), c(63,12), msg="returned plot data dimension: 
+##    OK.")
 ##}
 #### Test plotGeneAttrPerFeat
 ##test_plotGeneAttrPerFeat<-function(){
@@ -466,7 +467,8 @@ test_plotMetaDataExpl<-function(){
 ##        msg="featureID present in the featurePanel: OK.")
 ##    g<-plotNtdPercentage(ampliPanel, featureID)
 ##    checkTrue(is.ggplot(g), msg="returned plot type: OK.")
-##    checkEquals(dim(g$data), c(252,3), msg="returned plot data dimension: OK.")
+##    checkEquals(dim(g$data), c(252,3), msg="returned plot data dimension:
+##    OK.")
 ##}
 #### Test plotRegion
 ##test_plotRegion<-function(){

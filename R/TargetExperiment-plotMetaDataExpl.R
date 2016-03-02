@@ -101,14 +101,16 @@ absolute=FALSE, color="blue"){
                 "distribution", sep=" "), x= stat_lab,y=y_lab)+theme(
                 plot.title = element_text(size= rel(1.5), colour ="black"), 
                 title= element_text(size=14), axis.title= element_text(size=13
-                ), legend.text = element_text(size = 13))+ guides(fill=FALSE) + scale_fill_manual(values= color)+ scale_x_discrete(breaks=c(1),
+                ), legend.text = element_text(size = 13))+ guides(fill=FALSE) +
+                scale_fill_manual(values= color)+ scale_x_discrete(breaks=c(1),
                 labels=c(""))
         }else{
             box.plot<-g+geom_boxplot(aes(x=1, y=source, fill=as.factor(1)))+
                 labs(title= "", y=y_lab,x= stat_lab)+ theme(plot.title = 
                 element_text(size = rel(1.5), colour = "black"), title=
-                element_text(size=14),axis.title= element_text(size=13), legend.position="none")+guides(fill=FALSE) + scale_fill_manual(
-                values=color) + scale_x_continuous(breaks=1,labels="")            
+                element_text(size=14),axis.title= element_text(size=13), 
+                legend.position="none")+guides(fill=FALSE) + scale_fill_manual(
+                values=color) + scale_x_continuous(breaks=1,labels="")
             dens.plot<- g+geom_density(aes(x=source, fill=as.factor(1)), 
                 alpha=0.5)+ coord_flip()+ labs(title="", x=y_lab, y="density")+
                 theme(plot.title = element_text(size = rel(1.5), colour = 

@@ -8,7 +8,7 @@
 \title{Graphical exploration of a specific metadata column.}
 \usage{
 plotMetaDataExpl(object, name = c("length", "gc", "pool"), log = FALSE,
-  join = TRUE, absolute = FALSE, color = "blue")
+    join = TRUE, absolute = FALSE, color = "blue")
 
 \S4method{plotMetaDataExpl}{TargetExperiment}(object, name = c("length", "gc",
     "pool"), log = FALSE, join = TRUE, absolute = FALSE, color = "blue")
