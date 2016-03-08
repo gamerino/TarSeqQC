@@ -33,15 +33,17 @@ having panel and counts/coverage information.
 see full example in \code{\link{TargetExperiment-class}}
 }
 \examples{
-## loading TargetExperiment object
-data(ampliPanel, package="TarSeqQC")
-## Defining bam file, bed file and fasta file names and paths
-setBamFile(ampliPanel)<-system.file("extdata", "mybam.bam",
-    package="TarSeqQC", mustWork=TRUE)
-setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa",
-    package="TarSeqQC", mustWork=TRUE)
+if (interactive) {
+  ## loading TargetExperiment object
+  data(ampliPanel, package="TarSeqQC")
+  ## Defining bam file, bed file and fasta file names and paths
+  setBamFile(ampliPanel)<-system.file("extdata", "mybam.bam",
+      package="TarSeqQC", mustWork=TRUE)
+  setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa",
+      package="TarSeqQC", mustWork=TRUE)
 
-myFeaturePanel<-buildFeaturePanel(ampliPanel)
+  myFeaturePanel<-buildFeaturePanel(ampliPanel)
+}
 }
 \author{
 Gabriela A. Merino \email{gmerino@bdmg.com.ar}, Cristobal Fresno
