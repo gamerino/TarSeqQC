@@ -33,7 +33,7 @@ having panel and counts/coverage information.
 see full example in \code{\link{TargetExperiment-class}}
 }
 \examples{
-if (interactive) {
+if (interactive()) {
   ## loading TargetExperiment object
   data(ampliPanel, package="TarSeqQC")
   ## Defining bam file, bed file and fasta file names and paths
