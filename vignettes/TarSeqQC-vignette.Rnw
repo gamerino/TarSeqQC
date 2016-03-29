@@ -715,7 +715,25 @@ many features have its attribute value (\textit{coverage}) lower or higher than
 a threshold. In this example, we are interested in knowing how many amplicons 
 have shown at least a coverage of 50, because we consider that this is a 
 minimum value that we will admit. This is a typical aspect that will be 
-analyzed when you do an experiment \textit{Quality Control}.\\
+analyzed when you do an experiment \textit{Quality Control}. Complementing this
+method, the \Rfunction{plotAttrPerform} method allows the graphical exploration
+of relative and cumulative feature frequencies in the predefined intervals. The
+corresponding function call is:\\
+<<coveragePerform,eval=FALSE, fig=FALSE>>=
+plotAttrPerform(myPanel, attributeThres)
+@
+\begin{figure}[!htp]
+    \begin{center}
+        \includegraphics[scale=0.7]{coveragePerform.pdf}
+    \end{center}
+    \caption{Relative and cumulative amplicon frequencies in the specified
+    intervals.}
+    \label{fig:covPerf}
+\end{figure}
+In the cases in which several pools were used, both 
+\Rfunction{summaryIntervals} and \Rfunction{plotAttrPerform} allows the
+exploration at pool level. Thus, differences among pool can be easily 
+detected.\\
 Another method that could help this analysis is \Rfunction{getLowCtsFeatures}. 
 This method returns a \Rclass{data frame} object containing all the features
 that have its attribute value lower than a threshold. The output 

@@ -91,5 +91,5 @@ definition=function(object,source=c("length", "gc", "pool"), dens=FALSE){
     }
 
     return(g)    
-       
+    
 })

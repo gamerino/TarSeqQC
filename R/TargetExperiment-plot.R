@@ -47,7 +47,7 @@
 #'if(interactive()){
 #'g
 #'}
-#'@export
+#'@export plot
 setMethod(f="plot", signature=signature(x="TargetExperiment"), 
 definition=function(x, y, attributeThres=c(0, 1, 50, 200, 500, Inf),
 binSize=1, spaceGene=0.2,  spaceChr=1.2,  innerRadius=0.3,  outerRadius=1,  

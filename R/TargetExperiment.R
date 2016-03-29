@@ -164,6 +164,8 @@
 #'## Controlling low counts features
 #'# Do a frequency table for the attribute intervals
 #'summaryIntervals(ampliPanel, attributeThres)
+#'#plotting attribute intervals
+#'plotAttrPerform(object)
 #'# getting low counts features at gene level
 #'getLowCtsFeatures(ampliPanel, level="gene", threshold=50)
 #'# getting low counts features at feature level

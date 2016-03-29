@@ -424,6 +424,12 @@ test_plotMetaDataExpl<-function(){
 ##    g<-plotFeatPerform(ampliPanel)
 ##    checkTrue(class(g)[1] == "gg" , msg="returned plot type: OK.")
 ##}
+#### Test plotAttrPerform
+##test_plotAttrPerform<-function(){
+##    data(ampliPanel, package="TarSeqQC")
+##    g<-plotAttrPerform(ampliPanel)
+##    checkTrue(class(g)[1] == "gg" , msg="returned plot type: OK.")
+##}
 #### Test plotFeature
 ##test_plotFeature<-function(){
 ##    data(ampliPanel, package="TarSeqQC")
@@ -537,6 +543,7 @@ test_plotMetaDataExpl<-function(){
 # test_plotMetaDataExpl()
 # test_plot()
 # test_plotAttrExpl()
+# test_plotAttrPerform()
 # test_plotFeatPerform()
 # test_plotFeature()
 # test_plotGeneAttrPerFeat()

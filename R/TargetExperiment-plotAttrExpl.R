@@ -15,7 +15,7 @@
 #'
 #'@return ggplot2 graphics.
 #'
-#'@include TargetExperiment-buildReport.R
+#'@include TargetExperiment-plotAttrPerform.R
 #'@exportMethod plotAttrExpl
 #'@docType methods
 #'@name plotAttrExpl

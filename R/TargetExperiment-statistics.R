@@ -5,6 +5,8 @@
 #'@param object TargetExperiment class object.
 #'@param attributeThres numeric indicating the intervals extreme values
 #'required by summaryIntervals.
+#'@param pool logical indicating if the summary should be performed for each
+#'pool separately
 #'@param ... required by summary.
 #'
 #'@return according to the call one of the following objects can be returned
@@ -76,7 +78,7 @@ definition=function(object){
 })
 #'@name summary
 #'@rdname TargetExperiment-statistics
-#'@export
+#'@export summary
 #'@inheritParams summary
 #'@aliases summary,TargetExperiment-method
 #'# Object summary
@@ -99,7 +101,7 @@ definition=function(object,...){
 #'summaryIntervals(ampliPanel, attributeThres=attributeThres)
 
 setGeneric(name="summaryIntervals", def=function(object,attributeThres=c(0, 
-1, 50, 200, 500, Inf)){
+1, 50, 200, 500, Inf), pool=FALSE){
     standardGeneric("summaryIntervals")
 })
 #'@name summaryIntervals
@@ -107,9 +109,21 @@ setGeneric(name="summaryIntervals", def=function(object,attributeThres=c(0,
 #'@rdname TargetExperiment-statistics
 #'@aliases summaryIntervals,TargetExperiment-method
 setMethod(f="summaryIntervals",signature=signature(object="TargetExperiment"),
-definition=function(object,attributeThres= c(0, 1, 50, 200, 500, Inf)){
+definition=function(object,attributeThres= c(0, 1, 50, 200, 500, Inf), 
+pool=FALSE){
+
+    if(pool & !("pool" %in% names(mcols(getFeaturePanel(object))))){
+        stop("'pool' was set as TRUE but the bed file doesn't contain a 'pool'
+            column")
+    }
+    if(pool){
+    df_panel<-as.data.frame(getFeaturePanel(object))[,c("pool", 
+        getAttribute(object)), drop=FALSE]
+    }else{
     df_panel<-as.data.frame(getFeaturePanel(object))[,getAttribute(object), 
         drop=FALSE]
+    
+    }
     if(attributeThres[length(attributeThres)] < Inf){
         attributeThres<-c(attributeThres, Inf)
     }
@@ -117,8 +131,12 @@ definition=function(object,attributeThres= c(0, 1, 50, 200, 500, Inf)){
     # their attribute value and defined intervals
     df_panel[,"score"]<-cut(df_panel[,getAttribute(object)], 
         breaks=attributeThres, include.lowest=TRUE, right=FALSE)
+    if(pool){
+        att_table<-as.data.frame(table(df_panel[,"score"], df_panel[,"pool"]))
 
-    att_table<-as.data.frame(table(df_panel[,"score"]))
+    }else{
+        att_table<-as.data.frame(table(df_panel[,"score"]))
+    }
     interval_names<-sapply(1:length(attributeThres[attributeThres != "Inf"]),
     function(x){
         if(x < length(attributeThres[attributeThres != "Inf"])) {
@@ -129,6 +147,27 @@ definition=function(object,attributeThres= c(0, 1, 50, 200, 500, Inf)){
         }
     })
     att_table[,"Var1"]<-interval_names
+    
+    if(pool){
+        poolLevels<-levels(as.factor(df_panel[,"pool"]))
+        tabla<-lapply(1:length(poolLevels), function(i){
+            att_tableP<-att_table[att_table[,"Var2"] == poolLevels[i],c("Var1",
+                "Freq")]
+            tabla <- cbind(att_tableP,cumsum(att_tableP[,"Freq"]), 
+                round(100*att_tableP[,"Freq"]/sum(att_tableP[,"Freq"]),1))  
+
+            colnames(tabla) <- c(paste(getFeature(object), "_", 
+                getAttribute(object), "_intervals", sep=""),"abs","cum_abs",
+                "rel")
+            tabla[,"cum_rel"]<-cumsum(tabla[, "rel"])
+            if(tabla[nrow(tabla),"cum_rel"] != 100 ){
+                tabla[tabla[,"cum_rel"]==tabla[nrow(tabla),"cum_rel"], 
+                    "cum_rel"] <-100
+            }
+            return(tabla)
+        })
+    names(tabla)<-poolLevels
+    }else{
     tabla <- cbind(att_table,cumsum(att_table[,"Freq"]),round(
                     100*att_table[,"Freq"]/sum(att_table[,"Freq"]),1))  
     colnames(tabla) <- c(paste(getFeature(object), "_", getAttribute(object), 
@@ -136,6 +175,9 @@ definition=function(object,attributeThres= c(0, 1, 50, 200, 500, Inf)){
     tabla[,"cum_rel"]<-cumsum(tabla[, "rel"])
     if(tabla[nrow(tabla),"cum_rel"] != 100 ){
         tabla[tabla[,"cum_rel"]==tabla[nrow(tabla),"cum_rel"], "cum_rel"] <-100
+    }
+    
+    
     }
     return(tabla)
 })

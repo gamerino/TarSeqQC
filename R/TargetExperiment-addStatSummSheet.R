@@ -11,7 +11,7 @@
 #'
 #'@return Workbook object.
 #'
-#'@include TargetExperiment-ggplotColours.R TargetExperiment-statistics.R
+#'@include TargetExperiment-ggplotColours.R
 #'@exportMethod addStatSummSheet
 #'@docType methods
 #'@name addStatSummSheet

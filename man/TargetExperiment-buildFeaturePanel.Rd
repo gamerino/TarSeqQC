@@ -15,7 +15,7 @@ buildFeaturePanel(object, BPPARAM = bpparam())
 \item{object}{TargetExperiment class object.}
 
 \item{BPPARAM}{An optional BiocParallelParam instance defining the parallel
-back-end to be used during evaluation.}
+    back-end to be used during evaluation.}
 }
 \value{
 GRanges object.
@@ -26,23 +26,20 @@ Input can be a bam file or a pileup matrix. If the bed file contains a high
 number of amplicons, the bam file as input is recommended in order to
 diminish memory requirements. The resulting object is a GRanges instance
 having panel and counts/coverage information.
-
-
 }
 \note{
 see full example in \code{\link{TargetExperiment-class}}
 }
 \examples{
 if (interactive()) {
-  ## loading TargetExperiment object
-  data(ampliPanel, package="TarSeqQC")
-  ## Defining bam file, bed file and fasta file names and paths
-  setBamFile(ampliPanel)<-system.file("extdata", "mybam.bam",
-      package="TarSeqQC", mustWork=TRUE)
-  setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa",
-      package="TarSeqQC", mustWork=TRUE)
-
-  myFeaturePanel<-buildFeaturePanel(ampliPanel)
+    ## loading TargetExperiment object
+    data(ampliPanel, package="TarSeqQC")
+    ## Defining bam file, bed file and fasta file names and paths
+    setBamFile(ampliPanel)<-system.file("extdata", "mybam.bam",
+        package="TarSeqQC", mustWork=TRUE)
+    setFastaFile(ampliPanel)<-system.file("extdata", "myfasta.fa",
+        package="TarSeqQC", mustWork=TRUE)
+    myFeaturePanel<-buildFeaturePanel(ampliPanel)
 }
 }
 \author{
@@ -50,4 +47,3 @@ Gabriela A. Merino \email{gmerino@bdmg.com.ar}, Cristobal Fresno
 \email{cfresno@bdmg.com.ar} and Elmer A. Fernandez
 \email{efernandez@bdmg.com.ar}
 }
-

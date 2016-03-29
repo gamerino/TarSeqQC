@@ -141,7 +141,7 @@ complete=TRUE, log=TRUE, featureLabs=FALSE, sepChr=FALSE, legend=TRUE){
     # arrange the plots together, with appropriate height and width for each 
     # row and column
     if(complete){
-        g<-plot_grid(g1,g2, ncol=1, nrow=2)
+        g<-cowplot::plot_grid(g1,g2, ncol=1, nrow=2)
     }else {
         if(sepChr){
             g<-g1+facet_grid(~ seqnames, scales="free_x", space="free")

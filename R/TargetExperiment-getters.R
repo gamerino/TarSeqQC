@@ -24,7 +24,7 @@
 #' \item{PileupParam}{parameters for the pileup building}
 #' \item{data.frame}{regions or low counts features}
 #'
-#'@include TargetExperiment-getters.R
+#'@include TargetExperiment-ampliPanel.R
 #'@exportMethod getBedFile
 #'@docType methods
 #'@name getBedFile

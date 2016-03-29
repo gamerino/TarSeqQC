@@ -14,7 +14,7 @@
 #'
 #'@return ggplot object.
 #'
-#'@include TargetExperiment-plotNtdPercentage.R
+#'@include TargetExperiment-myCounts.R
 #'@exportMethod plotInOutFeatures
 #'@docType methods
 #'@name plotInOutFeatures

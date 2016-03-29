@@ -1,3 +1,13 @@
+Changes in version 1.1.6
+----------------------------------------------------------------
+CODE
+    * Changes in summaryIntervals in order to allow the exploration at
+    pool levels, useful when a targeted sequencing involving several PCR
+    pools was performed.
+    * plotAttrPerform method was added. This function produces a ggplot 
+    graph illustrating relative and cumulative frequencies of features
+    in attribute intervals. If the panel has several pools, then the graph
+    shows the mentioned results for each pool.
 Changes in version 1.1.2
 ----------------------------------------------------------------
 CODE

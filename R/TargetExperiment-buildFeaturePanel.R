@@ -65,7 +65,7 @@ definition=function(object,BPPARAM=bpparam()){
         seqnames=rname))}, BPPARAM=BPPARAM))
     reads<-GRanges(IRanges(reads[,"pos"], width=reads[,"width"]), 
         ID=reads[,"ID"], seqnames=reads[,"seqnames"])
-   
+
 #     reads<- do.call(c, bplapply(1:length(aln), function(x){
 #     with(aln[[x]], GRanges(IRanges(pos, width=qwidth), ID=qname,
 #         seqnames=rname))}, BPPARAM=BPPARAM))
