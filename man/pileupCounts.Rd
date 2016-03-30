@@ -43,9 +43,9 @@ data.frame object.
     obtained for the corresponding position.
 }
 \examples{
-##Defining the bed GRanges
+##Obtain the pileup matrix for the first amplicon
 data(ampliPanel, package="TarSeqQC")
-bed<-getBedFile(ampliPanel)
+bed<-getBedFile(ampliPanel)[1]
 ## Defining bam file and fasta file names and paths
 bamFile<-system.file("extdata", "mybam.bam", 
     package="TarSeqQC", mustWork=TRUE)

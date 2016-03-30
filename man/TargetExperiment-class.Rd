@@ -183,8 +183,10 @@ g<-g+theme(title=element_text(size=16), axis.title=element_text(size=16),
     legend.text=element_text(size=14))
 g
 
-# extracting the pileup matrix
-myCounts<-pileupCounts(ampliPanel)
+##Obtain the pileup matrix for the first amplicon
+bed<-getBedFile(ampliPanel)[1]
+## extracting the pileup matrix
+myCounts<-pileupCounts(bed, bamFile, fastaFile)
 head(myCounts)
 
 # getting and exploring a sequenced region of a particular gene
