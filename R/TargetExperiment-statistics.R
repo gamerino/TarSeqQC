@@ -78,15 +78,17 @@ definition=function(object){
 })
 #'@name summary
 #'@rdname TargetExperiment-statistics
-#'@export summary
+#'@exportMethods summary
 #'@inheritParams summary
 #'@aliases summary,TargetExperiment-method
 #'# Object summary
 #'summary(ampliPanel)
 setMethod(f="summary", signature=signature(object="TargetExperiment"),
 definition=function(object,...){
-    summaryDF<-(rbind(summaryGeneLev(object),
-        summaryFeatureLev(object)))
+    summaryDF<-rbind(summaryGeneLev(object),
+        summaryFeatureLev(object))
+    print("dfs")    
+    show(summaryDF)    
     return(summaryDF)
 })
 #'@exportMethod summaryIntervals

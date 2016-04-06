@@ -2,7 +2,7 @@
 
 export(TargetExperiment)
 export(pileupCounts)
-export(summary)
+exportMethods(summary)
 exportClasses(TargetExperiment)
 exportMethods("setAttribute<-")
 exportMethods("setBamFile<-")
