@@ -1,10 +1,11 @@
-#'Plot attribute exploration of a TargetExperiment object.
+#'Plot attribute exploration of a TargetExperiment/TargetExperimentList object.
 #'
-#'\code{plotAttrExpl} plots density and box-plot of the analyzed attribute at a
-#'feature or gene level. This graphics could plot together using the ggplot2
-#'geom_violin method.
+#'\code{plotAttrExpl} plots density and/or box-plot of the analyzed attribute 
+#'at a feature level. These graphics could be displayed together using the 
+#'ggplot2 geom_violin method. If panel's pools are present, one facet for each
+#' pool  will be showed.
 #'
-#'@param object TargetExperiment class object.
+#'@param object TargetExperiment/TargetExperimentList class object.
 #'@param level Character 'feature' or 'gene' indicating at which level should 
 #'be analyzed the attribute.
 #'@param join Logical indicating if boxplot and density function should be 
@@ -12,6 +13,7 @@
 #'@param log Logical indicating if the attribute should be considered in 
 #'log10 scale.
 #'@param color A character indicating a valid name color.
+#'@param ... necessary arguments
 #'
 #'@return ggplot2 graphics.
 #'
@@ -36,8 +38,8 @@
 #'if(interactive()){
 #'g
 #'}
-setGeneric(name="plotAttrExpl", def=function(object, level="feature", join=TRUE,
-log=TRUE, color="blue"){
+setGeneric(name="plotAttrExpl", def=function(object,dens=FALSE,join=FALSE, 
+log=TRUE, pool=FALSE,...){
     standardGeneric("plotAttrExpl")
 })
 #'

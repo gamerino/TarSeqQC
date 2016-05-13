@@ -1,8 +1,9 @@
-#'Print a TargetExperiment object.
+#'Print a TargetExperiment/TargetExperimentList object.
 #'
-#'Generic \code{print} method for TargetExperiment class and descendants.
+#'Generic \code{print} method for TargetExperiment and TargetExperimentList 
+#' classes and descendants.
 #'
-#'@param x TargetExperiment class object.
+#'@param x TargetExperiment/TargetExperimentList class object.
 #'@param ... Included for generic print compatibility.
 #'
 #'@return console output of the object.

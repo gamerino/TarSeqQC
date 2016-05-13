@@ -1,8 +1,9 @@
-#'TargetExperiment summary.
+#'TargetExperiment and TargetExperimentList summary methods.
 #'
-#'Explore the TargetExperiment's attribute values at feature and/or gene level.
+#'Explore the TargetExperiment and TargetExperimentList's attribute values 
+#'at feature and/or gene level.
 #'
-#'@param object TargetExperiment class object.
+#'@param object TargetExperiment/TargetExperimentList class object.
 #'@param attributeThres numeric indicating the intervals extreme values
 #'required by summaryIntervals.
 #'@param pool logical indicating if the summary should be performed for each
@@ -78,8 +79,8 @@ definition=function(object){
 })
 #'@name summary
 #'@rdname TargetExperiment-statistics
-#'@exportMethods summary
 #'@inheritParams summary
+#'@exportMethods summary
 #'@aliases summary,TargetExperiment-method
 #'# Object summary
 #'summary(ampliPanel)
@@ -87,8 +88,6 @@ setMethod(f="summary", signature=signature(object="TargetExperiment"),
 definition=function(object,...){
     summaryDF<-rbind(summaryGeneLev(object),
         summaryFeatureLev(object))
-    print("dfs")    
-    show(summaryDF)    
     return(summaryDF)
 })
 #'@exportMethod summaryIntervals
@@ -132,7 +131,7 @@ pool=FALSE){
     # creating a new variable 'score' that groups the features according to 
     # their attribute value and defined intervals
     df_panel[,"score"]<-cut(df_panel[,getAttribute(object)], 
-        breaks=attributeThres, include.lowest=TRUE, right=FALSE)
+        breaks=attributeThres, include.lowest=TRUE, right=FALSE, dig.lab = 6)
     if(pool){
         att_table<-as.data.frame(table(df_panel[,"score"], df_panel[,"pool"]))
 

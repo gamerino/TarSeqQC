@@ -39,6 +39,7 @@
 \newcommand{\fastafile}{\textit{FASTA File}}
 \newcommand{\pileup}{\textit{pileup}}
 \newcommand{\targetexperiment}{\Rclass{TargetExperiment}}
+\newcommand{\targetexperimentlist}{\Rclass{TargetExperimentList}}
 \newcommand{\tarseq}{\Rpackage{TarSeqQC}}
 
 
@@ -77,10 +78,16 @@ plot was also implemented in order to summarize all experiment results.
 Coverage or median count intervals can be defined and explored to further
 assist quality control analysis. Library and pool preparation, sequencing 
 errors, fragment length or gc content bias could be easily detected. Finally, 
-an .xlsx file reporting quality control results can be built. 
+an .xlsx file reporting quality control results can be built. \\
+Since its 1.1.8 version, \tarseq{} implements a new class, 
+\targetexperimentlist{} in order to allow the comparisson and joint analysis 
+of several Targeted Sequencing experiments performed using the same \bedfile. 
+This class includes
+several plots that can help to analyze several samples from the same patient or 
+from different patients under the same pathological condition. \\
 \end{abstract} 
 <<General options for R, echo=false, results=hide>>=
-options(prompt="> ", continue="+  ", width=78, useFancyQuotes=FALSE, digits=3)
+options(prompt="> ", continue="+  ", width=90, useFancyQuotes=FALSE, digits=3)
 @
 
 \newpage
@@ -149,17 +156,44 @@ Then, we show how to build an instance of the \targetexperiment{} class.
 After that, we will graphically explore the results and do the quality control
 over the sequenced features. Finally, we will build an .xlsx report that 
 summarize the analysis above.
-
+\newpage
+\section{Preliminaries}
+\subsection{Installation}
+\tarseq{} is a package for the \R{} computing environment and it is assumed
+that you have already installed \R{}. See the R project at 
+http://www.r-project.org. To install the latest version of \tarseq{},
+you will need to be using the latest version of R. \tarseq{} is part of the 
+Bioconductor project at http://www.bioconductor.org. To get the \tarseq{}
+package you can use:\\
+<<echo=TRUE, eval=FALSE>>=
+source("http://www.bioconductor.org/biocLite.R")
+biocLite("TarSeqQC")
+@ 
+Like other Bioconductor packages, there are always two available versions of 
+\tarseq{}. Most users will use the current official release version, which
+will be installed by biocLite if you are using the current version of R. There
+is also a developmental version of the package that includes new features due
+for the next official Bioconductor release. The developmental version will be
+installed if you are using the developmental version of R. Both can be found in
+the Bioconductor site.\\
+\subsection{Citation}
+The \tarseq{} R package can be cited using:\\
+<<echo=TRUE, eval=TRUE>>=
+citation("TarSeqQC")
+@ 
+\newpage
 \section{The \targetexperiment{} class}
 \tarseq{} \R{} package is based on the \targetexperiment{} class. The Figure 
-\ref{fig:class} shows the \targetexperiment{} class structure.\\
+\ref{fig:class1} shows the \targetexperiment{} class structure.\\
+\vspace{-25pt}
 \begin{figure}[!hbp]
     \begin{center}
-        \includegraphics[scale=0.6]{class.pdf}
+        \includegraphics[scale=0.5]{class.pdf}
     \end{center}
     \caption{\targetexperiment{} class diagram.}
-    \label{fig:class}
+    \label{fig:class1}
 \end{figure}
+\par 
 The \targetexperiment{} class has nine slots:
 \begin{itemize}
     \item \Rfunarg{bedFile}: a \Rclass{GRanges} object that models the 
@@ -192,7 +226,7 @@ sequencing experiment containing 29 \textit{amplicons} of 8 genes in 4
 chromosomes. \\
 %\clearpage
 
-\section{Input Data}
+\subsection{Input Data}
 
 A TS experiment is characterized by the presence of a \bedfile{} which
 defines the \textit{features} that should be sequenced. The \tarseq{} package 
@@ -222,7 +256,7 @@ type. The second parameter, \Rfunarg{attribute}, can be \textit{coverage} or
 \textit{medianCounts} defining which meassures will be considered in the 
 \textit{Quality Control} analysis.
 
-\subsection{Bed File}
+\subsubsection{Bed File}
 
 The \bedfile{} is stored as a \targetexperiment{} slot and it is modeled as a 
 \Rclass{GRanges} object (\cite{genomicranges}). The \bedfile{} must be as a
@@ -255,7 +289,7 @@ experiment and you are interested in exploring some genes, you could build your
 customized \bedfile{} in which the \textit{feature} could be ``exon'' or 
 ``transcript''. 
 
-\subsection{BAM File}
+\subsubsection{BAM File}
 The \bamfile{} stores the alignment results \citep{li2009sequence}. In this
 example case, it corresponds to the amplicon sequencing experiment alignment.
 This file will be used to build the \textit{pileup} matrix for the selected 
@@ -276,7 +310,7 @@ When the \targetexperiment{} constructor is called the \bamfile{}, will be
 stored as a \Rclass{BamFile} object \citep{rsamtools} and this object will be a
 \Rclass{TargetExperiment} slot.
 
-\subsection{FASTA File}
+\subsubsection{FASTA File}
 The \fastafile{} contains the reference sequence previously used to
 align the \bamfile{} and will be used to extract the feature sequences. This 
 information is useful to compare the pileup results with the reference, in 
@@ -290,7 +324,7 @@ fastaFile<-system.file("extdata", "myfasta.fa", package="TarSeqQC",
 The \fastafile{} will be stored as a \Rclass{FaFile} object (\cite{rsamtools})
 and this object will be setted as a \Rclass{TargetExperiment} slot.
 
-\subsection{Additional input data}
+\subsubsection{Additional input data}
 The previous files are mandatories to call the \targetexperiment{}
 constructor. Additional parameters can be set in order to apply several
 methods and perform quality control and results exploration. These parameters
@@ -336,8 +370,8 @@ are:
 For more information about \Rclass{ScanBamParam} and \Rclass{PileupParam} 
 constructors see \Rpackage{Rsamtools} manual.
 
-\section{Creating a \targetexperiment{} object}
-\subsection{Constructor call}
+\subsection{Creating a \targetexperiment{} object}
+\subsubsection{Constructor call}
 Once you have defined the input data presented above, the \targetexperiment{} 
 constructor could be called using:\\
 <<library call, echo=FALSE, results=hide, eval=TRUE>>=
@@ -425,7 +459,7 @@ Note that \Rfunarg{featurePanel} and \Rfunarg{genePanel} do not need to be
 rebuilt. The redefinition file names is only neccesary in order to use 
 \targetexperiment{} methods that query this files.\\
 
-\subsection{Early exploration}
+\subsubsection{Early exploration}
 The \targetexperiment{} class has typical \Rfunction{show/print} and 
 \Rfunction{summary} \R{} methods implemented. In addition, the 
 \Rfunction{summaryGeneLev} 
@@ -476,7 +510,7 @@ exploration of feature length distributions and gene frequencies along the
 features.\\
 <<length exploration, echo=TRUE, fig=FALSE,eval=FALSE>>=
 # explore amplicon length distribution
-plotMetaDataExpl(ampliPanel, "length", log=FALSE, join=FALSE, color=
+plotMetaDataExpl(myPanel, "length", log=FALSE, join=FALSE, color=
                     "blueviolet")
 @
 \begin{figure}[!htp]
@@ -489,13 +523,13 @@ plotMetaDataExpl(ampliPanel, "length", log=FALSE, join=FALSE, color=
 \par
 <<gene exploration, echo=TRUE, fig=FALSE,eval=FALSE>>=
 # explore gene's relative frequencies 
-plotMetaDataExpl(ampliPanel, "gene", abs=FALSE)
+plotMetaDataExpl(myPanel, "gene", abs=FALSE)
 @
-\begin{figure}[!hbtp]
+\begin{figure}[!h]
     \begin{center}
         \includegraphics[scale=0.4]{geneExploration.pdf}
     \end{center}
-    \caption{Gene's relative frquencies.}
+    \caption{Gene's relative frequencies.}
     \label{fig:geneplot}
 \end{figure}
 \par
@@ -508,19 +542,24 @@ in percentages. As can be viewed, more than the 22\% of the amplicons belong to
 'gene8' and approximately 21\% belong to 'gene5'. On the other hand, both 
 'gene1' and 'gene3' have less than 5\% of total amplicons.\\
 
-\section{Deep exploration and Quality Control}
-\subsection{Targeted selection performance}
+\subsection{Deep exploration and Quality Control}
+\subsubsection{Targeted selection performance}
 In the context of TS experiments, it is expected that most of sequencing reads
-come from the target regions and not the rest of the genome. If it does not, 
-may be a resequencing using another primers will be needed. One way to
-check this is using the \Rfunction{readFrequencies} which returns a 
-\Rclass{data frame} containing, for each chromosome, the amount and the 
-percentage of reads fall in and out features. Then, the 
-\Rfunction{plotInOutFeatures} method can be used in order to plot this
-\Rclass{data frame}. It can be achieved running the next code:
+come from the target regions and not from the rest of the genome. If it does 
+not, it may suggest an unexpected behaviour of the used primers library that
+could impact on the read counts of overlapped regions skewing interpretation.\\
+One way to check this is using the \Rfunction{readFrequencies} method which 
+returns a \Rclass{data frame} containing, for each chromosome, the amount 
+and the percentage of reads fall in and out features. Therefore, if this graph
+shows a high percentage of reads that fall outside of interest features, a 
+large part of the sequencing reads will be discarded when feature coverage is 
+computed and consecuently the power of detection will be lower.\\
+After \Rfunction{readFrequencies} calling, the \Rfunction{plotInOutFeatures}
+method can be used in order to plot the obtained \Rclass{data frame}. It can be
+achieved running the next code:
 <<read percentages and plot, eval=FALSE>>=
-readFrequencies(ampliPanel)
-plotInOutFeatures(readFrequencies(ampliPanel))
+readFrequencies(myPanel)
+plotInOutFeatures(readFrequencies(myPanel))
 @
 \begin{figure}[!htp]
     \begin{center}
@@ -530,16 +569,21 @@ plotInOutFeatures(readFrequencies(ampliPanel))
     \label{fig:plotInOut}
 \end{figure}
 \par
-In the Figure \ref{fig:plotInOut} can be observed that more than half sequence
-reads belong to genomic regions outside of the amplicons (red bars). This is a
-not good results, because it indicates that the used primers were not so 
-specifics to capture only the targeted regions.\\
-\subsection{Panel overview}
-When a person is working with a TS experiment, it is interesting to 
-simultaneously evaluate the performance of all the features. In addition, if 
-the user have prefixed attribute intervals, it could be important to compare 
-features according to them. For example, five coverage intervals can be defined
-according to the Table \ref{table:featureInterval}.\\
+Figure \ref{fig:plotInOut} showsc that more than half sequence reads belong to 
+genomic regions outside of the expected amplicon regions (red bars). This is a
+not expected results since it indicates that the used primers were not so 
+specifics to capture only the targeted regions. Moreover, TS libraries are 
+carefully designed to sequence specific genomic regions and the loss of a 
+large amount of sequence reads has a direct impact on the achieved coverage of
+the targeted regions. For these reasons the early detection of this technical 
+effect can avoid false subsequent analysis conclusions.\\
+\subsubsection{Panel overview}
+Working on a TS experiment, it would be useful simultaneously evaluate the
+overall performance of the features. For instance, the user could be interested
+in explore the proportion or amount of features within specific attribute 
+intervals. In the example data, five coverage intervals could be defined 
+according to the Table \ref{table:featureInterval}. Each user can define its
+attribute intervals table and the amount of them according to its needs.\\
 \begin{table}[ht]
     \caption{Coverage intervals} % title name of the table
     \centering % centering table
@@ -560,29 +604,30 @@ according to the Table \ref{table:featureInterval}.\\
     \end{tabular}
     \label{table:featureInterval}
 \end{table}
-Tthese coverage intervals could be incorporated into the analysis. To do 
-this, the \tarseq{} \R{} package needs an interval extreme definitions:
+In this example, 0 indicates \textit{no reads} and \textit{Inf} refers to
+features with coverage higher than 500. To incorporate the coverage intervals
+into the analysisit is neccesary to specify each interval extreme value like:
 <<attributeThres>>=
 # definition of the interval extreme values
 attributeThres<-c(0,1,50,200,500, Inf)
 @
 %In order to facilitate the object exploration and help the 
 %\textit{Quality Control} process, additional methods were developed. 
-A panel results overview is critical in order to compare and integrate those. 
-To help this task, \tarseq package implements the \Rfunction{plot} method. This
-is a graphical tool consisting in a polar histogram, in which each gene is
-represented as a bar. Each bar is colored depending the percentage of features
-that have their attribute value in a particular prefixed interval. In addition,
-the bars (genes) can be grouped in chromosomes in order to facilitate the
-comparisson at this level. The next code help to build this plot:
+A panel results overview is critical in order to compare and integrate those
+at feture, gene and chromose level. To help this task, \tarseq package
+implements the \Rfunction{plot} method, a graphical tool consisting in a polar
+histogram where each gene is represented as a bar. Each bar is colored 
+depending on the percentage of features that have their attribute value within 
+a particular prefixed interval. In addition,
+the bars (genes) can be grouped in chromosomes in order to facilitate coverage
+results comparisson at this level. The next code builds this plot:
 <<plot, fig=FALSE, eval=FALSE>>=
 # plot panel overview
-g<-plot(myPanel, attributeThres, chrLabels =TRUE)
-g
+plot(myPanel, attributeThres=attributeThres, chrLabels =TRUE)
 @
-\begin{figure}[!htp]
+\begin{figure}[!hpt]
     \begin{center}
-        \includegraphics[scale=0.5]{plot.pdf}
+        \includegraphics[scale=0.7]{plot.pdf}
     \end{center}
     \caption{Panel overview plot.}
     \label{fig:plot}
@@ -593,37 +638,38 @@ amplicon of the ``gene3'' was not sequenced. This is because in the Figure
 \ref{fig:plot}, the bar corresponding to ``gene3'' is colored in red and
 this color is related to the [0,1) coverage interval. In the same plot, can
 also be appreciated that this gene has only one amplicon, as depicted in 
-parenthesis in the bar label  \textit{``gene3(1)''}. Also it is possible to
-note that 40\% of  ``gene4'' amplicons has a coverage between 1 and 50. Note
-that this gene have five amplicons, then the 40 \% corresponds to 2 amplicon. 
-Another 20 \% (1 amplicon) has a coverage value between 50 and 200, other one
-``gene4'' amplicon have a very good coverage value, it means, between 200 and
-500 and the other amplicon have an excellent coverage higher than 500. \\
+parenthesis in the bar label  \textit{``gene3(1)''}. Meanwhile ``gene4'' has
+40\% of its amplicons (2) with a coverage between 1 and 50, 20 \% (1 amplicon) 
+whit coverage between 50 and 200 and the rest with a very good coverage value,
+greater than 200. It is notable that this plot provides a fast overview of the
+coverage feature performance.\\
 It is important to note that a small and simple example is presented here. The 
-prevoious plot could have a grater impact when the panel has more features and
+previous plot could have a grater impact when the panel has more features and
 genes. Figure \ref{fig:plotCPP} shows the panel overview for a TS Experiment
-based on the \textit{Ion AmpliSeq Cancer Panel Primer Pool}. This is a TS Panel
-offered by \textit{Life Technologies} (\cite{CPP}) that allows the inspection
+based on the \textit{Ion AmpliSeq Cancer Panel Primer Pool} \textregistered{}. 
+This is a TS Panel offered by \textit{Life Technologies} (\cite{CPP}) that
+allows the inspection
 of 190 amplicons. In this case, can be easily observed that ``MLH1'' and 
 ``CDKN2A'' genes were no sequenced. Can also be appreciated that several genes
-like ``ALK'', ``VHL'', ``AKT1'', ``ARBB2'', have uniforme coverage values
-along their amplicons. On the contrary, ``KDR'' and ``PTEN'' genes have 
-some amplicons that were not sequenced and some other with a high coverage.
+like ``ALK'', ``NRAS'', ``BRAF'', ``HNF1A'', have uniforme coverage values
+along their amplicons. On the contrary, ``RB1'' and ``ATM'' genes have 
+some amplicons with low coverage and some other with a high coverage.
 \begin{figure}[!htp]
     \begin{center}
-        \includegraphics[scale=0.5]{plotCPP.pdf}
+        \includegraphics[scale=0.7]{plotCPP.pdf}
     \end{center}
     \caption{Cancer Panel Primer Pool overview plot.}
     \label{fig:plotCPP}
 \end{figure}
-Complementing the previous plot, \Rfunction{plotFeatPerform} illustrates a
-similar graphic where the bars are distributed along the x-axis. In order to 
-expand the polar histogram showed in Figure \ref{fig:plot}, the parameter
-\Rfunarg{complete} is included. If you set it as TRUE, the resultant plot will 
-contain two graphics. The upper panel is a bar plot at feature level, and the 
-lower, at a gene level. Both graphics incorporate the prefixed attribute
-intervals information and contain a red line to indicate the average value of 
-the attribute at the corresponding level. In our example, you could run:\\
+Another alternative to explore attribute (coverage) performance is given by
+\Rfunction{plotFeatPerform} that shows a similar plot expanding it along the
+x-axis. This method also allows the exploration of attribute values at feature
+and gene levels, setting its parameter \Rfunarg{complete} as TRUE. As result, 
+the generated graph will contain two plots. The upper panel is a bar plot 
+at feature level, and the lower, at gene level. Both graphics incorporate 
+the prefixed attribute intervals information and contain a red line to indicate
+the average value of the attribute at the corresponding level. In our example, 
+you could run:\\
 <<plotFeatPerform, fig=FALSE, eval=FALSE>>=
 # plot panel overview
 g<-plotFeatPerform(myPanel, attributeThres, complete=TRUE, log=FALSE, 
@@ -638,22 +684,22 @@ g
     feature level, and the lower, at gene level.}
     \label{fig:perform}
 \end{figure}
-In Figure \ref{fig:perform} we could evaluate the coverage value for each
-amplicon and gene. We can observe that when coverage is summarized at gene
+Figure \ref{fig:perform} helps the coverage value evaluation for each amplicon
+and gene. It is noticeable that when coverage is summarized at gene
 level the highest value is lower than 500. However, at amplicon level, the 
 highest value is grater than 800. \\
-The previous plot is also very useful when we are working with panels 
-made-up by several primer pools combination. For example, the
-\textit{Comprehensive Cancer Panel} is another \textit{Life Tachnologies} panel
-that allows the exploration of 16000 amplicons from 409 genes related to
+The previous plot is also very useful when TS panels were made-up by several
+primer pools combination. For example, the
+\textit{Comprehensive Cancer Panel} \textregistered{} is another 
+\textit{Life Technologies} panel that allows the exploration of 16000 amplicons
+from 409 genes related to
 several cancer types using 4 primer pools (\cite{CCP}). In this case, the
 \bedfile{} contains a ``pool'' column that stores the pool number for each
 feature. This information will be conserved in the \targetexperiment{}
 object that was built from this panel.\\
-In the \textit{Quality Control} context, it is so important, evaluate in
+In the \textit{Quality Control} context, it is important to evaluate in
 early analysis stages, if some pool effect exists and if all pool results are
-comparable. Naturally, the \tarseq{} \R{} package uses this information to
-assist the user. For example, the Figure \ref{fig:perfCCP} illustrates the use
+comparable. For example, the Figure \ref{fig:perfCCP} illustrates the use
 of the \Rfunction{plotFeatPerform} in the described case. Now, you can see that
 the graphic corresponding to the amplicon level shows a separation between 
 amplicons according to its pool value. Note that the same plot at a gene level
@@ -665,26 +711,26 @@ that has pool information, the output will contain statistic results for the
 amplicon level and for each pool separately.
 \begin{figure}[!htp]
     \begin{center}
-        \includegraphics[scale=0.8]{perfExplCCP.pdf}
+        \includegraphics[scale=0.7]{perfExplCCP.pdf}
     \end{center}
     \caption{Performance exploration of an Ion AmpliSeq Comprehensive Cancer 
             Panel experiment.}
     \label{fig:perfCCP}
 \end{figure}
-\clearpage
-\subsection{Controlling possible attribute bias}
-It is known that those genes having high GC content or high length tends to 
-be 'more sequenced' that those with lower GC/length values. Then, GC content
-and feature length can be considered as possible bias sources, in particular,
-when the feature is an exon or a transcript. In order to check it, \tarseq{} 
-incorporates \Rfunction{biasExploration} that allows the inspection of the 
-selected attribute ('coverage' in the example) in terms  of groups or intervals
-of bias sources. To do this, the method defines four source groups according
-to the source's distribution quartiles and then asigns one group to each 
-feature. After that boxplot and, optionally, density plot for each group are
-plotted in order to appreciate possible source bias. It can be performed for 
-GC content, feature length, or any other metadata column. If the source is a
-catergorical variable, like pool or gene, each cathegory will be considered as
+
+\subsubsection{Controlling possible attribute bias}
+It is known that those DNA fragments having high GC content or high length 
+tends to be 'more sequenced' those with lower GC/length values. Then, GC 
+content and feature length can be considered as possible bias sources, in 
+particular, when the feature is an exon or a transcript. In order to check it,
+\tarseq{} incorporates \Rfunction{biasExploration} that allows the inspection 
+of the selected attribute ('coverage' in the example) in terms of groups or 
+intervals of bias sources. To do this, the method defines four source groups 
+according to the distribution quartiles of the selected source (GC content, 
+length or any included in the panel medatada) and then asigns one group to 
+each feature. After that boxplot and, optionally, density plot for each group
+are plotted in order to evaulate possible bias. If the selected source is a
+categorical variable, like pool or gene, each category will be considered as
 a group. For instance, the next lines allows the exploration of GC content 
 effect:
 <<gc exploration, echo=TRUE, eval=FALSE>>=
@@ -700,7 +746,7 @@ biasExploration(myPanel, source="gc", dens=TRUE)
     \label{fig:gcExploration}
 \end{figure}
 
-\subsection{Controlling low counts features}
+\subsubsection{Controlling low counts features}
 Low counts features should be detected in early analysis stages. The 
 \Rfunction{summaryIntervals} method builds a frequency table of the fetures
 that have its attribute value between predefined intervals. For example, if you
@@ -724,7 +770,7 @@ plotAttrPerform(myPanel, attributeThres)
 @
 \begin{figure}[!htp]
     \begin{center}
-        \includegraphics[scale=0.7]{coveragePerform.pdf}
+        \includegraphics[scale=0.6]{coveragePerform.pdf}
     \end{center}
     \caption{Relative and cumulative amplicon frequencies in the specified
     intervals.}
@@ -739,18 +785,18 @@ This method returns a \Rclass{data frame} object containing all the features
 that have its attribute value lower than a threshold. The output 
 \Rclass{data frame} also contains panel and attribute information for each
 feature. For example, to known which are the genes that have a
-coverage value lower than 50, you can do:\\
+coverage value lower than 50, you can do:
 <<low counts features>>=
 getLowCtsFeatures(myPanel, level="gene", threshold=50)
 @
 In addition, if you want to known which amplicons have a coverage
-value lower than 50, you should execute:\\
+value lower than 50, you should execute:
 <<low counts features>>=
 getLowCtsFeatures(myPanel, level="feature", threshold=50)
 @
 Graphical methods were also implemented. The \Rfunction{plotGeneAttrPerFeat} 
 allows the attribute value exploration for all the features of a selected gene.
-For instance, if you want to explore the ``gene4'', you should do:\\
+For instance, if you want to explore the ``gene4'', you should do:
 <<geneAttrPerFeat, fig=FALSE, eval=FALSE>>=
 g<-plotGeneAttrPerFeat(myPanel, geneID="gene4")
 # adjust text size
@@ -769,7 +815,7 @@ g
 The attribute value for each feature contained in the ``gene4'' can be observed
 in Figure \ref{fig:perfgene4}.
 
-\subsection{Read counts exploration}
+\subsubsection{Read counts exploration}
 \textit{Quality Control} in TS experiments implies the analysis of 
 coverage/median counts achieved for each feature. But, sometimes,
 the exploration of the read profile that was obtained for a particular
@@ -826,11 +872,11 @@ data("myCounts", package="TarSeqQC")
 head(myCounts)
 @
 The obtained \Rclass{data frame} contains the \textit{pileup} information. It 
-can be used to build a \textit{read profile} plot, in which the x axis 
+can be used to build a \textit{read profile} plot where the x axis 
 represents the genomic position and the y axis, the obtained read counts. The 
-\Rfunction{plotRegion} allows the read profile exploration for a specific 
-genomic region. Helping the region definition, the \Rfunction{getRegion} method
-extracts the information for a genomic region. For example, the code below 
+\Rfunction{plotRegion} allows exploration of the read profile for a specific 
+genomic region. The \Rfunction{getRegion} method extracts the information for 
+a genomic region. For example, the code below 
 returns a \Rclass{data frame} with location information of ``gene7'' amplicons:
 <<getRegion>>=
 #complete information for gene7
@@ -854,10 +900,10 @@ g
     \label{fig:regiongene7}
 \end{figure}
 
-Other method, \Rfunction{plotFeature}, allows the read profile exploration
-of a particular feature. In this case, only is neccesary to specify the feature
-name that should be explored. For example in order to explore the ``AMPL20''
-amplicon  of the ``gene7'', the code is:
+Other method, \Rfunction{plotFeature}, allows exploring the read profile 
+of a particular feature. In this case,it is only neccesary to specify the 
+feature name that should be explored. For example in order to explore the 
+``AMPL20'' amplicon  of the ``gene7'', the code is:
 <<plotFeature, fig=FALSE, eval=FALSE, results=hide>>=
 g<-plotFeature(myPanel, featureID="AMPL20")
 x11(type="cairo")
@@ -865,39 +911,39 @@ g
 @
 \begin{figure}[!htp]
     \begin{center}
-        \includegraphics[scale=0.4]{featuregene7.pdf}
+        \includegraphics[scale=0.35]{featuregene7.pdf}
     \end{center}
     \caption{Read counts profile for the "20" gene7 amplicon.}
     \label{fig:featgene7}
 \end{figure}
+\par
 As can be seen in both Figure \ref{fig:regiongene7} and Figure 
 \ref{fig:featgene7}, the gray shadow corresponds to the total counts that were 
 obtained at each genomic position insight the selected amplicon. The violet 
-line indicates the read counts matching with the reference sequence. In order 
+line indicates read counts matching with the reference sequence. In order 
 to distinguish how many read counts could correspond to a genomic variation, it
 is crucial that the \Rfunarg{pileupP} definition contains the 
 \Rfunarg{distinguish nucleotide} parameter as TRUE, which is its default 
-value. In the plots, the green, blue, red and brown lines illustrate the read 
-counts that do not match with the reference and inform about a possible 
-nucleotide variation. In the \ref{fig:featgene7} can be appreciated that the 
+value. In the previous plots, the green, blue, red and brown lines illustrate 
+the read counts that do not match with the reference and inform about a 
+possible nucleotide variation. In the Figure \ref{fig:featgene7} can be 
+appreciated that the 
 selected amplicon shows a variation changing the reference  nucleotide for a 
-``T''. Remember that the presented analysis is only an exploratory tool . Thus,
-the possible nucleotide variations detected in this stage should be confirmed 
-or rejected in more specific downstream analysis. \\
+``T''. \\
 The proportion of read counts that match and no match against the 
-reference can be known using the \Rfunction{plotNtdPercentage} method as:
+reference can be displayed using the \Rfunction{plotNtdPercentage} method as:
 <<plotNtd, fig=FALSE, eval=FALSE, results=hide>>=
-g<-plotNtdPercentage(myPanel, featureID="AMPL20")
-g
+plotNtdPercentage(myPanel, featureID="AMPL20")
 @
-\begin{figure}[!htp]
+\begin{figure}[!h]
     \begin{center}
-        \includegraphics[scale=0.4]{NTDPercAMPL20.pdf}
+        \includegraphics[scale=0.35]{NTDPercAMPL20.pdf}
     \end{center}
     \caption{Nucleotide percentages for each genomic position on the 
             "AMPL20" gene7 amplicon.}
     \label{fig:ntd}
 \end{figure}
+\par 
 In Figure \ref{fig:ntd} can be observed that between 4910 and 
 4920 positions there are a nucleotide showing differences between reference and
 read sequences. This information can be also extracted using the previous 
@@ -921,8 +967,13 @@ featureCounts[which.min(featureCounts[,"="]),]
 @
 As can be observed, in the position 4912 the reference genome indicates that 
 there should be a ``G'', and the read counts indicate that in this position 
-there is a ``T'', showing a possible nucleotide variation. \\
-\section{Quality Control Report}
+there is a ``T'', showing a possible nucleotide variation.
+Remember that the presented analysis is only an exploratory tool. Thus,
+the possible nucleotide variations detected in this stage should be confirmed 
+or rejected in more specific downstream analysis. In the same way, a variant 
+identified in variant analysis can be easily explored and confirmed using 
+our tool.
+\subsection{Quality Control Report}
 The \tarseq{} \R{} package provides a method that generates an .xlsx report in 
 which \textit{Quality Control} relevant information is contained. This file has
 three sheets. In the first, a summary is presented, containing the results of 
@@ -939,9 +990,219 @@ specified, using the code below:
 <<buildReport, eval=FALSE>>=
 imageFile<-system.file("extdata", "plot.pdf", package="TarSeqQC",
                         mustWork=TRUE)
-buildReport(ampliPanel, attributeThres, imageFile ,file="Results.xlsx")
+buildReport(myPanel, attributeThres, imageFile ,file="Results.xlsx")
 @
-
+\section{The \targetexperimentlist{} class}
+The \targetexperimentlist{} class was built in order to allow the joint 
+anlysis of several \targetexperiment{} objects. The Figure 
+\ref{fig:class} shows the \targetexperimentlist{} class structure.\\
+\begin{figure}[!hbp]
+    \begin{center}
+        \includegraphics[scale=0.4]{TEList.pdf}
+    \end{center}
+    \caption{\targetexperimentlist{} class diagram.}
+    \label{fig:class}
+\end{figure}
+\par 
+The \targetexperimentlist{} class has four slots:
+\begin{itemize}
+    \item \Rfunarg{bedFile}: a \Rclass{GRanges} object that models the 
+        \bedfile{}
+    \item \Rfunarg{panels}: a \Rclass{GRanges} object that contains information 
+        related to several feature panels and related statistics.
+    \item \Rfunarg{attribute}: a \Rclass{character} indicating which attribute 
+        \textit{coverage} or \textit{medianCounts} will be used to the 
+        analysis.  
+    \item \Rfunarg{feature}: a \Rclass{character} indicating the name of the 
+        analyzed features, e.g.: ``amplicon'', ``exon'', ``transcript''.
+\end{itemize}
+\targetexperimentlist{} has implemented several methods that are a extension of
+previously described methods for \targetexperiment{} class. The next sections 
+will illustrate the employment of \targetexperimentlist{} methods using a
+\targetexperimentlist{} object provided with the package. This dataset contains
+information of two synthetic amplicon sequencing experiments using 29 
+\textit{amplicons} of 8 genes in 4 chromosomes and secuenced using two PCR 
+pools.\\
+\subsection{Input Data}
+The \targetexperimentlist{} allows the joint analysis of several TS experiments
+performed using the same \bedfile{} that can be involved in several
+situations such as a disease characterization study, patient monitoring or
+system calibration process.\\
+As a first step, one \targetexperiment{} object for each of the TS experiments
+should be built. Then, a \Rclass{list} object, called \Rfunarg{panelList}, 
+should be defined where each of its elements will be a \targetexperiment{} 
+object. For instance, having defined two \targetexperiment{} objects, 
+\Rfunarg{te1} and \Rfunarg{te2}, the \Rclass{list} must be defined as:
+<<echo=TRUE,eval=FALSE>>=
+panelList<-list(panel1=te1, panel2=te2)  
+@ 
+After that, the \targetexperimentlist{} constructor can be called passing three 
+parameters: \Rfunarg{panelList}, \Rfunarg{feature} and \Rfunarg{attribute}. The
+las two are the same previously used in panels definitions. It is worth 
+highlighting that in this case \Rfunarg{attribute} cannot be specified after
+object definition. When the constructor is called, the resultant object only 
+conserves information of the selected attribute. For instance if 
+\Rfunarg{attribute} is`coverage', `medianCounts' information 
+will not be stored in the \targetexperimentlist{} object. Thus, if user wants
+to change the selected \Rfunarg{attribute}, the \targetexperimentlist{} 
+constructor must be called again.
+\subsection{Creating a \targetexperimentlist{} object}
+\subsubsection{Constructor call}
+\targetexperimentlist{} consutructor can be now called using:
+<<echo=TRUE,eval=FALSE>>=
+TEList<-TargetExperimentList(TEList=ampliList, feature="amplicon", 
+    attribute="coverage")
+@
+This object is provided with the \tarseq{} package and can be loaded doing:
+<<echo=TRUE,eval=TRUE>>=
+data(TEList, package = "TarSeqQC")
+@
+\subsubsection{Early exploration}
+As \targetexperiment{}, the \targetexperimentlist{} class has also implemented
+typical \R{} methods such as \Rfunction{show}, \Rfunction{print} and 
+\Rfunction{summary}. They can be used as:\\
+<<echo=TRUE,eval=TRUE>>=
+# show/print
+TEList
+# summary
+summary(TEList)
+@
+The \Rfunction{summary} methods returns a list where each element is a statistic
+summary table computed in each feature panel. In particular, if the TS involves
+several PCR primer pools, then the method will display statistics summaries 
+for each panel/sample and for each pool as can be seen in the example presented
+here. This basic exploration allows the identification of the panel 2 as a 
+poor performance panel in wich the mean coverage was just 74 whereas in panel
+1, amplicons achieved a mean coverage of 316. It is also observed that 
+amplicons in pool 1 achieved higher mean coverage in contrast of amplicons
+in pool 2 in both panels.\\
+A simple way to observe the described situation is provided by the previously 
+used \Rfunction{plotAttrExpl} method but now in the \targetexperimentlist{} 
+object. Now, the use of the method is:\\
+<<eval=FALSE>>=
+x11(type="cairo")
+plotAttrExpl(TEList, dens=TRUE, join=FALSE, log=FALSE, pool=TRUE)
+@
+\begin{figure}[!htp]
+    \begin{center}
+        \includegraphics[scale=0.6]{attrPerfPool.pdf}
+    \end{center}
+    \caption{Attribute distribution and density plots for the two studied panels
+    and separated by PCR pools.}
+    \label{fig:attrExplList}
+\end{figure}
+The previous method provides several options allowing different configurations
+of the displayed plot. The parameter \Rfunarg{dens} is a logical
+that indicates if density plot should be included and, if it is set as 
+\Rfunarg{TRUE}, then the \Rfunarg{join} flag indicates if density and box-plots
+should be plot together or not. The \Rfunarg{pool} parameter is also a logical
+and if it indicates PCR pool presence (\Rfunarg{pool} = \Rfunarg{TRUE}), then
+the plot are built for each pool separately using the \Rpackage{ggplot2} 
+facets facility. The last case is the showed in Figure \ref{fig:attrExplList}.\\
+In order to allows the same exploration but at a pool level, 
+\targetexperimentlist{} class implements the \Rfunction{plotPoolPerformance}
+method. This have the same parameters specifications that the previous method 
+excepting, obviously, the \Rfunarg{pool} flag.\\
+<<eval=FALSE>>=
+x11(type="cairo");
+plotPoolPerformance(TEList, dens=TRUE, join=FALSE, log=FALSE)
+@
+\begin{figure}[!htp]
+    \begin{center}
+        \includegraphics[scale=0.6]{poolPerformDens.pdf}
+    \end{center}
+    \caption{Attribute distribution and density plots for the two PCR pools.}
+    \label{fig:poolPerf}
+\end{figure}
+\subsection{Comparative analysis and Quality Control}
+As in the case of the \targetexperiment{} class, attribute intervals such the 
+listed in Table \ref{table:featureInterval} can be included in the panel 
+comparative analysis. For instance the two previous \targetexperimentlist{} 
+methods could accept a parameter \Rfunarg{attributeThres} specifying the
+attribute intervals. If this parameter is specified, then the plots will be 
+colored according to the interval in which fall the corresponding median 
+value. The two previous figures were built without using this parameter and
+consequently, the plots shows one color for each sample. If in the corresponding
+methods calling \Rfunarg{attributeThres} is added, then the resultant plots are
+showed in Figure  \ref{fig:attrPerfThres} and Figure \ref{fig:poolPerfThres}.\\
+\begin{figure}[!htp]
+    \begin{center}
+        \includegraphics[scale=0.6]{attrPerfPoolThres.pdf}
+    \end{center}
+    \caption{Attribute distribution and density plots for the two PCR pools.}
+    \label{fig:attrPerfThres}
+\end{figure}
+\begin{figure}[!htp]
+    \begin{center}
+        \includegraphics[scale=0.5]{poolPerformThres.pdf}
+    \end{center}
+    \caption{Attribute distribution and density plots for the two PCR pools.}
+    \label{fig:poolPerfThres}
+\end{figure}
+\par
+The \Rmethod{plot} method was also implemented for \targetexperimentlist{}
+class. In this case, the resultant \Rpackage{ggplot2} graph is a heatmap where
+rows represent features, columns represent samples and each cell is colored
+according to the attribute value for the feature in the corresponding sample.
+The method also allows the incorporation of pool information using 
+\Rpackage{ggplot2} facets facilities. In the example case the follow lines 
+generates this plot:\\
+<<eval=FALSE>>=
+plot(TEList, attributeThres = attributeThres, sampleLabs = TRUE,
+    featureLabs = TRUE)
+@
+\begin{figure}[!htp]
+    \begin{center}
+    \includegraphics[scale=0.7]{plotTEList.pdf}
+    \end{center}
+    \caption{Panels overview: amplicons in rows and samples in columns. Colors
+        according to prefixed coverage intervals}
+    \label{fig:plotTEList}
+\end{figure}
+The displayed heatmap confirms the behaviour previously observed in 
+\Rfunction{summary} results and in Figure \ref{fig:attrExplList} where panel 2
+shows a boxplot with lower median compared with panel 1. In panel 2, more than
+50 \% of the amplicons have a coverage 
+lower than 50 related to \textit{low sequencing coverage} interval. Thus, if
+downstream analysis involves nucleotide variant identification, this panel
+should be discarded or re-sequenced in order to achieve higher coverage values
+that provides more credibility in variant identification. \\
+When \Rfunarg{featureLabs} is set as `TRUE', the \Rfunction{plot} method allows
+the identification of features with low attribute value by simple inspection
+of x-axis ticks. If user wants to know not only who are the features with low 
+attribute value but also what attribute value achieved each of these, thus
+\Rfunction{getLowCtsFeatures} can be used again as:\\
+<<split=FALSE>>=
+getLowCtsFeatures(TEList, level="feature", threshold=50)
+@
+The returned object is a \Rclass{data.frame} containig those features or genes
+(depending the value of the \Rfunarg{level} parameter) that have attribute 
+values lower than a threshold in at least one of the anzlized samples. For 
+instance, the first amplicon appearing is `AMPL4' having 0 coverage in both 
+panels and the second amplicon is `AMPL1' having coverage lower than 50 only
+in the second panel (0). \\
+A more detailed view of the achieved attribute values per features is given for
+the \Rfunction{plotGlobalAttrExpl} \targetexperimentlist{} method.
+<<eval=FALSE>>=
+x11(type="cairo")
+plotGlobalAttrExpl(TEList, attributeThres=attributeThres, dens=FALSE,
+    pool=TRUE, featureLabs=FALSE)
+@
+\begin{figure}[!htp]
+    \begin{center}
+    \includegraphics[scale=0.7]{GlobalAttrPool.pdf}
+    \end{center}
+    \caption{Amplicon performance. Each box-plot represents an amplicon, the
+    values are the coverage achieved in the samples and its color is according
+    to prefixed coverage intervals. Each facet represents a different PCR pool}
+    \label{fig:global}
+\end{figure}
+\par
+The Figure \ref{fig:global} shows the performance for each feature, in terms of
+achieved attribute, and allows the separation of them according to the PCR 
+pool. Thus, the identification of poor performance pools is also allowed. In 
+this case, both pool perfomances are similar and `AMPL4' and `AMPL7' show the
+worst performance.
 \section{Troubleshoot}
 Remember that all \targetexperiment{} methods that need 
 read count information at a nucleotide level work over the \bedfile, \bamfile{}

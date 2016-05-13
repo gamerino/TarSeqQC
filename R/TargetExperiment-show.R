@@ -1,10 +1,11 @@
-#'Show method for the TargetExperiment class.
+#'Show method for the TargetExperiment and TargetExperimentList classes.
 #'
-#'\code{show} a TargetExperiment object
+#'\code{show} a TargetExperiment/TargetExperimentList object
 #'
-#'Generic show method for TargetExperiment class output visualization.
+#'Generic show method for TargetExperiment and TargetExperimentList classes 
+#'output visualization.
 #'
-#'@param object TargetExperiment class object
+#'@param object TargetExperiment/TargetExperimentList class object
 #'
 #'@return console output of the object
 #'

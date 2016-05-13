@@ -23,12 +23,12 @@ be analyzed.}
 considered in log10 scale.}
 
 \item{join}{Logical only for numerical variables. It indicates if boxplot and
-    density function should be plotted together using the ggplot2 geom_violin 
-    method.}
+density function should be plotted together using the ggplot2 geom_violin 
+method.}
 
 \item{absolute}{Logical indicating if the frequencies of the selected 
-    categorical metadata column should be in absolute scale. If absoulte is 
-    FALSE the frequencies are in relative percentages.}
+categorical metadata column should be in absolute scale. If absoulte is FALSE
+the frequencies are in relative percentages.}
 
 \item{color}{A character indicating a valid name color.}
 }
@@ -37,11 +37,11 @@ ggplot2 graphics.
 }
 \description{
 \code{plotMetaDataExpl} plots density and box-plot of an specific metadata 
-    column. If the characteristic is non numerical, then  a frequency plot is 
-    built.
+column. If the characteristic is non numerical, then  a frequency plot is 
+built.
 }
 \note{
-    see full example in \code{\link{TargetExperiment-class}}
+see full example in \code{\link{TargetExperiment-class}}
 }
 \examples{
 ## Loading the TargetExperiment object

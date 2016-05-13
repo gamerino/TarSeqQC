@@ -1,9 +1,9 @@
-#'Getters for TargetExperiment object.
+#'Getters for TargetExperiment and TargetExperimentList objects.
 #'
-#'Obtain TargetExperiment's slot information, according to the given 
-#'function call.
+#'Obtain information about TargetExperiment and TargetExperimentList slots, 
+#'according to the given function call.
 #'
-#'@param object TargetExperiment class object.
+#'@param object TargetExperiment/TargetExperimentList class object.
 #'@param level Character indicating 'gene' or 'feature'. Useful to getRegion
 #'function
 #'@param ID Character indicating the feature name that getRegion should be 
@@ -24,7 +24,7 @@
 #' \item{PileupParam}{parameters for the pileup building}
 #' \item{data.frame}{regions or low counts features}
 #'
-#'@include TargetExperiment-ampliPanel.R
+#'@include TargetExperiment-ampliPanel2.R
 #'@exportMethod getBedFile
 #'@docType methods
 #'@name getBedFile

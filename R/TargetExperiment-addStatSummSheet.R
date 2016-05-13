@@ -39,7 +39,8 @@ imageFile){
 featurePanel<-getFeaturePanel(object)
     genePanel<-getGenePanel(object)
     pool<-any("pool" == names(mcols(featurePanel)))
-    colors.fill<-ggplotColours(object,n=(length(attributeThres)-1))
+#     colors.fill<-ggplotColours(object,n=(length(attributeThres)-1))
+    colors.fill<-colorRampPalette(c("red", "green"))(length(attributeThres)-1)
     statistics_summary<-as.data.frame(rbind(summaryGeneLev(object), 
         summaryFeatureLev(object)))
     #   Computing frequency tables for genes and feature
@@ -56,7 +57,7 @@ featurePanel<-getFeaturePanel(object)
     attribute<-getAttribute(object)
     feature<-getFeature(object)
     df_panel[,"score"]<-cut(df_panel[,attribute], breaks=attributeThres, 
-        include.lowest=TRUE, right=FALSE)
+        include.lowest=TRUE, right=FALSE,dig.lab = 6)
     first_feat_ids<-data.frame(sapply(levels(df_panel[,"score"]), function(x){
         aux<-row.names(df_panel[df_panel[,"score"]== x,])[1:5]
         out<-paste(aux[!is.na(aux)], sep="", collapse=", ")
@@ -68,7 +69,7 @@ featurePanel<-getFeaturePanel(object)
     names(first_feat_ids)[1]<-paste(feature, "_id", sep="")
     gene_panel<-as.data.frame(genePanel)
     gene_panel[,"score"]<-cut(gene_panel[,attribute], breaks=attributeThres, 
-        include.lowest=TRUE, right=FALSE)
+        include.lowest=TRUE, right=FALSE,dig.lab = 6)
     first_gene_ids<-data.frame(gene_id=sapply(levels(gene_panel[,"score"]),
     function(x){
         aux<-row.names(gene_panel[gene_panel[,"score"]== x,])[1:5]

@@ -16,30 +16,30 @@ Targeted Sequencing Experiment.
 \section{Slots}{
 
 \describe{
-\item{\code{scanBamP}}{ScanBamParam containing the information to scan the 
-    BAM file.}
+\item{\code{scanBamP}}{ScanBamParam containing 
+the information to scan the BAM file.}
 
-\item{\code{pileupP}}{PileupParam containing the information to build the 
-    pileup.}
+\item{\code{pileupP}}{PileupParam containing 
+the information to build the pileup.}
 
 \item{\code{bedFile}}{GRanges object that models the bed file.}
 
 \item{\code{bamFile}}{BamFile object that is a reference to the BAM file.}
 
-\item{\code{fastaFile}}{FaFile object that is a reference to the reference 
-    sequence.}
+\item{\code{fastaFile}}{FaFile object that is a 
+reference to the reference sequence.}
 
-\item{\code{featurePanel}}{GRanges object that models the feature panel and 
-    related statistics.}
+\item{\code{featurePanel}}{GRanges object that models 
+the feature panel and related statistics.}
 
-\item{\code{genePanel}}{GRanges object that models the analyzed panel and 
-    related statistics at a gene level.}
+\item{\code{genePanel}}{GRanges object that models
+the analyzed panel and related statistics at a gene level.}
 
 \item{\code{attribute}}{character indicates which attribute 'coverage' or 
-    'medianCounts' will be used to the analysis.}
+'medianCounts' will be used to the analysis.}
 
 \item{\code{feature}}{character indicates the name of the analyzed features. E.g
-    'amplicon', 'exon', 'transcript'.}
+'amplicon', 'exon', 'transcript'.}
 }}
 \section{Features}{
 
@@ -51,8 +51,8 @@ Targeted Sequencing Experiment.
     \item Detect in early stage sequencing or library preparation errors.
     \item Explore read profiles for particular features or genomic regions.
     \item Explore any kind of experiment in which 'feature' definition is
-        possible for several genes. E.g RNA-seq experiments in which 
-        transcripts could be the 'features'.
+        possible for several genes. E.g RNA-seq experiments in which transcripts
+        could be the 'features'.
     \item Report quality control results.
 }
 }
@@ -71,7 +71,7 @@ TargetExperiment S4 class includes the following functions:
 \item{getBedFile, getBamFile, getFeaturePanel, getGenePanel,  getAttribute,
     getFeature, getScanBamP, getPileupP}{return the respective TargetExperiment
     slot}
-\item{setAttribute,setFeature, setScanBamP, setPileupP}{return the 
+\item{setAttribute,setFeature, setScanBamP, setPileupP}{set the 
     respective TargetExperiment slots}
 \item{show}{generic output of the object}
 \item{print}{generic output of the object}
@@ -108,8 +108,10 @@ Gabriela A. Merino \email{gmerino@bdmg.com.ar}, Cristobal Fresno
 examples:
 
 ## Defining bam file, bed file and fasta file names and paths
-bamFile<-system.file("extdata", "mybam.bam", package="TarSeqQC", mustWork=TRUE)
-bedFile<-system.file("extdata", "mybed.bed", package="TarSeqQC", mustWork=TRUE)
+bamFile<-system.file("extdata", "mybam.bam", package="TarSeqQC", 
+    mustWork=TRUE)
+bedFile<-system.file("extdata", "mybed.bed", package="TarSeqQC",
+    mustWork=TRUE)
 fastaFile<-system.file("extdata", "myfasta.fa", package="TarSeqQC", 
     mustWork=TRUE)
 
@@ -120,7 +122,7 @@ feature<-"amplicon"
 # Defining attribute parameter
 attribute<-"coverage"
 ampliPanel<-TargetExperiment(bedFile, bamFile, fastaFile, attribute=attribute,
-    feature=feature)
+feature=feature)
 
 ## Alternative object creation
 # Creating the TargetExperiment object
@@ -148,7 +150,7 @@ g<-plotAttrExpl(ampliPanel,level="feature",join=TRUE, log=FALSE, color="blue")
 g
 # explore amplicon length distribution
 plotMetaDataExpl(ampliPanel, "length", log=FALSE, join=FALSE, color=
-    "blueviolet")
+"blueviolet")
 # explore gene's relative frequencies
 plotMetaDataExpl(ampliPanel, "gene", abs=FALSE)
 ## Deep exploration and Quality Control
@@ -161,17 +163,17 @@ g<-plot(ampliPanel, attributeThres, chrLabels =TRUE)
 g
 # plot panel overview in a feature performance plot
 g<-plotFeatPerform(ampliPanel, attributeThres, complete=TRUE, log=FALSE, 
-    featureLabs=TRUE, sepChr=TRUE, legend=TRUE)
+featureLabs=TRUE, sepChr=TRUE, legend=TRUE)
 g
 
 # explore possible attribute bias
 x11(type="cairo")
-biasExploration(myPanel, source="gc", dens=TRUE)
+biasExploration(ampliPanel, source="gc", dens=TRUE)
 ## Controlling low counts features
 # Do a frequency table for the attribute intervals
 summaryIntervals(ampliPanel, attributeThres)
-# plotting attribute intervals
-plotAttrPerform(object)
+#plotting attribute intervals
+plotAttrPerform(ampliPanel)
 # getting low counts features at gene level
 getLowCtsFeatures(ampliPanel, level="gene", threshold=50)
 # getting low counts features at feature level
@@ -180,7 +182,7 @@ getLowCtsFeatures(ampliPanel, level="feature", threshold=50)
 g<-plotGeneAttrPerFeat(ampliPanel, geneID="gene4")
 # adjust text size
 g<-g+theme(title=element_text(size=16), axis.title=element_text(size=16),
-    legend.text=element_text(size=14))
+legend.text=element_text(size=14))
 g
 
 ##Obtain the pileup matrix for the first amplicon
@@ -193,7 +195,7 @@ head(myCounts)
 getRegion(ampliPanel, level="gene", ID="gene7", collapse=FALSE)
 # plot a particular genomic region
 g<-plotRegion(ampliPanel,region=c(4500,6800), seqname="chr10", SNPs=TRUE,  
-    xlab="", title="gene7 amplicons",size=0.5)
+xlab="", title="gene7 amplicons",size=0.5)
 # x11(type="cairo")
 g
 # exploring the read count profile for a particular amplicon
@@ -213,7 +215,7 @@ buildReport(ampliPanel, attributeThres, imageFile ,file="Results.xlsx")
 Rsamtools
 
 Other TargetExperiment: \code{\link{TargetExperiment}},
-    \code{\link{ampliPanel}}, \code{\link{initialize}},
-    \code{\link{myCounts}}
+    \code{\link{ampliPanel2}}, \code{\link{ampliPanel}},
+    \code{\link{initialize}}, \code{\link{myCounts}}
 }
 

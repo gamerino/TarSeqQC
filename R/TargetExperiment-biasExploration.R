@@ -78,7 +78,7 @@ definition=function(object,source=c("length", "gc", "pool"), dens=FALSE){
         colnames(myDF)[colnames(myDF) == "source"] <-"intervals"
     }else{
         myDF[,"intervals"]<-cut(myDF[,"source"], breaks=summary(myDF[,"source"]
-            )[c(1:3, 5:6)],include.lowest=TRUE)
+            )[c(1:3, 5:6)],include.lowest=TRUE, dig.lab = 6)
     }
     intervals<-NULL
     g<-ggplot(myDF,aes(x=intervals, y=attribute, fill=intervals))+

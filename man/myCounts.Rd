@@ -31,7 +31,8 @@ Gabriela A. Merino \email{gmerino@bdmg.com.ar}, Cristobal Fresno
 }
 \seealso{
 Other TargetExperiment: \code{\link{TargetExperiment-class}},
-    \code{\link{TargetExperiment}}, \code{\link{ampliPanel}},
+    \code{\link{TargetExperiment}},
+    \code{\link{ampliPanel2}}, \code{\link{ampliPanel}},
     \code{\link{initialize}}
 }
 

@@ -5,7 +5,8 @@
 \alias{biasExploration}
 \alias{biasExploration,TargetExperiment-method}
 \alias{biasExploration-methods}
-\title{Plot attribute density and boxplot for each bias source quartile.}
+\title{Plot attribute density and boxplot for each bias source quartile or 
+cathegory.}
 \usage{
 biasExploration(object, source = c("length", "gc", "pool"), dens = FALSE)
 
@@ -28,9 +29,9 @@ ggplot2 graphics.
 }
 \description{
 \code{biasExploration} plots density and box-plot of the analyzed attribute 
-    for eaach bias source' quartiles. It helps the identification of some bias
-    due to high source values, for example, high gc content. This graphics 
-    could plot together using the ggplot2 geom_violin method.
+for each bias source' quartiles pr cathegories. It helps the identification 
+of some bias due to high source values, for example, high gc content. This 
+graphics could plot together using the ggplot2 geom_violin method.
 }
 \note{
 see full example in \code{\link{TargetExperiment-class}}

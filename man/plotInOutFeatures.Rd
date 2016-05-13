@@ -30,11 +30,11 @@ ggplot object.
 }
 \description{
 \code{plotInOutFeatures} allows the graphical exploration of the data 
-    frame obtained using \code{readPercentages}. This data frame contains
-    information about amount of reads mapped into the targeted regions and out
-    of them. This information is presented in rows, one for each chromosome 
-    and in absolute and relative amounts. After it invokation, a bar plot built
-    as a ggplot object is returned
+frame obtained using \code{readFrequencies}. This data frame contains
+information about amount of reads mapped into the targeted regions and out of
+them. This information is presented in rows, one for each chromosome and in 
+absolute and relative amounts. After it invokation, a bar plot built as a 
+ggplot object is returned
 }
 \note{
 see full example in \code{\link{TargetExperiment-class}}

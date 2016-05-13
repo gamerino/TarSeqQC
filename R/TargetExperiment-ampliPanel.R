@@ -10,7 +10,7 @@
 #'\item{attribute}{Character "coverage"}
 #'}
 #'
-#'@include TargetExperiment.R
+#'@include TargetExperimentList.R
 #'@docType data
 #'@format A TargetExperiment object
 #'@source see \code{\link{TargetExperiment-class}}

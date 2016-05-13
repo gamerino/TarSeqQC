@@ -57,23 +57,29 @@ setMethod(f="plotFeatPerform", signature=signature(object="TargetExperiment"),
 definition=function(object, attributeThres=c(0,1,50,200,500, Inf),
 complete=TRUE, log=TRUE, featureLabs=FALSE, sepChr=FALSE, legend=TRUE){
     # definition of the data 
+    if(attributeThres[1] !=0){
+        attributeThres<-c(0,attributeThres)
+    }
+    if(attributeThres[length(attributeThres)] !=Inf){
+        attributeThres<-c(attributeThres, Inf)
+    }
     df_panel<-cbind(as.data.frame(getFeaturePanel(object)), feature=names(
         getFeaturePanel(object)))
-    
     names(df_panel)[names(df_panel) == getAttribute(object)] <- "attribute"
     df_panel[,"score"]<-cut(df_panel[,"attribute"], breaks=attributeThres, 
-        include.lowest=TRUE, right=FALSE)
+        include.lowest=TRUE, right=FALSE,dig.lab = 6)
+    score_levels<-levels(df_panel[,"score"])
     pool<-"pool" %in% names(df_panel)
     attribute<-getAttribute(object)
     feature<-getFeature(object)
-    colors<-ggplotColours(object, n=(length(attributeThres)-1))
+#     colors<-ggplotColours(object, n=(length(attributeThres)-1))
     
     # if complete then feature and gene panel should be plotted
     if (complete) {
         data2<-ddply(df_panel, c("seqnames","gene"), summarize, 
             attribute=mean(attribute))
         data2[,"score"]<-cut(data2[,"attribute"], breaks=attributeThres, 
-            include.lowest=TRUE, right=FALSE)
+            include.lowest=TRUE, right=FALSE,dig.lab = 6)
 
     }
     # if log the attribute scale will be in log10
@@ -95,14 +101,16 @@ complete=TRUE, log=TRUE, featureLabs=FALSE, sepChr=FALSE, legend=TRUE){
     if(complete){
         x_lab2<-"gene"
         gene<-score<-NULL
-
-        g2<-ggplot( data2,aes(x=as.factor(gene), y=attribute, 
-            fill=as.factor(score))) + geom_bar(stat="identity", binwidth=2) + 
+        g2<-ggplot(data2,aes(x=as.factor(gene), y=attribute, 
+            fill=score)) + geom_bar(stat="identity") + 
             facet_grid(~ seqnames, scales="free_x", space="free") + theme( 
-            axis.text.x = element_text(angle = 90,size=4))+ geom_hline(
-            yintercept=mean(data2[, "attribute"]), colour="red") + labs(
-            title="", x=x_lab2,y=y_lab2)+ scale_fill_manual(
-            values=colors[levels((data2$score)) %in% unique(data2$score)])
+            axis.text.x = element_text(angle = 90,size=10))
+            colors<-colorRampPalette(c("red", "green"))(length(score_levels))
+            names(colors)<-score_levels
+            g2<-g2+scale_fill_manual(
+            values=colors, breaks=score_levels)+ 
+            geom_hline(yintercept=mean(data2[, "attribute"]), colour="red") + 
+            labs(title="", x=x_lab2,y=y_lab2)
         if(legend) g2<-g2+guides(fill=guide_legend(title=paste(attribute,
             "_groups", sep="")))
     }
@@ -112,28 +120,29 @@ complete=TRUE, log=TRUE, featureLabs=FALSE, sepChr=FALSE, legend=TRUE){
         data1<-cbind(data1, pool=df_panel[,"pool"])
         x_lab1<-"pool"
         g1<-ggplot(data1,aes(x=as.factor(feature), y= attribute, 
-            fill=as.factor(score)))+geom_bar(stat="identity")+facet_grid(~ pool,
+            fill=score))+geom_bar(stat="identity")+facet_grid(~ pool,
             scales="free_x", space="free")+ theme(axis.text.x = element_blank(),
             axis.title.x=element_blank())+scale_y_continuous(limits = c(0,
             max(data1[,"attribute"])))+labs(title="", x=x_lab1,y=y_lab1) + 
             geom_hline(yintercept=mean(data1[,"attribute"]), colour="red", 
-            show_guide=TRUE)
+            show.legend=TRUE)
     }else {
         g1<-ggplot( data1,aes(x=as.factor(feature), y= attribute, 
-            fill=as.factor(score)))+geom_bar(stat="identity")+ 
+            fill=score))+geom_bar(stat="identity")+ 
             scale_y_continuous(limits = c(0, max(data1[,"attribute"])))+labs(
             title="", y=y_lab1)+geom_hline(yintercept=mean(data1[,"attribute"]),
-            colour="red", show_guide=TRUE)
+            colour="red", show.legend=TRUE)
     }
     if(featureLabs){
         g1<-g1+theme( axis.title.x=element_blank(),axis.text.x = element_text(
-            angle = 90,size=4))
+            angle = 90,size=8))
     }else{
         g1<-g1+theme(axis.text.x = element_blank(), axis.title.x=element_blank(
         ))
     }
-    g1<-g1+scale_fill_manual(values=colors[levels((data1$score)) %in% unique(
-        data1$score)])
+    colors<-colorRampPalette(c("red", "green"))(length(score_levels))
+    names(colors)<-score_levels
+    g1<-g1+scale_fill_manual(values=colors, breaks=score_levels)
     if(legend){
         g1<-g1+guides(fill=guide_legend(title=paste(attribute,"_groups", 
             sep="")))

@@ -5,7 +5,7 @@
 #'features that have shown the analyzed attribute in a user setted interval.
 #'The resulting graph can be busy and might be better off saved.
 #'
-#'@param x TargetExperiment class object.
+#'@param x TargetExperiment/TargetExperimentList class object.
 #'@param y not used but necessary for redefining the generic function.
 #'@param attributeThres Numeric indicating the interval extreme values.
 #'@param binSize Numeric indicating bin width. Should probably be left
@@ -53,13 +53,19 @@ definition=function(x, y, attributeThres=c(0, 1, 50, 200, 500, Inf),
 binSize=1, spaceGene=0.2,  spaceChr=1.2,  innerRadius=0.3,  outerRadius=1,  
 guides=c(20,40,60,80),  alphaStart=-0.3,  circleProportion=0.95,  
 direction="inwards",  chrLabels=FALSE){
+    if(attributeThres[1] !=0){
+        attributeThres<-c(0,attributeThres)
+    }
+    if(attributeThres[length(attributeThres)] !=Inf){
+        attributeThres<-c(attributeThres, Inf)
+    }
     df_panel<-as.data.frame(getFeaturePanel(x))
     df_panel[,"names"]<-rownames(df_panel)
     attribute<-getAttribute(x)
     # creating a 'score' variable to group features according to the attribute
     #'intervals
     df_panel[,"score"]<-cut(df_panel[,attribute], breaks=attributeThres, 
-        include.lowest=TRUE, right=FALSE)
+        include.lowest=TRUE, right=FALSE, dig.lab = 6)
     score_levels<-levels(df_panel[,"score"])
 
     df_panel<-df_panel[order(df_panel[,"seqnames"], df_panel[,"gene"], 
@@ -136,7 +142,10 @@ direction="inwards",  chrLabels=FALSE){
     totalLength<-tail(df_panel[, "xmin"]+binSize+spaceChr,1)/circleProportion-0
     p<-ggplot(df_panel)+geom_rect(aes( xmin=xmin, xmax=xmax, ymin=ymin, 
         ymax=ymax,fill=score))
-
+    colors<-colorRampPalette(c("red", "green"))(length(score_levels))
+    names(colors)<-score_levels
+    p<-p+scale_fill_manual(name=paste(attribute, "interval", sep=" "),
+                breaks=score_levels, values=colors)
     # names labels
     readableAngle<-function(x){
         angle<-x*(-360/totalLength)-alphaStart*180/pi+90

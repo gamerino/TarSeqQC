@@ -13,34 +13,34 @@ pileupCounts(bed, bamFile, fastaFile, scanBamP = NULL, pileupP = NULL,
 \item{bed}{a Granges object containing the bed file information.}
 
 \item{bamFile}{Character indicating the alignment and index bam
-    files full path.}
+files full path.}
 
 \item{fastaFile}{Character indicating the full path to the genome reference
-    and index files.}
+and index files.}
 
 \item{scanBamP}{ScanBamParam indicating the parameters the BAM file read.}
 
 \item{pileupP}{PileupParam indicating the parameters for the pileup build.}
 
 \item{BPPARAM}{An optional BiocParallelParam instance defining the parallel
-    back-end to be used during evaluation.}
+back-end to be used during evaluation.}
 }
 \value{
 data.frame object.
 }
 \description{
 \code{pileupCounts} waits a TargetExperiment object containing the bed file
-    information in order to obtain pileup counts only for the specified genomic
-    regions. The resulting object is a data.frame instance, in which each row 
-    represents one position of the specified features across the bed file. The 
-    first three columns called 'pos', 'seqnames' and 'which_label,' represent 
-    the position in the seqnames (e.g. pos=10183795 and seqnames=chr3) and the
-    associated feature. According to the 'pileupP' parameters setted before, 
-    the number of next columns could change. If 'distinguish_nucleotide' was 
-    set as TRUE, then one column per ntd will appear containing the counts 
-    obtained for each of them. Same will occur when 'distinguish_strands' is
-    set as TRUE. The last column, called 'counts', contains the total counts
-    obtained for the corresponding position.
+information in order to obtain pileup counts only for the specified genomic
+regions. The resulting object is a data.frame instance, in which each row 
+represents one position of the specified features across the bed file. The 
+first three columns called 'pos', 'seqnames' and 'which_label,' represent the
+position in the seqnames (e.g. pos=10183795 and seqnames=chr3) and the 
+associated feature. According to the 'pileupP' parameters setted before, the 
+number of next columns could change. If 'distinguish_nucleotide' was set as
+TRUE, then one column per ntd will appear containing the counts obtained for
+each of them. Same will occur when 'distinguish_strands' is set as TRUE. The
+last column, called 'counts', contains the total counts obtained for the
+corresponding position.
 }
 \examples{
 ##Obtain the pileup matrix for the first amplicon

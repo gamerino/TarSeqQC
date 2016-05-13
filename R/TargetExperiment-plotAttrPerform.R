@@ -48,13 +48,15 @@ definition=function(object, attributeThres=c(0,1,50,200,500, Inf)){
     # definition of the data
     pool<-"pool" %in% names(mcols(getFeaturePanel(object)))
     df_panel<-summaryIntervals(object,attributeThres, pool)
-    colors<-ggplotColours(object, n=(length(attributeThres)))
     intervals<-cum_rel<-NULL
     if(is.data.frame(df_panel)){
         intervalName<-names(df_panel)[1]
         names(df_panel)[1]<-"intervals"
         df_panel[,"intervals"]<-factor(df_panel[,"intervals"], 
             levels=df_panel[,"intervals"])
+        colors<-colorRampPalette(c("red", "green"))(length(levels(df_panel[,
+            "intervals"])))
+        names(colors)<-levels(df_panel[,"intervals"])    
         g<-ggplot(df_panel)+geom_bar(stat="identity", aes(x=intervals, 
             y=rel, fill=intervals))+geom_point(aes(x=intervals, y=cum_rel))+
             geom_line(aes(x=intervals, y=cum_rel, group=1, color=as.factor(

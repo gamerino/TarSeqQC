@@ -30,7 +30,7 @@ packages. This package includes the new following features:
 }
 \author{
 Gabriela A. Merino \email{gmerino@bdmg.com.ar}, Cristobal Fresno 
-\email{cfresno@bdmg.com.ar} and Elmer A. Fernandez 
-\email{efernandez@bdmg.com.ar}
+    \email{cfresno@bdmg.com.ar} and Elmer A. Fernandez 
+    \email{efernandez@bdmg.com.ar}
 }
 

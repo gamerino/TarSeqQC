@@ -42,7 +42,7 @@ setGeneric(name="buildReport", def=function(object,attributeThres=c(0, 1, 50,
 setMethod(f="buildReport", signature="TargetExperiment", definition=function(
 object, attributeThres=c(0, 1, 50, 200, 500, Inf), imageFile=NULL,
 file="Results.xlsx"){
-    colors.fill<-ggplotColours(object,n=(length(attributeThres)-1))
+    colors.fill<-colorRampPalette(c("red", "green"))(length(attributeThres)-1)
     featurePanel<-getFeaturePanel(object)
     genePanel<-getGenePanel(object)
     attribute<-getAttribute(object)
@@ -87,7 +87,7 @@ file="Results.xlsx"){
 
     # coloring cells
     gene_panel[,"score"]<-cut(gene_panel[,attribute], breaks=attributeThres,
-        include.lowest=TRUE, right=FALSE)
+        include.lowest=TRUE, right=FALSE, dig.lab = 6)
 
     cov_intervals<-levels(gene_panel[,"score"])
     sapply(1:length(cov_intervals), function(no_interval){
@@ -105,7 +105,7 @@ file="Results.xlsx"){
         startRow=1, startCol=1,withFilter =FALSE, tableStyle = "None", 
         headerStyle=headerStyles)
     df_panel[,"groups"]<-cut(df_panel[,attribute], breaks=attributeThres,
-        include.lowest=TRUE, right=FALSE)
+        include.lowest=TRUE, right=FALSE,dig.lab = 6)
 
     # coloring cells
 

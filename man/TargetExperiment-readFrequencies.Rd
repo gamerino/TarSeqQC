@@ -16,14 +16,14 @@ readFrequencies(object, BPPARAM = bpparam())
 \item{object}{TargetExperiment class object.}
 
 \item{BPPARAM}{An optional BiocParallelParam instance defining the parallel
-    back-end to be used during evaluation.}
+back-end to be used during evaluation.}
 }
 \value{
 data.frame object.
 }
 \description{
 \code{readFrequencies} builds a data frame containing the read frequencies 
-    falling in targeted regions and out of those, separated by chromosome.
+falling in targeted regions and out of those, separated by chromosome.
 }
 \note{
 see full example in \code{\link{TargetExperiment-class}}

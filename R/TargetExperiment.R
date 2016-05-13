@@ -52,7 +52,7 @@
 #' \item{getBedFile, getBamFile, getFeaturePanel, getGenePanel,  getAttribute,
 #' getFeature, getScanBamP, getPileupP}{return the respective TargetExperiment
 #' slot}
-#' \item{setAttribute,setFeature, setScanBamP, setPileupP}{return the 
+#' \item{setAttribute,setFeature, setScanBamP, setPileupP}{set the 
 #' respective TargetExperiment slots}
 #' \item{show}{generic output of the object}
 #' \item{print}{generic output of the object}
@@ -160,12 +160,12 @@
 #'
 #'# explore possible attribute bias
 #'x11(type="cairo")
-#'biasExploration(myPanel, source="gc", dens=TRUE)
+#'biasExploration(ampliPanel, source="gc", dens=TRUE)
 #'## Controlling low counts features
 #'# Do a frequency table for the attribute intervals
 #'summaryIntervals(ampliPanel, attributeThres)
 #'#plotting attribute intervals
-#'plotAttrPerform(object)
+#'plotAttrPerform(ampliPanel)
 #'# getting low counts features at gene level
 #'getLowCtsFeatures(ampliPanel, level="gene", threshold=50)
 #'# getting low counts features at feature level
