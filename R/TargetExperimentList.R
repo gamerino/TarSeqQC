@@ -70,28 +70,27 @@
 #'##Calling the constructor
 #'object<-TargetExperimentList(TEList=ampliList, attribute=attribute,
 #'feature=feature)
-#'
-#'setFeature(object)<-"amplicon"
+#'## load the example dataset
+#'data(TEList, package="TarSeqQC")
+#'setFeature(TEList)<-"amplicon"
 #'## Early exploration
 #'# show/print
-#'object
+#'TEList
 #'# summary
-#'summary(object)
+#'summary(TEList)
 #'## Controlling low counts features
 #'# Definition of the interval extreme values
 #'attributeThres<-c(0,1,50,200,500, Inf)
 #'# Do a frequency table for the attribute intervals
-#'summaryIntervals(object, attributeThres)
+#'summaryIntervals(TEList, attributeThres)
 #'# getting low counts features at gene level
 #'getLowCtsFeatures(TEList, threshold=50)
-#'# getting and exploring a sequenced region of a particular gene
-#'getRegion(TEList, level="gene", ID="gene7", collapse=FALSE)
 #'# exploring panel performance along several samples
-#'g<-plot(object, attributeThres, featureLabels =TRUE)
+#'g<-plot(TEList, attributeThres=attributeThres, featureLabels =TRUE)
 #'if(interactive()){
 #'g
 #'}
-#'g<-plotGlobalAttrExpl(object,log=FALSE)
+#'g<-plotGlobalAttrExpl(TEList,log=FALSE)
 #'# x11(type="cairo")
 #'if(interactive()){
 #'g

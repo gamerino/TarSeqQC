@@ -12,11 +12,10 @@
 #'@note see full example in \code{\link{TargetExperimentList-class}}
 #'@examples
 #'## loading TargetExperimentList object
-#'if (interactive()){
-#'  data(TEList, package="TarSeqQC")
-#'  ## Set feature slot value
-#'  setFeature(ampliPanel)<-"amplicon"
-#'}
+#'data(TEList, package="TarSeqQC")
+#'## Set feature slot value
+#'setFeature(TEList)<-"amplicon"
+#'
 setReplaceMethod(f="setFeature", signature=signature(object=
     "TargetExperimentList", value="character"),  definition= function(object, 
     value){

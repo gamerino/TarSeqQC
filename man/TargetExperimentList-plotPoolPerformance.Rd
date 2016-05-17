@@ -41,14 +41,8 @@ together using the ggplot2 geom_violin method.
 \examples{
 ## Loading the TargetExperimentList object
 data(TEList, package="TarSeqQC")
-
 # Attribute boxplot and density plot exploration
-g<-plotPoolPerformance(TEList,join=TRUE, log=FALSE)
-# x11(type="cairo")
-if(interactive()){
-g
-}
-g<-plotAttrExpl(TEList,join=TRUE, log=FALSE, pool=FALSE)
+g<-plotPoolPerformance(TEList,log=FALSE)
 # x11(type="cairo")
 if(interactive()){
 g

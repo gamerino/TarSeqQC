@@ -39,7 +39,7 @@ definition=function(object,n){
 #'@examples
 #'## Loading the TargetExperimentList object
 #'data(TEList, package="TarSeqQC")
-#'colors<-ggplotColours(object, n=5)
+#'colors<-ggplotColours(TEList, n=5)
 setMethod(f="ggplotColours", signature="TargetExperimentList",
 definition=function(object,n){
     

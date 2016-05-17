@@ -89,7 +89,7 @@ data(TEList, package="TarSeqQC")
 attributeThres<-c(0,1,50,200,500, Inf)
 
 ## Plot panel overview
-g<-plot(object, attributeThres, featureLabs =TRUE)
+g<-plot(TEList, attributeThres=attributeThres, featureLabs =TRUE)
 if(interactive()){
 g
 }

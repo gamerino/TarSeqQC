@@ -75,7 +75,7 @@ data(ampliPanel, package="TarSeqQC")
 colors<-ggplotColours(ampliPanel, n=5)
 ## Loading the TargetExperimentList object
 data(TEList, package="TarSeqQC")
-colors<-ggplotColours(object, n=5)
+colors<-ggplotColours(TEList, n=5)
 ## Loading the TargetExperiment object
 data(ampliPanel,package="TarSeqQC")
 # definition of the interval extreme values

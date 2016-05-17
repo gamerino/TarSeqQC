@@ -19,6 +19,10 @@
 #'@rdname TargetExperimentList-initialize
 #'@import Rsamtools 
 #'@import GenomicRanges
+#'@importFrom stats IQR
+#'@importFrom stats aggregate
+#'@importFrom stats median
+#'@importFrom stats sd
 #'@importMethodsFrom BiocGenerics strand
 #'@importClassesFrom S4Vectors Rle
 #'@importMethodsFrom S4Vectors Rle

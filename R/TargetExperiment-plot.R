@@ -28,6 +28,9 @@
 #'@name plot
 #'@rdname TargetExperiment-plot
 #'@import ggplot2
+#'@importFrom graphics plot
+#'@importFrom grDevices colorRampPalette
+#'@importFrom grDevices hcl
 #'@aliases plot,TargetExperiment,ANY-method
 #'@seealso \code{\link{plotFeatPerform}}
 #'@note see full example in \code{\link{TargetExperiment-class}}

@@ -35,6 +35,9 @@
 #'@importMethodsFrom S4Vectors Rle
 #'@importClassesFrom IRanges IRanges
 #'@importFrom IRanges IRanges
+#'@imporFrom utils head
+#'@imporFrom utils read.delim
+#'@imporFrom utils tail
 #'@import BiocParallel
 #'@importMethodsFrom BiocParallel bpprogressbar<-
 #'@aliases initialize,TargetExperiment-method

@@ -18,7 +18,7 @@
 #'data(TEList, package="TarSeqQC")
 #'
 #'# Attribute boxplot and density plot exploration
-#'g<-plotAttrExpl(TEList,join=TRUE, log=FALSE, pool=FALSE)
+#'g<-plotAttrExpl(TEList, log=FALSE, pool=FALSE)
 #'# x11(type="cairo")
 #'if(interactive()){
 #'g

@@ -21,6 +21,10 @@ Depends:
     plyr,
     openxlsx
 Imports:
+    grDevices,
+    graphics,
+    stats,
+    utils,
     S4Vectors,
     IRanges,
     BiocGenerics,

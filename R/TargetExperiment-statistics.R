@@ -36,6 +36,10 @@ setGeneric(name="summaryFeatureLev", def=function(object){
 })
 #'@name summaryFeatureLev
 #'@import plyr
+#'@importFrom stats IQR
+#'@importFrom stats aggregate
+#'@importFrom stats median
+#'@importFrom stats sd
 #'@rdname TargetExperiment-statistics
 #'@aliases summaryFeatureLev,TargetExperiment-method
 #'@inheritParams summaryFeatureLev

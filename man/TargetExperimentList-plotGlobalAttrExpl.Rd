@@ -53,7 +53,7 @@ see full example in \code{\link{TargetExperimentList-class}}
 data(TEList, package="TarSeqQC")
 
 # Attribute boxplot and density plot exploration
-g<-plotGlobalAttrExpl(object,log=FALSE)
+g<-plotGlobalAttrExpl(TEList,log=FALSE)
 # x11(type="cairo")
 if(interactive()){
 g
