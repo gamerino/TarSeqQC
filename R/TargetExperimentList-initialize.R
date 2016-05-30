@@ -54,7 +54,8 @@ definition=function(.Object, TEList,feature=NULL, attribute="coverage"){
     if(nargs() >=2){
         if (length(TEList) <2){
             stop("The TEList should contain at least two TargetExperiment 
-                objects")}
+                objects")
+        }
     # bedFile slot
         bed<-getBedFile(TEList[[1]])
         bed_df<-as.data.frame(bed)
@@ -91,7 +92,7 @@ definition=function(.Object, TEList,feature=NULL, attribute="coverage"){
             panel<-cbind(panel, mcols(getFeaturePanel(TEList[[i]]))[,
                 attribute])
         }
-        colnames(panel)<-c(panelNames, paste(attribute,"panel", 
+        colnames(panel)<-c(panelNames, paste(attribute,"subject", 
             1:length(TEList), sep="_"))
         finalPanel<-GRanges(seqnames=panel[,"seqnames"], ranges=IRanges(start=
             panel[,"start"], end=panel[,"end"], names=rownames(panel)), 
