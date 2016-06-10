@@ -61,6 +61,9 @@ setMethod(f="plotMetaDataExpl", signature=signature(object="TargetExperiment"),
 definition=function(object,name=c("length", "gc", "pool"),log=FALSE, join=TRUE,
 absolute=FALSE, color="blue"){
     myDF<-as.data.frame(getFeaturePanel(object))
+    if(any(names(myDF) == "pool")){
+        myDF[,"pool"]<-as.factor(myDF[,"pool"])
+    }
     if (name %in% c("length", "gc", "pool")){
         source<-match.arg(name)
     }else{
