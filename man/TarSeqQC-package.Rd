@@ -29,8 +29,9 @@ packages. This package includes the new following features:
 }
 }
 \author{
-Gabriela A. Merino \email{gmerino@bdmg.com.ar}, Cristobal Fresno 
-    \email{cfresno@bdmg.com.ar} and Elmer A. Fernandez 
-    \email{efernandez@bdmg.com.ar}
+Gabriela A. Merino \email{gmerino@bdmg.com.ar}, Cristobal Fresno
+\email{cfresno@bdmg.com.ar}, Yanina Murua \email{ymurua@leloir.org.ar},
+Andrea S. Llera \email{allera@leloir.org.ar} and Elmer A. Fernandez 
+\email{efernandez@bdmg.com.ar}
 }
 

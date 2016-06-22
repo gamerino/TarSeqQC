@@ -56,9 +56,10 @@
 #'@seealso Rsamtools
 #'@family TargetExperimentList
 #'@author Gabriela A. Merino \email{gmerino@@bdmg.com.ar}, Cristobal Fresno
-#'\email{cfresno@@bdmg.com.ar} and Elmer A. Fernandez 
-#'\email{efernandez@@bdmg.com.ar}
-#'examples:
+#'\email{cfresno@@bdmg.com.ar}, Yanina Murua \email{ymurua@leloir.org.ar},
+#'Andrea S. Llera \email{allera@leloir.org.ar} and Elmer A. Fernandez 
+#'\email{efernandez@bdmg.com.ar}
+#'@examples
 #'# Defining the set of TargetExperiment objects
 #'data(ampliPanel, package="TarSeqQC")
 #'data(ampliPanel2, package="TarSeqQC")
@@ -84,9 +85,9 @@
 #'# Do a frequency table for the attribute intervals
 #'summaryIntervals(TEList, attributeThres)
 #'# getting low counts features at gene level
-#'getLowCtsFeatures(TEList, threshold=50)
+#'getLowCtsFeatures(TEList, level=gene, threshold=50)
 #'# exploring panel performance along several samples
-#'g<-plot(TEList, attributeThres=attributeThres, featureLabels =TRUE)
+#'g<-plot(TEList, attributeThres=attributeThres, featureLabs =TRUE)
 #'if(interactive()){
 #'g
 #'}
@@ -95,7 +96,7 @@
 #'if(interactive()){
 #'g
 #'}
-#'g<-plotPoolPerformance(TEList,join=TRUE, log=FALSE)
+#'g<-plotPoolPerformance(TEList, log=FALSE)
 #'if(interactive()){
 #'g
 #'}

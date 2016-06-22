@@ -34,9 +34,10 @@
 #'@aliases plot,TargetExperiment,ANY-method
 #'@seealso \code{\link{plotFeatPerform}}
 #'@note see full example in \code{\link{TargetExperiment-class}}
-#'@author Gabriela A. Merino \email{gmerino@@bdmg.com.ar} Cristobal Fresno 
-#'\email{cfresno@@bdmg.com.ar} and Elmer A. Fernandez 
-#'\email{efernandez@@bdmg.com.ar}
+#'@author Gabriela A. Merino \email{gmerino@@bdmg.com.ar}, Cristobal Fresno
+#'\email{cfresno@@bdmg.com.ar}, Yanina Murua \email{ymurua@leloir.org.ar},
+#'Andrea S. Llera \email{allera@leloir.org.ar} and Elmer A. Fernandez 
+#'\email{efernandez@bdmg.com.ar}
 #'@references
 #'\url{http://www.r-bloggers.com/polar-histogram-pretty-and-useful/}
 #'@examples

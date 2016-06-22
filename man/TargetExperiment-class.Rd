@@ -103,10 +103,12 @@ TargetExperiment S4 class includes the following functions:
 }
 \author{
 Gabriela A. Merino \email{gmerino@bdmg.com.ar}, Cristobal Fresno
-\email{cfresno@bdmg.com.ar} and Elmer A. Fernandez 
+\email{cfresno@bdmg.com.ar}, Yanina Murua \email{ymurua@leloir.org.ar},
+Andrea S. Llera \email{allera@leloir.org.ar} and Elmer A. Fernandez 
 \email{efernandez@bdmg.com.ar}
-examples:
+}
 
+\examples{
 ## Defining bam file, bed file and fasta file names and paths
 bamFile<-system.file("extdata", "mybam.bam", package="TarSeqQC", 
     mustWork=TRUE)
@@ -146,34 +148,52 @@ summaryFeatureLev(ampliPanel)
 summaryGeneLev(ampliPanel)
 # attribute boxplot and density plot exploration
 g<-plotAttrExpl(ampliPanel,level="feature",join=TRUE, log=FALSE, color="blue")
-# x11(type="cairo")
-g
+if(interactive()){
+x11(type="cairo");g
+}
 # explore amplicon length distribution
-plotMetaDataExpl(ampliPanel, "length", log=FALSE, join=FALSE, color=
+g<-plotMetaDataExpl(ampliPanel, "length", log=FALSE, join=FALSE, color=
 "blueviolet")
+if(interactive()){
+g
+}
 # explore gene's relative frequencies
-plotMetaDataExpl(ampliPanel, "gene", abs=FALSE)
+g<-plotMetaDataExpl(ampliPanel, "gene", abs=FALSE)
+if(interactive()){
+g
+}
 ## Deep exploration and Quality Control
 myfrequencies<-readFrequencies(ampliPanel)
-plotInOutFeatures(readFrequencies(ampliPanel))
+g<-plotInOutFeatures(readFrequencies(ampliPanel))
+if(interactive()){
+g
+}
 # definition of the interval extreme values
 attributeThres<-c(0,1,50,200,500, Inf)
 # plot panel overview
 g<-plot(ampliPanel, attributeThres, chrLabels =TRUE)
-g
+if(interactive()){
+x11(type="cairo");g
+}
 # plot panel overview in a feature performance plot
 g<-plotFeatPerform(ampliPanel, attributeThres, complete=TRUE, log=FALSE, 
 featureLabs=TRUE, sepChr=TRUE, legend=TRUE)
+if(interactive()){
 g
-
+}
 # explore possible attribute bias
-x11(type="cairo")
-biasExploration(ampliPanel, source="gc", dens=TRUE)
+g<-biasExploration(ampliPanel, source="gc", dens=TRUE)
+if(interactive()){
+x11(type="cairo");g
+}
 ## Controlling low counts features
 # Do a frequency table for the attribute intervals
 summaryIntervals(ampliPanel, attributeThres)
 #plotting attribute intervals
-plotAttrPerform(ampliPanel)
+g<-plotAttrPerform(ampliPanel)
+if(interactive()){
+g
+}
 # getting low counts features at gene level
 getLowCtsFeatures(ampliPanel, level="gene", threshold=50)
 # getting low counts features at feature level
@@ -183,29 +203,33 @@ g<-plotGeneAttrPerFeat(ampliPanel, geneID="gene4")
 # adjust text size
 g<-g+theme(title=element_text(size=16), axis.title=element_text(size=16),
 legend.text=element_text(size=14))
+if(interactive()){
 g
-
+}
 ##Obtain the pileup matrix for the first amplicon
 bed<-getBedFile(ampliPanel)[1]
 ## extracting the pileup matrix
 myCounts<-pileupCounts(bed, bamFile, fastaFile)
 head(myCounts)
-
 # getting and exploring a sequenced region of a particular gene
 getRegion(ampliPanel, level="gene", ID="gene7", collapse=FALSE)
 # plot a particular genomic region
 g<-plotRegion(ampliPanel,region=c(4500,6800), seqname="chr10", SNPs=TRUE,  
 xlab="", title="gene7 amplicons",size=0.5)
-# x11(type="cairo")
-g
+if(interactive()){
+x11(type="cairo");g
+}
 # exploring the read count profile for a particular amplicon
 g<-plotFeature(ampliPanel, featureID="AMPL20")
-# x11(type="cairo")
-g
+if(interactive()){
+x11(type="cairo");g
+}
 # exploring the nucleotide percentages compositions of the read counts for a 
 # particular amplicon
 g<-plotNtdPercentage(ampliPanel,featureID="AMPL20")
+if(interactive()){
 g
+}
 ## Building the XLSX report
 imageFile<-system.file("extdata", "plot.pdf", package="TarSeqQC",
     mustWork=TRUE)

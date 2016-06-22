@@ -38,6 +38,7 @@ ggplot2 graphics.
 attribute achieved in each PCR pool. These graphics could be displayed 
 together using the ggplot2 geom_violin method.
 }
+
 \examples{
 ## Loading the TargetExperimentList object
 data(TEList, package="TarSeqQC")
@@ -48,4 +49,11 @@ if(interactive()){
 g
 }
 }
+\author{
+Gabriela A. Merino \email{gmerino@bdmg.com.ar}, Cristobal Fresno
+\email{cfresno@bdmg.com.ar}, Yanina Murua \email{ymurua@leloir.org.ar},
+Andrea S. Llera \email{allera@leloir.org.ar} and Elmer A. Fernandez 
+\email{efernandez@bdmg.com.ar}
+}
+
 

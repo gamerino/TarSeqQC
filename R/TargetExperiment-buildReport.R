@@ -30,7 +30,7 @@
 #'
 
 setGeneric(name="buildReport", def=function(object,attributeThres=c(0, 1, 50,
-200, 500, Inf), imageFile=NULL, file){
+200, 500, Inf), imageFile=NULL, file="Results.xlsx"){
     standardGeneric("buildReport")
 })
 #'

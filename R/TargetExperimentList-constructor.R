@@ -28,8 +28,9 @@
 #'@note see full example in \code{\link{TargetExperimentList-class}}
 #'@family TargetExperimentList
 #'@author Gabriela A. Merino \email{gmerino@@bdmg.com.ar}, Cristobal Fresno
-#'\email{cfresno@@bdmg.com.ar} and Elmer A. Fernandez 
-#'\email{efernandez@@bdmg.com.ar}
+#'\email{cfresno@@bdmg.com.ar}, Yanina Murua \email{ymurua@leloir.org.ar},
+#'Andrea S. Llera \email{allera@leloir.org.ar} and Elmer A. Fernandez 
+#'\email{efernandez@bdmg.com.ar}
 #'@examples
 #'# Defining the set of TargetExperiment objects
 #'data(ampliPanel, package="TarSeqQC")
