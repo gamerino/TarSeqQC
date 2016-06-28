@@ -28,7 +28,7 @@ addStatSummSheet(object, wb, attributeThres = c(0, 1, 50, 200, 500, Inf),
     attributeThres = c(0, 1, 50, 200, 500, Inf), imageFile)
 
 buildReport(object, attributeThres = c(0, 1, 50, 200, 500, Inf),
-    imageFile = NULL, file)
+    imageFile = NULL, file= "Results.xlsx")
 
 \S4method{buildReport}{TargetExperiment}(object, attributeThres = c(0, 1, 50,
     200, 500, Inf), imageFile = NULL, file = "Results.xlsx")

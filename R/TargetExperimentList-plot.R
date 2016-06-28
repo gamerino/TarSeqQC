@@ -28,7 +28,7 @@
 #'if(interactive()){
 #'g
 #'}
-#'@export plot
+#' @exportMethod plot
 setMethod(f="plot", signature=signature(x="TargetExperimentList"), 
 definition=function(x, y, attributeThres=c(0, 1, 50, 200, 500, Inf),pool=FALSE,
 sampleLabs=TRUE, featureLabs=FALSE){

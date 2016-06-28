@@ -30,7 +30,7 @@
 #'
 
 setGeneric(name="buildReport", def=function(object,attributeThres=c(0, 1, 50,
-200, 500, Inf), imageFile=NULL, file="Results.xlsx"){
+200, 500, Inf),imageFile=NULL, file="Results.xlsx"){
     standardGeneric("buildReport")
 })
 #'
@@ -40,8 +40,8 @@ setGeneric(name="buildReport", def=function(object,attributeThres=c(0, 1, 50,
 #'@aliases buildReport,TargetExperiment-method
 #'@inheritParams buildReport
 setMethod(f="buildReport", signature="TargetExperiment", definition=function(
-object, attributeThres=c(0, 1, 50, 200, 500, Inf), imageFile=NULL,
-file="Results.xlsx"){
+object, attributeThres=c(0, 1, 50, 200, 500, Inf),
+imageFile=NULL, file="Results.xlsx"){
     colors.fill<-colorRampPalette(c("red", "green"))(length(attributeThres)-1)
     featurePanel<-getFeaturePanel(object)
     genePanel<-getGenePanel(object)
@@ -68,14 +68,15 @@ file="Results.xlsx"){
     }
     gene_panel<-gene_panel[,-rm_cols]
     if(is.null(imageFile)){
-        ggsave(filename="plotTargetExp.png", 
-        plot(x=object, attributeThres=attributeThres))
+        g<-plot(object, attributeThres=attributeThres)
         imageFile<-"plotTargetExp.png"
+        ggplot2::ggsave(g,filename=imageFile)
+        
     }
     # creating the xlsx file
     wb <- createWorkbook()
     # create sheet1
-    wb<-addStatSummSheet(object, wb,attributeThres, imageFile )
+    wb<-addStatSummSheet(object, wb,attributeThres, imageFile=imageFile )
 
     # creating sheet2
     sheet2<- addWorksheet(wb, "genes")
@@ -145,5 +146,5 @@ file="Results.xlsx"){
             cols= col.cov)
     })
     #save the excel file
-    saveWorkbook(wb, file=file)
+    saveWorkbook(wb, file=file, overwrite = TRUE)
 })

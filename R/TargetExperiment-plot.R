@@ -28,7 +28,6 @@
 #'@name plot
 #'@rdname TargetExperiment-plot
 #'@import ggplot2
-#'@importFrom graphics plot
 #'@importFrom grDevices colorRampPalette
 #'@importFrom grDevices hcl
 #'@aliases plot,TargetExperiment,ANY-method
@@ -53,7 +52,7 @@
 #'}
 #'@export plot
 setMethod(f="plot", signature=signature(x="TargetExperiment"), 
-definition=function(x, y, attributeThres=c(0, 1, 50, 200, 500, Inf),
+definition=function(x,y, attributeThres=c(0, 1, 50, 200, 500, Inf),
 binSize=1, spaceGene=0.2,  spaceChr=1.2,  innerRadius=0.3,  outerRadius=1,  
 guides=c(20,40,60,80),  alphaStart=-0.3,  circleProportion=0.95,  
 direction="inwards",  chrLabels=FALSE){
