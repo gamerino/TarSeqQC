@@ -1,7 +1,7 @@
 Package: TarSeqQC
 Type: Package
-Version: 1.3.6
-Date: 2016-06-28
+Version: 1.3.7
+Date: 2016-06-30
 Title: TARgeted SEQuencing Experiment Quality Control
 Author: Gabriela A. Merino, Cristobal Fresno, Yanina Murua, Andrea S. Llera
     and Elmer A. Fernandez
@@ -32,7 +32,8 @@ Imports:
     GenomeInfoDb,
     BiocParallel,
     Biostrings,
-    cowplot	
+    cowplot,
+    graphics
 Suggests:
     RUnit
 Collate:

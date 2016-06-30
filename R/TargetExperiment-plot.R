@@ -30,6 +30,7 @@
 #'@import ggplot2
 #'@importFrom grDevices colorRampPalette
 #'@importFrom grDevices hcl
+#'@importFrom graphics plot
 #'@aliases plot,TargetExperiment,ANY-method
 #'@seealso \code{\link{plotFeatPerform}}
 #'@note see full example in \code{\link{TargetExperiment-class}}
@@ -50,13 +51,13 @@
 #'if(interactive()){
 #'g
 #'}
-#'@export plot
-setMethod(f="plot", signature=signature(x="TargetExperiment"), 
-definition=function(x,y, attributeThres=c(0, 1, 50, 200, 500, Inf),
+#'@export plot.TargetExperiment
+plot.TargetExperiment <- function(x, y, attributeThres=c(0, 1, 50, 200, 500, 
+Inf),
 binSize=1, spaceGene=0.2,  spaceChr=1.2,  innerRadius=0.3,  outerRadius=1,  
 guides=c(20,40,60,80),  alphaStart=-0.3,  circleProportion=0.95,  
-direction="inwards",  chrLabels=FALSE){
-    if(attributeThres[1] !=0){
+direction="inwards",  chrLabels=FALSE,...){
+if(attributeThres[1] !=0){
         attributeThres<-c(0,attributeThres)
     }
     if(attributeThres[length(attributeThres)] !=Inf){
@@ -202,4 +203,8 @@ direction="inwards",  chrLabels=FALSE){
     p<-p+guides(fill=guide_legend(title=paste(attribute, "_groups", sep="")))
     p<-p+coord_polar(start=alphaStart)
     p
-})
+
+}
+#'@S3method
+## S4 method dispatches to S3
+setMethod("plot", "TargetExperiment", plot.TargetExperiment)
