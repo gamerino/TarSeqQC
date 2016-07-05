@@ -31,7 +31,7 @@
 #'@importFrom grDevices colorRampPalette
 #'@importFrom grDevices hcl
 #'@importFrom graphics plot
-#'@aliases plot,TargetExperiment,ANY-method
+#'@aliases plot,TargetExperiment,plot.TargetExperiment
 #'@seealso \code{\link{plotFeatPerform}}
 #'@note see full example in \code{\link{TargetExperiment-class}}
 #'@author Gabriela A. Merino \email{gmerino@@bdmg.com.ar}, Cristobal Fresno
@@ -53,10 +53,9 @@
 #'}
 #'@export plot.TargetExperiment
 plot.TargetExperiment <- function(x, y, attributeThres=c(0, 1, 50, 200, 500, 
-Inf),
-binSize=1, spaceGene=0.2,  spaceChr=1.2,  innerRadius=0.3,  outerRadius=1,  
-guides=c(20,40,60,80),  alphaStart=-0.3,  circleProportion=0.95,  
-direction="inwards",  chrLabels=FALSE,...){
+Inf),binSize=1, spaceGene=0.2,  spaceChr=1.2,  innerRadius=0.3,
+outerRadius=1, guides=c(20,40,60,80),  alphaStart=-0.3,  
+circleProportion=0.95, direction="inwards",  chrLabels=FALSE,...){
 if(attributeThres[1] !=0){
         attributeThres<-c(0,attributeThres)
     }
@@ -205,6 +204,6 @@ if(attributeThres[1] !=0){
     p
 
 }
-#'@S3method
+#'@S3method plot TargetExperiment
 ## S4 method dispatches to S3
 setMethod("plot", "TargetExperiment", plot.TargetExperiment)

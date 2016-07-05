@@ -61,42 +61,47 @@ definition=function(object,BPPARAM=bpparam()){
     bamFile<-getBamFile(object)
     aln <- scanBam(bamFile, param=param)
     # create RangedData object
-    reads<- do.call(rbind, bplapply(1:length(aln), function(x){
-    with(aln[[x]], data.frame(pos=pos, width=qwidth, ID=qname,
-        seqnames=rname))}, BPPARAM=BPPARAM))
-    reads<-GRanges(IRanges(reads[,"pos"], width=reads[,"width"]), 
-        ID=reads[,"ID"], seqnames=reads[,"seqnames"])
-
-#     reads<- do.call(c, bplapply(1:length(aln), function(x){
-#     with(aln[[x]], GRanges(IRanges(pos, width=qwidth), ID=qname,
-#         seqnames=rname))}, BPPARAM=BPPARAM))
-#     
     chrs <-as.character(unique(seqnames(bed_file)))
-    
-    # compute counts of all reads
-    counts <- coverage(reads)
-    #compute statistics
-    info<-do.call(rbind,lapply(chrs, function(chr){  
-        index<-which(as.character(seqnames(bed_file)) == chr)
-    # select cromosome counts and features
-        chrCounts <- counts[[chr]]
-        featRange <- ranges(bed_file[index])
-        aux <- bplapply(featRange, function(x){
+    alName<-do.call(rbind,strsplit(names(aln), ":"))
+    info<-do.call(rbind,lapply(1:length(chrs), function(x){
+        chr<-chrs[x]
+        index<-which(alName[,1] == chr)
+        dfInfo<-do.call(rbind,lapply(1:length(index), function(i){
+            df<-as.data.frame(aln[[index[i]]])
+            reads<-GRanges(IRanges(df[,"pos"], width=df[,"qwidth"]), 
+                ID=df[,"qname"], seqnames=df[,"rname"])
+        # compute counts of all reads
+            count<-coverage(reads)
+                      
+        #compute statistics
+     
+            index2<-which(as.character(seqnames(bed_file)) == chr)
+        # select cromosome counts and features
+            chrCounts <- count[[chr]]
+            featRange <- ranges(bed_file[index2])[i]
+            aux1 <- lapply(featRange, function(x){
                 if(all(x <= length(chrCounts))){
-                    return(chrCounts[x])
+                   return(chrCounts[x])
                 }else{ return(c(0,0))}
             }) 
     # compute average median SD and IQR for counts per feature
-            cov <- floor(sapply(aux, mean))
-            sdcov <- floor(sapply(aux, sd))
-            medcount<-floor(sapply(aux, median))
-            iqrcount<-floor(sapply(aux, IQR))
-            return(cbind(coverage=cov, sdCoverage=sdcov,
-                medianCounts= medcount,  IQRCounts=iqrcount))
-    }))
-    
+            cov <- floor(as.numeric(lapply(aux1, mean)))
+            sdcov <- floor(as.numeric(lapply(aux1, sd)))
+            medcount<-floor(as.numeric(lapply(aux1, median)))
+            iqrcount<-floor(as.numeric(lapply(aux1, IQR)))
+            return(cbind(names=names(featRange),coverage=cov, sdCoverage=sdcov,
+                medianCounts= medcount,  IQRCounts=iqrcount))}))
+        return(as.data.frame(dfInfo))
+    })
+    )
+    rownames(info)<-info[,1]
+    info<-info[,-1]
+    info[,"coverage"]<-as.numeric(as.character(info[,"coverage"]))
+    info[,"sdCoverage"]<-as.numeric(as.character(info[,"sdCoverage"]))
+    info[,"medianCounts"]<-as.numeric(as.character(info[,"medianCounts"]))
+    info[,"IQRCounts"]<-as.numeric(as.character(info[,"IQRCounts"]))
     m<-match(names(bed_file), rownames(info))
-    mcols(bed_file)<-cbind(mcols(bed_file),as.data.frame(info[m,]))
+    mcols(bed_file)<-cbind(mcols(bed_file),info[m,])
     return(bed_file)
 })
 

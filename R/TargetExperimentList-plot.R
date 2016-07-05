@@ -9,13 +9,14 @@
 #'pool separately
 #'@param sampleLabs Logical. Sample names must be plotted?.
 #'@param featureLabs Logical. Feature names must be plotted?.
+#'@param ... not used but necessary for redefining the generic function.
 #'@include TargetExperimentList-statistics.R
 #'@docType methods
 #'@name plot
 #'@rdname TargetExperiment-plot
 #'@import ggplot2
 #'@importFrom reshape2 melt
-#'@aliases plot,TargetExperimentList,ANY-method
+#'@aliases plot,TargetExperimentList,plot.TargetExperimentList
 #'@note see full example in \code{\link{TargetExperimentList-class}}
 #'@examples
 #'## Loading the TargetExperimentList object
@@ -28,10 +29,10 @@
 #'if(interactive()){
 #'g
 #'}
-#' @exportMethod plot
-setMethod(f="plot", signature=signature(x="TargetExperimentList"), 
-definition=function(x, y, attributeThres=c(0, 1, 50, 200, 500, Inf),pool=FALSE,
-sampleLabs=TRUE, featureLabs=FALSE){
+#'@export plot.TargetExperimentList
+plot.TargetExperimentList<-function(x, y, attributeThres=
+c(0, 1, 50, 200, 500, Inf),pool=FALSE, sampleLabs=TRUE, 
+featureLabs=FALSE, ...){
     if(attributeThres[1] !=0){
         attributeThres<-c(0,attributeThres)
     }
@@ -116,4 +117,7 @@ sampleLabs=TRUE, featureLabs=FALSE){
     g<-g+facet_grid(~ pool, scales="free")
     }
     g
-})
+}
+#'@S3method plot TargetExperimentList
+## S4 method dispatches to S3
+setMethod("plot", "TargetExperimentList", plot.TargetExperimentList)

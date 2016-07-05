@@ -4,18 +4,20 @@
 \docType{methods}
 \name{plot}
 \alias{plot}
-\alias{plot,TargetExperiment,ANY-method}
-\alias{plot,TargetExperimentList,ANY-method}
+\alias{plot,TargetExperiment}
+\alias{plot,TargetExperimentList}
+\alias{plot.TargetExperiment}
+\alias{plot.TargetExperimentList}
 \title{Plot TargetExperiment object overview.}
 \usage{
-\S4method{plot}{TargetExperiment,ANY}(x, y, attributeThres = c(0, 1, 50, 200,
+\method{plot}{TargetExperiment}(x, y, attributeThres = c(0, 1, 50, 200,
     500, Inf), binSize = 1, spaceGene = 0.2, spaceChr = 1.2,
     innerRadius = 0.3, outerRadius = 1, guides = c(20, 40, 60, 80),
     alphaStart = -0.3, circleProportion = 0.95, direction = "inwards",
-    chrLabels = FALSE)
+    chrLabels = FALSE, ...)
 
-\S4method{plot}{TargetExperimentList,ANY}(x, y, attributeThres = c(0, 1, 50,
-    200, 500, Inf), pool = FALSE, sampleLabs = TRUE, featureLabs = FALSE)
+\method{plot}{TargetExperimentList}(x, y, attributeThres = c(0, 1, 50,
+    200, 500, Inf), pool = FALSE, sampleLabs = TRUE, featureLabs = FALSE,...)
 }
 \arguments{
 \item{x}{TargetExperiment/TargetExperimentList class object.}
@@ -52,6 +54,8 @@
 \item{sampleLabs}{Logical. Sample names must be plotted?.}
 
 \item{featureLabs}{Logical. Feature names must be plotted?.}
+
+\item{...}{not used but necessary for redefining the generic function.}
 }
 \value{
 a ggplot2 graph.
