@@ -66,6 +66,9 @@ definition=function(object,source=c("length", "gc", "pool"), dens=FALSE){
             function")
     }
     colnames(myDF)[colnames(myDF) =="width"]<-"length"
+    if(source == "pool"){
+        myDF[,"pool"]<-as.factor(myDF[,"pool"])
+    }
     # select only one bias source
     myDF<-myDF[,colnames(myDF)[colnames(myDF) %in% c(attribute, source)]]
     colnames(myDF)[colnames(myDF) == attribute]<-"attribute"
@@ -78,8 +81,9 @@ definition=function(object,source=c("length", "gc", "pool"), dens=FALSE){
     if(is.factor(myDF[,"source"])){
         colnames(myDF)[colnames(myDF) == "source"] <-"intervals"
     }else{
-        myDF[,"intervals"]<-cut(myDF[,"source"], breaks=summary(myDF[,"source"]
-            )[c(1:3, 5:6)],include.lowest=TRUE, dig.lab = 6)
+        myDF[,"intervals"]<-cut(myDF[,"source"],breaks=summary(myDF[,
+            "source"])[c(1:3, 5:6)],include.lowest=TRUE, dig.lab = 6)
+        
     }
     intervals<-NULL
     g<-ggplot(myDF,aes(x=intervals, y=attribute, fill=intervals))+

@@ -53,6 +53,9 @@ setMethod(f="initialize", signature=signature(.Object="TargetExperimentList"),
 definition=function(.Object, TEList,feature=NULL, attribute="coverage"){
     ##Set the different slots
     if(nargs() >=2){
+        if(is.null(names(TEList))){
+            names(TEList)<-paste("subject", 1:length(TEList), sep="_")
+        }
         if (length(TEList) <2){
             stop("The TEList should contain at least two TargetExperiment 
                 objects")
@@ -93,8 +96,9 @@ definition=function(.Object, TEList,feature=NULL, attribute="coverage"){
             panel<-cbind(panel, mcols(getFeaturePanel(TEList[[i]]))[,
                 attribute])
         }
-        colnames(panel)<-c(panelNames, paste(attribute,"subject", 
-            1:length(TEList), sep="_"))
+#         colnames(panel)<-c(panelNames, paste(attribute,"subject", 
+#             1:length(TEList), sep="_"))
+        colnames(panel)<-c(panelNames, paste(attribute,names(TEList), sep="_"))
         finalPanel<-GRanges(seqnames=panel[,"seqnames"], ranges=IRanges(start=
             panel[,"start"], end=panel[,"end"], names=rownames(panel)), 
             strand=panel[,"strand"])

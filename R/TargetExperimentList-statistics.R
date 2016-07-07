@@ -113,7 +113,7 @@ setMethod(f="summaryIntervals",signature=signature(object=
             aux<-c(aux, as.character(scores[,i]))
         }
         aux<-data.frame(score=factor(aux, levels=interval_names[,
-            "interval_names"]), pool=rep(df_panel[,"pool"], times=4))
+            "interval_names"]), pool=rep(df_panel[,"pool"],times=ncol(scores)))
         tabla<-as.data.frame(table(aux))
         poolLevels<-levels(as.factor(df_panel[,"pool"]))
         
