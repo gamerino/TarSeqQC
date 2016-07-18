@@ -358,6 +358,7 @@ test_buildFeaturePanel<-function(){
         package="TarSeqQC", mustWork=TRUE)
     #read only the first 2 amplicons
     bed<-getBedFile(ampliPanel)[1:2]
+    ampliPanel@bedFile<-bed
     scanBamP<-getScanBamP(ampliPanel)
     bamWhich(scanBamP)<-bed
     setScanBamP(ampliPanel)<-scanBamP
@@ -367,7 +368,7 @@ test_buildFeaturePanel<-function(){
     checkTrue(all(c("gene", "medianCounts", "IQRCounts", "coverage", 
         "sdCoverage") %in% colnames(mcols(myFeaturePanel)) ), 
         msg="buildFeaturePanel returned metadata colnames: OK.")
-    checkEquals(length(myFeaturePanel), 29, 
+    checkEquals(length(myFeaturePanel), 2, 
         msg="buildFeaturePanels returned GRanges dimension: OK.")
     checkTrue(all(names(myFeaturePanel) %in% names(getFeaturePanel(ampliPanel
         ))), msg="buildFeaturePanel returned GRanges names: OK.")
