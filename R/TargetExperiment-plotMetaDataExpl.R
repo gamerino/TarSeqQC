@@ -100,14 +100,13 @@ absolute=FALSE, color="blue"){
         if(join){
 
             p<-g+geom_violin(aes(x=as.factor(1), y=source, fill=as.factor(1)), 
-                alpha=0.5)+ geom_boxplot(aes(x=as.factor(1), y=source, fill=
-                as.factor(1)), width=0.2)+labs(title=paste(x_lab, 
-                "distribution", sep=" "), x= stat_lab,y=y_lab)+theme(
-                plot.title = element_text(size= rel(1.5), colour ="black"), 
-                title= element_text(size=14), axis.title= element_text(size=13
-                ), legend.text = element_text(size = 13))+ guides(fill=FALSE) +
-                scale_fill_manual(values= color)+ scale_x_discrete(breaks=c(1),
-                labels=c(""))
+                alpha=0.5, draw_quantiles = c(0.25, 0.5,0.75),trim=FALSE)+ 
+                labs(title=paste(x_lab, "distribution", sep=" "), x=stat_lab, 
+                y=y_lab)+theme(plot.title = element_text(size=rel(1.5), colour=
+                "black"), title= element_text(size=14),axis.title= 
+                element_text(size=13), legend.text = element_text(size = 13))+
+                guides(fill=FALSE) +  scale_fill_manual(values= color)+ 
+                scale_x_discrete(breaks=c(1),  labels=c(""))
         }else{
             box.plot<-g+geom_boxplot(aes(x=1, y=source, fill=as.factor(1)))+
                 labs(title= "", y=y_lab,x= stat_lab)+ theme(plot.title = 

@@ -123,13 +123,14 @@ medianMarg=NULL){
         y_lab<-paste("log10(", attribute,"+1)", sep="")
     }
     value<-NULL
-    g<-ggplot(dfMelt, aes(x=names, y=value, fill=scores))
+    g<-ggplot(dfMelt)
     x_lab<-feature
 
     #if dens=TRUE the boxplot and density plot are drawing together as a 
     #violin plot else only the bolxplot is displayed
     if(dens){
-        g<-g+geom_violin( alpha=0.5)+geom_boxplot( width=0.2)+labs(
+        g<-g+geom_violin(aes(x=names, y=value,fill=scores), alpha=0.5, 
+            draw_quantiles = c(0.25, 0.5,0.75), trim=FALSE)+labs(
             title="", x=x_lab,y=y_lab)+theme(
             plot.title =element_text(size=rel(1.5), colour ="black"), 
             title=element_text(size=22), axis.title=element_text(size=22),
@@ -137,9 +138,10 @@ medianMarg=NULL){
         g<-g+guides(fill= guide_legend(title=paste(attribute, "_groups", 
             sep="")))
     }else{
-        g<-g+geom_boxplot()+labs(title=" ",  x=x_lab,y=y_lab)+theme(
-            axis.title=element_text(size=14), legend.text = element_text( 
-            size = 11), axis.text.x=element_text(angle=90))+guides(fill=FALSE)
+        g<-g+geom_boxplot(aes(x=names, y=value,fill=scores))+labs(title="", 
+            x=x_lab,y=y_lab)+theme(axis.title=element_text(size=14), 
+            legend.text = element_text(size = 11), axis.text.x= element_text( 
+            angle=90))+guides(fill=FALSE)
         g<-g+guides(fill=guide_legend(title=paste(attribute, "_groups", 
             sep="")))
     }

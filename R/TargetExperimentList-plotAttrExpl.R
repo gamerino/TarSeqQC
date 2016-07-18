@@ -131,12 +131,14 @@ attributeThres=NULL){
     
     if(dens){
         if(join){
-            g<-g+geom_violin( alpha=0.5)+geom_boxplot( width=0.2)+labs(x=x_lab,
-                y=y_lab)+theme(axis.text=element_text(size=12), axis.ticks=
-                element_line(), axis.title=element_text(size=16), legend.text=
+            g<-g+geom_violin( alpha=0.5,draw_quantiles = c(0.25, 0.5,0.75),
+                trim=FALSE)+labs(x=x_lab,y=y_lab)+theme(axis.text= 
+                element_text(size=12), axis.ticks=element_line(), 
+                axis.title=element_text(size=16), legend.text=
                 element_text(size=16), legend.title=element_text(size=16))
             if(pool){
-            g<-g+facet_grid(~pool)+theme(strip.text.x = element_text(size= 10))
+                g<-g+facet_grid(~pool)+theme(strip.text.x = element_text(
+                    size= 10))
             }
             if(!is.null(attributeThres)){
                 colors<-colorRampPalette(c("red", "green"))(length(

@@ -138,9 +138,10 @@ log=TRUE, attributeThres=NULL){
         #if join the boxplot and density plot are drawing together as a violin
         #plot
         if(join){
-            g<-g+geom_violin( alpha=0.5)+geom_boxplot( width=0.2)+labs(
-                x=x_lab,y=y_lab)+theme(legend.text = element_text(size = 18),
-                legend.title = element_text(size = 18))
+            g<-g+geom_violin(alpha=0.5,draw_quantiles = c(0.25, 0.5,0.75),
+                trim=FALSE)+labs(x=x_lab,y=y_lab) +theme(legend.text = 
+                element_text(size = 18), legend.title = element_text(size = 18)
+                )
             if(!is.null(attributeThres)){
                 colors<-colorRampPalette(c("red", "green"))(length(
                     interval_names))

@@ -93,11 +93,11 @@ definition=function(object,level="feature",join=TRUE, log=TRUE, color="blue"){
     }
     #if join the boxplot and density plot are drawing together as a violin plot
     if(join){
-        g<-g+geom_violin( alpha=0.5)+geom_boxplot( width=0.2)+labs(
-            title=paste(level, attribute,sep=" "), x=x_lab,y=y_lab)+theme(
-            plot.title =element_text(size=rel(1.5), colour ="black"), 
-            title=element_text(size=22), axis.title=element_text(size=22),
-            legend.text = element_text(size = 18))
+        g<-g+geom_violin(alpha=0.5,draw_quantiles = c(0.25,0.5,0.75
+            ), trim=FALSE)+labs(title=paste(level, attribute,sep=" "), x=x_lab,
+            y=y_lab)+theme(plot.title =element_text(size=rel(1.5), 
+            colour="black"),title=element_text(size=22),axis.title= 
+            element_text(size=22),legend.text = element_text(size = 18))
         if(pool){
         g<-g+scale_fill_hue(name="Pool")
         }else{

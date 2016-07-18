@@ -86,15 +86,16 @@ definition=function(object,source=c("length", "gc", "pool"), dens=FALSE){
         
     }
     intervals<-NULL
-    g<-ggplot(myDF,aes(x=intervals, y=attribute, fill=intervals))+
-        geom_boxplot()+ labs(x = "", y =
-        attribute)+ theme(axis.title=element_text(size=22), legend.text = 
-        element_text(size = 16),legend.title=element_text(size=18))+ 
-        scale_fill_hue(name=paste(source, "groups", sep=" "))
+    g<-ggplot(myDF,aes(x=intervals, y=attribute, fill=intervals))
     if(dens){
-        g<-g+geom_violin(alpha=0.5)
+        g<-g+geom_violin(alpha=0.5,draw_quantiles = c(0.25, 0.5,0.75),
+            trim=FALSE) 
+    }else{
+        g<-g+geom_boxplot()
     }
-
+    g<-g+ labs(x = "", y = attribute)+ theme(axis.title=element_text(size=22),
+        legend.text =  element_text(size=16),legend.title=element_text(size=18)
+        ) +scale_fill_hue(name=paste(source, "groups", sep=" "))
     return(g)    
     
 })
