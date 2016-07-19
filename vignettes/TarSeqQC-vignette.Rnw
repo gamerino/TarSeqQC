@@ -50,10 +50,9 @@
 \author[2]{Yanina Murua}
 \author[2]{Andrea S Llera}
 \author[1]{Elmer A Fern\'{a}ndez}
-\affil[1]{Laboratory of Molecular and Cellular Therapy, Instituto
+\affil[1]{CONICET-Universidad Cat\'{o}lica de C\'{o}rdoba, Argentina}
+\affil[2]{Laboratory of Molecular and Cellular Therapy, Instituto
 Leloir-CONICET, Argentina}
-\affil[2]{CONICET-Universidad Cat\'{o}lica de C\'{o}rdoba, Argentina}
-
 \date{\today}
 \begin{document}
 \SweaveOpts{concordance=TRUE}
