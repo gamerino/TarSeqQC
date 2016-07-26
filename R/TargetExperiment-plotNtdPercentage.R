@@ -79,6 +79,11 @@ featureID, BPPARAM=bpparam()){
         c("A", "C", "G","T")])
     title<-paste("Ntd percentages of ", featureID,sep="")
     pos<-value<-variable<-NULL
+    if("seq" %in% colnames(cts)){
+        refSeq<-(cts$seq)
+        melt_perc[,"seq"]<-as.character(rep(refSeq,4))
+        melt_perc[,"value"][melt_perc[,"variable"] == melt_perc[,"seq"]]<-0
+    }
     p<-ggplot(data=melt_perc,aes(x=as.factor(pos), y=value, fill=variable))+
         geom_bar(stat="identity")
     color<-c(A="green", C="blue", T="red", G="brown")
@@ -90,6 +95,6 @@ featureID, BPPARAM=bpparam()){
         melt_perc$seq<-as.character(rep(refSeq,4))
         p<-p+scale_x_discrete(labels=melt_perc[,"seq"])
     }
+    p<-p+ylim(c(0,100))
     return(p)
 })
-
