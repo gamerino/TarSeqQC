@@ -27,22 +27,30 @@ definition=function(object,...){
     dfF<-lapply(1:length(index), function(i){ #hacer este una lista
     
         attrSumm<-round(summary(df_panel[,index[i]]))
-        if( "pool" %in% names(df_panel)){
-            pool_summary<-(ddply(df_panel, "pool", function(x){
-                round(summary(x[,index[i]]))
-            }))
-            pool_names<-paste("pool", pool_summary[,1], sep=" ")
-            df<-data.frame(cbind(attrSumm),t(pool_summary[,-1]))
-            names(df)<-c(getFeature(object), pool_names)
-        }else{
-            df<-data.frame(as.matrix(attrSumm))
-            names(df)<-c(getFeature(object))
-        }
+        df<-data.frame(as.matrix(attrSumm))
+        names(df)<-paste(getFeature(object), getAttribute(object), sep=" ")
         dfF<-t(df)
         colnames(dfF)<-rownames(df)
         return(dfF)
     })
     names(dfF)<-listNames
+    if( "pool" %in% names(df_panel)){
+        df_panel[,"pool"]<-as.factor(df_panel[,"pool"])
+        df2<-cbind(pool=rep(df_panel[,"pool"], times=length(index)), value= 
+            as.numeric(as.matrix(df_panel[, index])))        
+        
+        pool_summary<-lapply(levels(df_panel[,"pool"]), function(i){
+            aux<-as.data.frame(t(as.matrix(round(summary(df2[ 
+                df2[,"pool"] == i, "value"])))))
+            rownames(aux)<-paste(getFeature(object), getAttribute(object),
+                sep=" ")
+            return(aux)
+        })
+        pool_names<-paste("pool", levels(df_panel[,"pool"]), sep=" ")
+        names(pool_summary)<-pool_names
+        dfF<-c(dfF, pool_summary)
+    }
+    
     return(dfF)
 })
 #'@exportMethod summaryIntervals

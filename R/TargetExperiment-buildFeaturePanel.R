@@ -72,16 +72,16 @@ definition=function(object,BPPARAM=bpparam()){
                 ID=df[,"qname"], seqnames=df[,"rname"])
         # compute counts of all reads
             count<-coverage(reads)
-                      
+
         #compute statistics
-     
+
             index2<-which(as.character(seqnames(bed_file)) == chr)
         # select cromosome counts and features
             chrCounts <- count[[chr]]
             featRange <- ranges(bed_file[index2])[i]
             aux1 <- lapply(featRange, function(x){
                 if(all(x <= length(chrCounts))){
-                   return(chrCounts[x])
+                    return(chrCounts[x])
                 }else{ return(c(0,0))}
             }) 
     # compute average median SD and IQR for counts per feature
