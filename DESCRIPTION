@@ -33,7 +33,8 @@ Imports:
     BiocParallel,
     Biostrings,
     cowplot,
-    graphics
+    graphics,
+    GenomicAlignments
 Suggests:
     RUnit
 Collate:
