@@ -123,29 +123,37 @@ size=0.5, BPPARAM=bpparam()){
         p<-p+geom_bar(data=cts,aes(x=pos, y=G, fill="G"), size=size, 
             stat="identity")
         fill<-c( A="green", C="blue", T="red", G="brown")
-    }
+        p<-p+scale_color_manual(name="Profiles", values=color, breaks=names(
+            color))+scale_fill_manual(name="", values=c(counts="grey29", fill),
+            breaks=names(c(counts="grey29", fill)))
+    }else{
     p<-p+scale_color_manual(name="Profiles", values=color, breaks=names(color))+
-        scale_fill_manual(name="", values=c(counts="grey29", fill), breaks=
-        names(c(counts="grey29", fill)))
-    x_start<-which(cts[,"pos"] %in% start(bedFile[seqnames(
-        bedFile) == seqname]))
-    x_end<-which(cts[,"pos"] %in% end(bedFile[seqnames(bedFile) == seqname]))
-    # take into account several cases
-    # i) length(x_start) = length(x_end) and x_start > x_end
-    if (length(x_start) == length(x_end) & any(x_start > x_end)){
-        x_start<-c(1,x_start)
-        x_end<-c(x_end, nrow(cts))    
+        scale_fill_manual(name="", values=c(counts="grey29"), breaks=
+        names(c(counts="grey29")))
     }
-    # ii) length(x_start) > length(x_end) 
-    if (length(x_start) != length(x_end)){
-        if(length(x_start) > length(x_end)) {
-            x_end<-c(x_end, nrow(cts))
-        }else x_start<-c(1, x_start) # iii) length(x_start) > length(x_end)
-    }
-    # adding feature information
-    p<-p+geom_segment(data=data.frame(x_start=cts[x_start, "pos"], 
-        x_end=cts[x_end, "pos"]), aes(x=x_start,  y=-10, xend=x_end, yend=-10),
-        color="darkcyan", alpha=rep(0.7,length(x_end)), size=2)
+    bed<-as.data.frame(bedFile[seqnames(bedFile) == seqname])
+    aux<-bed[(bed$end >=region[1]  & bed$end <region[2]) | (bed$start >=
+        region[1] & bed$start <region[2]),c("start", "end")]
+    aux[aux[,"start"]< region[1] & aux[,"end"]<=region[2] ,"start"]<-region[1]
+    aux[aux[,"end"] > region[2] & aux[,"start"]>= region[1] ,"end"]<-region[2]
+#     x_start<-which 
+#     x_end<-which(cts[,"pos"] %in% end(bedFile[seqnames(bedFile) == seqname]))
+#     # take into account several cases
+#     # i) length(x_start) = length(x_end) and x_start > x_end
+#     if (length(x_start) == length(x_end) & any(x_start > x_end)){
+#         x_start<-c(1,x_start)
+#         x_end<-c(x_end, nrow(cts))    
+#     }
+#     # ii) length(x_start) > length(x_end) 
+#     if (length(x_start) != length(x_end)){
+#         if(length(x_start) > length(x_end)) {
+#             x_end<-c(x_end, nrow(cts))
+#         }else x_start<-c(1, x_start) # iii) length(x_start) > length(x_end)
+#     }
+#    
+   # adding feature information
+    p<-p+geom_segment(data=aux, aes(x=start,  y=-10, xend=end, yend=-10),
+        color="darkcyan", alpha=rep(0.7,nrow(aux)), size=2)
     p<-p+labs(title = title, x = xlab)
     p<-p+theme(panel.background=element_rect(fill="white", color="black"),
         legend.key=element_rect( fill="white", color="white"), 

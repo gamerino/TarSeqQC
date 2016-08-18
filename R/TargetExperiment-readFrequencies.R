@@ -47,13 +47,14 @@ setMethod(f="readFrequencies", signature="TargetExperiment",
 definition=function(object,BPPARAM=bpparam()){
     bed_file<-getBedFile(object)
     param <- getScanBamP(object)
+    bamFile<-getBamFile(object)
     #extract GC content from Fasta File
     chrLengths<-seqlengths(getFastaFile(object))
-    chrs <-as.character(unique(seqnames(bed_file)))
+    chrs <-as.character(seqnames(bed_file))
 
     chrGaps<-gaps(bed_file)
     # add last gaps
-    aux<-(do.call(rbind, bplapply(chrs, 
+    aux<-(do.call(rbind, bplapply(unique(chrs), 
         function(chrL){
             if (max(end(ranges(chrGaps)[seqnames(chrGaps) == chrL])) < 
                 chrLengths[chrL])
@@ -76,19 +77,19 @@ definition=function(object,BPPARAM=bpparam()){
     paramOut<-param
     bamWhat(paramOut) <-c("qname", "pos", "qwidth", "rname")
     bamWhich(paramOut)<-regionsOut
-    countsOut<- countBam(getBamFile(object), param=paramOut)
-    
     # Count reads overlapping in targeted regions
     bamWhat(param) <-c("qname", "pos", "qwidth", "rname")
-    countsIn<- countBam(getBamFile(object), param=param)
-    
+    aln<-readGAlignments(path(bamFile))
+    outCounts<-countOverlaps(aln,bamWhich(paramOut),type="within")
+    inCounts<-countOverlaps(aln,bamWhich(param))
+
     
     #compute statistics
-    info<-as.data.frame(do.call(rbind,lapply(chrs, function(chr){  
-        return(c(chr=chr, In=sum(countsIn[countsIn [,"space"] == chr,
-            "records" ]), Out=sum(countsOut[countsOut[,"space"] == chr,
-            "records"])))
-        
+    alnChr<-as.character(seqnames(aln))
+    info<-as.data.frame(do.call(rbind,lapply(unique(alnChr),function(i){
+        return(c(chr=i, In=sum(inCounts[alnChr==i]), Out=sum(
+            outCounts[alnChr==i])))
+
     })))
     info[,"In"]<-as.numeric(as.character(info[,"In"]))
     info[,"Out"]<-as.numeric(as.character(info[,"Out"]))
