@@ -59,8 +59,8 @@ log=TRUE, attributeThres=NULL){
     #selecting the panel
     df<-as.data.frame(getPanels(object))
     stopifnot(any(names(df) == "pool"))
-    y_lab<-getAttribute(object)
     attribute<-getAttribute(object)
+    y_lab<-capitalize(attribute)
     #if log the plot will be in log10 scale
     index<-do.call(c, lapply(1:ncol(df), function(i){
         if(strsplit(colnames(df)[i], split="_")[[1]][[1]] == 
@@ -112,7 +112,7 @@ log=TRUE, attributeThres=NULL){
         df[, index]<-log10(df[, index]+1)
         y_lab<-paste("log10(", attribute,"+1)", sep="")
     }else{
-        y_lab<-paste(attribute,sep=" ")
+        y_lab<-paste(capitalize(attribute),sep=" ")
     }
     df<-df[,c(index, which("pool" == names(df)), which("scores" == names(df))),
         drop=FALSE]
@@ -149,9 +149,9 @@ log=TRUE, attributeThres=NULL){
                 g<-g+scale_fill_manual(name=paste(attribute, "interval", 
                     sep=" "), breaks=interval_names, values=colors)+theme(
                     axis.text=element_text(size=16),axis.ticks=element_line()
-                    )+labs(x="pool")
+                    )+labs(x="Pool")
             }else{
-                g<-g+scale_fill_discrete("pool")+ theme(axis.text=
+                g<-g+scale_fill_discrete("Pool")+ theme(axis.text=
                     element_text(size=16), axis.text.x=element_blank(), 
                     axis.ticks.x=element_blank(), axis.title=element_text(
                     size=22))
@@ -172,11 +172,11 @@ log=TRUE, attributeThres=NULL){
                 names(colors)<-interval_names  
                 dens.plot<-dens.plot+scale_fill_manual(name=paste(attribute, 
                     "interval", sep=" "), breaks=interval_names, values=colors)
-                box.plot<-box.plot+labs(x="pool")+scale_fill_manual(values=
+                box.plot<-box.plot+labs(x="Pool")+scale_fill_manual(values=
                     colors)
 
             }else{
-                dens.plot<-dens.plot+scale_fill_discrete("pool")
+                dens.plot<-dens.plot+scale_fill_discrete("Pool")
             }    
             #arrange the plots together, with appropriate height and width for
             # each row and column
@@ -190,12 +190,13 @@ log=TRUE, attributeThres=NULL){
         if(!is.null(attributeThres)){
             colors<-colorRampPalette(c("red", "green"))(length(interval_names))
             names(colors)<-interval_names
-            g<-g+scale_fill_manual(name=paste(attribute, "interval", sep=" "),
-                breaks=interval_names, values=colors)+theme(axis.text= 
-                element_text(size=16), axis.ticks=element_line(),axis.title=
-                element_text(size=22))+labs(x="pool")
+            g<-g+scale_fill_manual(name=paste(capitalize(attribute), 
+                "intervals", sep=" "),  breaks=interval_names, values=colors)+
+                theme(axis.text= element_text(size=16), 
+                axis.ticks=element_line(),axis.title= element_text(size=22))+
+                labs(x="Pool")
         }else{
-            g<-g+scale_fill_discrete("pool")
+            g<-g+scale_fill_discrete("Pool")
         }    
 
         

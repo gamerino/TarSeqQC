@@ -93,14 +93,14 @@ complete=TRUE, log=TRUE, featureLabs=FALSE, sepChr=FALSE, legend=TRUE){
         }
         
     }else{
-        y_lab1<-paste(feature,attribute,sep=" ")
-        y_lab2<-paste("gene",attribute,sep=" ")
+        y_lab1<-paste(capitalize(feature),attribute,sep=" ")
+        y_lab2<-paste("Gene",attribute,sep=" ")
     }  
     data1<-df_panel[,c("seqnames","feature", "attribute", "score")]
     data1<-arrange(data1,seqnames,feature)
     # plotting gene level
     if(complete){
-        x_lab2<-"gene"
+        x_lab2<-"Gene"
         gene<-score<-NULL
         g2<-ggplot(data2,aes(x=as.factor(gene), y=attribute, 
             fill=score)) + geom_bar(stat="identity") + 
@@ -112,14 +112,14 @@ complete=TRUE, log=TRUE, featureLabs=FALSE, sepChr=FALSE, legend=TRUE){
             values=colors, breaks=score_levels)+ 
             geom_hline(yintercept=mean(data2[, "attribute"]), colour="red") + 
             labs(title="", x=x_lab2,y=y_lab2)
-        if(legend) g2<-g2+guides(fill=guide_legend(title=paste(attribute,
-            "_groups", sep="")))
+        if(legend) g2<-g2+guides(fill=guide_legend(title=paste(capitalize(
+            attribute), "_intervals", sep="")))
     }
     # plot feature level
     # if pool the features ar grouped by pool
     if(pool) {
         data1<-cbind(data1, pool=df_panel[,"pool"])
-        x_lab1<-"pool"
+        x_lab1<-"Pool"
         g1<-ggplot(data1,aes(x=as.factor(feature), y= attribute, 
             fill=score))+geom_bar(stat="identity")+facet_grid(~ pool,
             scales="free_x", space="free")+ theme(axis.text.x = element_blank(),
@@ -145,8 +145,8 @@ complete=TRUE, log=TRUE, featureLabs=FALSE, sepChr=FALSE, legend=TRUE){
     names(colors)<-score_levels
     g1<-g1+scale_fill_manual(values=colors, breaks=score_levels)
     if(legend){
-        g1<-g1+guides(fill=guide_legend(title=paste(attribute,"_groups", 
-            sep="")))
+        g1<-g1+guides(fill=guide_legend(title=paste(capitalize(attribute),
+            "_intervals", sep="")))
     }
     # arrange the plots together, with appropriate height and width for each 
     # row and column

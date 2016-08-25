@@ -62,7 +62,7 @@ definition=function(object,level="feature",join=TRUE, log=TRUE, color="blue"){
         df<-as.data.frame(getGenePanel(object))
     }
     pool<-"pool" %in% names(df)
-    y_lab<-getAttribute(object)
+    y_lab<-capitalize(getAttribute(object))
     attribute<-getAttribute(object)
     # computting statistics
     mean_attr<-round(mean(df[, attribute]), digits=1)
@@ -74,7 +74,7 @@ definition=function(object,level="feature",join=TRUE, log=TRUE, color="blue"){
         df[, attribute]<-log10(df[, attribute]+1)
         y_lab<-paste("log10(", level,"_", attribute,"+1)", sep="")
     }else{
-        y_lab<-paste(level, attribute,sep=" ")
+        y_lab<-paste(capitalize(level), attribute,sep=" ")
     }
     #if pool will appear one graph per pool
     if(pool) {
@@ -82,21 +82,21 @@ definition=function(object,level="feature",join=TRUE, log=TRUE, color="blue"){
         names(df)<-c("attribute", "pool")
         g<-ggplot( df,aes(x=as.factor(pool), y=attribute,fill=as.factor(pool)))
         dens.plot<-ggplot(df,aes(attribute,fill=as.factor(pool)))
-        x_lab<-"pool"
+        x_lab<-"Pool"
     }else {
         df<-df[, attribute, drop=FALSE]
         names(df)<-"attribute"
         g<-ggplot( df,aes(as.factor(1), attribute, fill=as.factor(1)))
         dens.plot<-ggplot(df,aes( attribute, fill=as.factor(1)))
-        x_lab<-paste("mean = ", mean_attr,",  sd = ", sd_attr,",  median = ", 
+        x_lab<-paste("Mean = ", mean_attr,",  sd = ", sd_attr,",  median = ", 
             median_attr, ",  IQR = ", IQR_attr, sep="")
     }
     #if join the boxplot and density plot are drawing together as a violin plot
     if(join){
-        g<-g+geom_violin(alpha=0.5,draw_quantiles = c(0.25,0.5,0.75
-            ), trim=FALSE)+labs(title=paste(level, attribute,sep=" "), x=x_lab,
-            y=y_lab)+theme(plot.title =element_text(size=rel(1.5), 
-            colour="black"),title=element_text(size=22),axis.title= 
+        g<-g+geom_violin(alpha=0.5,draw_quantiles = c(0.25,0.5,0.75), 
+            trim=FALSE)+labs(title=paste(capitalize(level), attribute, 
+            sep=" "), x=x_lab, y=y_lab)+theme(plot.title =element_text(size=
+            rel(1.5), colour="black"),title=element_text(size=22),axis.title=
             element_text(size=22),legend.text = element_text(size = 18))
         if(pool){
         g<-g+scale_fill_hue(name="Pool")
@@ -105,11 +105,11 @@ definition=function(object,level="feature",join=TRUE, log=TRUE, color="blue"){
         }
         return(g)
     }else{
-        box.plot<-g+geom_boxplot()+labs(title=paste(level,attribute,sep=" "), 
-            x=x_lab,y=y_lab)+theme(plot.title = element_text(size = rel(1.5), 
-            colour = "black"), title=element_text(size=22), 
-            axis.title=element_text(size=22), legend.text = element_text(
-            size = 18))+guides(fill=FALSE)
+        box.plot<-g+geom_boxplot()+labs(title=paste(capitalize(level), 
+            attribute,sep=" "), x=x_lab,y=y_lab)+theme(plot.title = 
+            element_text(size = rel(1.5), colour = "black"), title=
+            element_text(size=22), axis.title=element_text(size=22), 
+            legend.text = element_text(size = 18))+guides(fill=FALSE)
         #marginal density of y - plot on the right
         dens.plot<- dens.plot+geom_density(alpha=0.5)+coord_flip()+ 
             labs(title="Density",x=y_lab, y="")+theme(plot.title = element_text(

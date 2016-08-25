@@ -31,6 +31,7 @@
 #'@importFrom grDevices colorRampPalette
 #'@importFrom grDevices hcl
 #'@importFrom graphics plot
+#'@importFrom Hmisc capitalize
 #'@aliases plot,TargetExperiment,plot.TargetExperiment
 #'@seealso \code{\link{plotFeatPerform}}
 #'@note see full example in \code{\link{TargetExperiment-class}}
@@ -56,7 +57,7 @@ plot.TargetExperiment <- function(x, y, attributeThres=c(0, 1, 50, 200, 500,
 Inf),binSize=1, spaceGene=0.2,  spaceChr=1.2,  innerRadius=0.3,
 outerRadius=1, guides=c(20,40,60,80),  alphaStart=-0.3,  
 circleProportion=0.95, direction="inwards",  chrLabels=FALSE,...){
-if(attributeThres[1] !=0){
+    if(attributeThres[1] !=0){
         attributeThres<-c(0,attributeThres)
     }
     if(attributeThres[length(attributeThres)] !=Inf){
@@ -199,7 +200,8 @@ if(attributeThres[1] !=0){
         axis.text.y=element_blank(), axis.ticks=element_blank() )
     p<-p+xlim(0,tail(df_panel[,"xmin"]+binSize+spaceChr,1)/circleProportion)
     p<-p+ylim(0,outerRadius+0.2)
-    p<-p+guides(fill=guide_legend(title=paste(attribute, "_groups", sep="")))
+    p<-p+guides(fill=guide_legend(title=paste(capitalize(attribute), 
+        "_intervals", sep="")))
     p<-p+coord_polar(start=alphaStart)
     p
 

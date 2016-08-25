@@ -572,8 +572,8 @@ plotInOutFeatures(readFrequencies(myPanel))
     \label{fig:plotInOut}
 \end{figure}
 \par
-Figure \ref{fig:plotInOut} showsc that more than half sequence reads belong to 
-genomic regions outside of the expected amplicon regions (red bars). This is a
+Figure \ref{fig:plotInOut} shows that more than 15% of sequencing reads belong
+to genomic regions outside of the expected amplicons (red bars). This is a
 not expected results since it indicates that the used primers were not so 
 specifics to capture only the targeted regions. Moreover, TS libraries are 
 carefully designed to sequence specific genomic regions and the loss of a 
@@ -659,7 +659,7 @@ along their amplicons. On the contrary, ``RB1'' and ``ATM'' genes have
 some amplicons with low coverage and some other with a high coverage.
 \begin{figure}[!htp]
     \begin{center}
-        \includegraphics[scale=0.7]{plotCPP.pdf}
+        \includegraphics[scale=0.9]{plotCPP.pdf}
     \end{center}
     \caption{Cancer Panel Primer Pool overview plot.}
     \label{fig:plotCPP}
@@ -714,7 +714,7 @@ that has pool information, the output will contain statistic results for the
 amplicon level and for each pool separately.
 \begin{figure}[!htp]
     \begin{center}
-        \includegraphics[scale=0.7]{perfExplCCP.pdf}
+        \includegraphics[scale=0.3]{perfExplCCP.pdf}
     \end{center}
     \caption{Performance exploration of an Ion AmpliSeq Comprehensive Cancer 
             Panel experiment.}

@@ -63,19 +63,19 @@ object= "TargetExperiment"), definition=function(object, geneID){
         g<-ggplot(df_panel, aes(x=as.factor(feature_id), y=attr, fill=as.factor(
             pool)))+geom_bar(stat = "identity")+theme(
             axis.text.x = element_text(size = 18, colour = "black", angle = 60)
-            )+scale_fill_hue(name = "Pool")+labs(x=paste(feature,"s of ", 
-            geneID, " gene", sep="" ), y=paste(feature, attribute, sep =" "), 
-            title=paste(feature, attribute, "of ", geneID, "gene", sep=" "))+
-            scale_x_discrete(limits=as.character(df_panel[,"feature_id"]))+
-            theme(title=element_text(size=22), axis.title=element_text(size=22),
-            legend.text = element_text(size = 18))
+            )+scale_fill_hue(name = "Pool")+labs(x=capitalize(feature), 
+            y=paste(capitalize(feature), attribute, sep =" "), 
+            title=paste(capitalize(feature), attribute, "of ", geneID, "gene",
+            sep=" "))+ scale_x_discrete(limits=as.character(df_panel[,
+            "feature_id"]))+theme(title=element_text(size=22), axis.title=
+            element_text(size=22), legend.text = element_text(size = 18))
     }else{
         g<-ggplot(df_panel,aes(x=as.factor(feature_id), y=attr, fill=as.factor(
             feature_id))) + geom_bar(stat = "identity") + theme(
             axis.text.x = element_text(size=18, colour= "black", angle = 60)) +
-            scale_fill_hue() +labs(x=paste(feature,"s of ", 
-            geneID, " gene", sep="" ), y=paste(feature, attribute, sep =" "), 
-            title=paste( feature, attribute, "of ", geneID, "gene", sep=" ")) +
+            scale_fill_hue() +labs(x=capitalize(feature), y=paste(capitalize(
+            feature), attribute, sep =" "), title=paste(capitalize( feature),
+            attribute, "of ", geneID, "gene", sep=" ")) +
             scale_x_discrete(limits=as.character(df_panel[,"feature_id"]))+
             theme(title=element_text(size=22), axis.title=element_text(size=22),
             legend.position="none")

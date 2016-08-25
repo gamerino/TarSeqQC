@@ -151,10 +151,10 @@ size=0.5, BPPARAM=bpparam()){
 #         }else x_start<-c(1, x_start) # iii) length(x_start) > length(x_end)
 #     }
 #    
-   # adding feature information
+# adding feature information
     p<-p+geom_segment(data=aux, aes(x=start,  y=-10, xend=end, yend=-10),
         color="darkcyan", alpha=rep(0.7,nrow(aux)), size=2)
-    p<-p+labs(title = title, x = xlab)
+    p<-p+labs(title = title, x = xlab, y="Counts")
     p<-p+theme(panel.background=element_rect(fill="white", color="black"),
         legend.key=element_rect( fill="white", color="white"), 
         panel.grid.major=element_line(color="lightgoldenrod3"), 

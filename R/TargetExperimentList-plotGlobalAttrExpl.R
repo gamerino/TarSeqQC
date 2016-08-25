@@ -72,7 +72,7 @@ medianMarg=NULL){
     }
     attribute<-getAttribute(object)
     feature<-getFeature(object)
-    y_lab<-attribute
+    y_lab<-capitalize(attribute)
     index<-do.call(c, lapply(1:ncol(df), function(i){
         if(strsplit(colnames(df)[i], split="_")[[1]][[1]] == 
             attribute){
@@ -124,7 +124,7 @@ medianMarg=NULL){
     }
     value<-NULL
     g<-ggplot(dfMelt)
-    x_lab<-feature
+    x_lab<-capitalize(feature)
 
     #if dens=TRUE the boxplot and density plot are drawing together as a 
     #violin plot else only the bolxplot is displayed
@@ -135,15 +135,15 @@ medianMarg=NULL){
             plot.title =element_text(size=rel(1.5), colour ="black"), 
             title=element_text(size=22), axis.title=element_text(size=22),
             legend.text = element_text(size = 18))
-        g<-g+guides(fill= guide_legend(title=paste(attribute, "_groups", 
-            sep="")))
+        g<-g+guides(fill= guide_legend(title=paste(capitalize(attribute),
+            "_intervals",  sep="")))
     }else{
         g<-g+geom_boxplot(aes(x=names, y=value,fill=scores))+labs(title="", 
             x=x_lab,y=y_lab)+theme(axis.title=element_text(size=14), 
             legend.text = element_text(size = 11), axis.text.x= element_text( 
             angle=90))+guides(fill=FALSE)
-        g<-g+guides(fill=guide_legend(title=paste(attribute, "_groups", 
-            sep="")))
+        g<-g+guides(fill=guide_legend(title=paste(capitalize(attribute), 
+            "_intervals",  sep="")))
     }
     if(pool){
         g<-g+facet_grid(~ pool, scales="free_x", space="free")
@@ -202,7 +202,7 @@ medianMarg=NULL){
     names(colors)<-interval_names
     g<-g+scale_fill_manual(name=paste(attribute, "interval", sep=" "),
         breaks=interval_names, values=colors)+guides(fill=
-        guide_legend(title=paste(attribute, "_groups", sep="")))
+        guide_legend(title=paste(capitalize(attribute), "_intervals", sep="")))
     
     return(g)
 })

@@ -75,7 +75,7 @@ absolute=FALSE, color="blue"){
             data name")
         }
     }
-    x_lab<-paste(source)
+    x_lab<-paste(capitalize(source))
     
     if(source == "length") source<-"width"
     colnames(myDF)[colnames(myDF) == source]<-"source"
@@ -88,11 +88,11 @@ absolute=FALSE, color="blue"){
         sd_attr<-round(sd(myDF[, "source"]), digits=1)
         median_attr<-round(median(myDF[, "source"]), digits=1)
         IQR_attr<-round(IQR(myDF[, "source"]), digits=1)
-        stat_lab<-paste("mean = ", mean_attr,",  sd = ",sd_attr,",  median = ",
+        stat_lab<-paste("Mean = ", mean_attr,",  sd = ",sd_attr,",  median = ",
             median_attr, ",  IQR = ", IQR_attr, sep="")
         if(log){
             myDF[, "source"]<-log10(myDF[, "source"]+1)
-            y_lab<-paste("log10(",x_lab,"+1)", sep="")
+#             y_lab<-paste("log10(",x_lab,"+1)", sep="")
         }else{
             y_lab<-paste(x_lab)
         }
@@ -115,7 +115,7 @@ absolute=FALSE, color="blue"){
                 legend.position="none")+guides(fill=FALSE) + scale_fill_manual(
                 values=color) + scale_x_continuous(breaks=1,labels="")
             dens.plot<- g+geom_density(aes(x=source, fill=as.factor(1)), 
-                alpha=0.5)+ coord_flip()+ labs(title="", x=y_lab, y="density")+
+                alpha=0.5)+ coord_flip()+ labs(title="", x=y_lab, y="Density")+
                 theme(plot.title = element_text(size = rel(1.5), colour = 
                 "black"), title= element_text(size=14), axis.title= 
                 element_text(size=13), legend.position = "none")+

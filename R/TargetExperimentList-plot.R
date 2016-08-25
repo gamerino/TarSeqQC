@@ -103,7 +103,7 @@ featureLabs=FALSE, ...){
     names(colors)<-interval_names[,"interval_names"]
     g<-g+scale_fill_manual(name=paste(attribute, "interval", sep=" "), breaks=
         interval_names[,"interval_names"], values=colors)+guides(fill=
-        guide_legend(title=paste( attribute, "_groups", sep="")))
+        guide_legend(title=paste( capitalize(attribute), "_intervals", sep="")))
     if(!featureLabs){
         g<-g+theme(axis.text.x=element_blank(), axis.ticks.x=element_blank())
     }else{
@@ -112,7 +112,7 @@ featureLabs=FALSE, ...){
     if(!sampleLabs){
         g<-g+theme(axis.text.y=element_blank(), axis.ticks.y=element_blank())
     }
-    g<-g+labs(x=getFeature(x), y= "samples")
+    g<-g+labs(x=capitalize(getFeature(x)), y= "Samples")
     if (pool){
     g<-g+facet_grid(~ pool, scales="free")
     }

@@ -66,19 +66,19 @@ attributeThres=NULL){
         if(pool){
             poolIndex<-which(colnames(df)=="pool")
             medians<-as.data.frame(do.call(rbind,lapply(index, function(x){
-                sample<-strsplit(colnames(df[,x,drop=FALSE]), split=paste(
+                Sample<-strsplit(colnames(df[,x,drop=FALSE]), split=paste(
                     attribute, "_",sep=""))[[1]][2]
                 res<-do.call(rbind,lapply(unique(df[,poolIndex]), function(j){
                     return(c(pool=j, median=median(df[df[,"pool"]==j, x])))}))
-                return(cbind(sample=sample, res=res))
+                return(cbind(Sample=Sample, res=res))
             })))
             medians[,"median"]<-as.numeric(as.character(medians[,"median"]))
 
         }else{
             medians<-as.data.frame(do.call(rbind,lapply(index, function(x){
-                sample<-strsplit(colnames(df[,x,drop=FALSE]), split=paste(
+                Sample<-strsplit(colnames(df[,x,drop=FALSE]), split=paste(
                     attribute, "_",sep=""))[[1]][2]
-                return(c(sample=sample, median=median(df[,x])))
+                return(c(Sample=Sample, median=median(df[,x])))
             
             })))
             medians[,"median"]<-as.numeric(as.character(medians[,"median"]))
@@ -88,15 +88,15 @@ attributeThres=NULL){
                 include.lowest=TRUE,   right=FALSE, dig.lab = 6)
         levels(scores)<-interval_names
         medians[,"scores"]<-scores
-        colnames(df[,index])<-unique(medians[,"sample"])
+        colnames(df[,index])<-unique(medians[,"Sample"])
     }
     if(log){
         df[, index]<-log10(df[, index]+1)
         y_lab<-paste("log10(", attribute,"+1)", sep="")
     }else{
-        y_lab<-paste(attribute,sep=" ")
+        y_lab<-capitalize(attribute)
     }
-    x_lab<-"sample"
+    x_lab<-"Sample"
     #if pool will appear one graph per pool
     if(pool) {
         df<-df[,c(index, which("pool" == names(df))), drop=FALSE]
@@ -113,10 +113,10 @@ attributeThres=NULL){
     if(!(is.null(attributeThres))){
         if(pool){
             m1<-paste(dfMelt[,"pool"],dfMelt[,"variable"],sep="")
-            m2<-paste(medians[,"pool"], medians[,"sample"],sep="")
+            m2<-paste(medians[,"pool"], medians[,"Sample"],sep="")
         }else{
             m1<-dfMelt[,"variable"]
-            m2<-medians[,"sample"]
+            m2<-medians[,"Sample"]
         }
         dfMelt[,"scores"]<-medians[match(m1,m2),"scores"]
 
@@ -144,12 +144,12 @@ attributeThres=NULL){
                 colors<-colorRampPalette(c("red", "green"))(length(
                     interval_names))
                 names(colors)<-interval_names
-                g<-g+scale_fill_manual(name=paste(attribute, "interval", 
-                    sep=" "), breaks=interval_names, values=colors)+theme(
-                    axis.text=element_text(size=12), axis.ticks=
-                    element_line())+labs(x="sample")
+                g<-g+scale_fill_manual(name=paste(capitalize(attribute), 
+                    "intervals", sep=" "), breaks=interval_names, values=
+                    colors)+theme(axis.text=element_text(size=12), axis.ticks=
+                    element_line())+labs(x="Sample")
             }else{
-                g<-g+scale_fill_discrete("sample")+ theme(axis.text=
+                g<-g+scale_fill_discrete("Sample")+ theme(axis.text=
                     element_text(size=12), axis.text.x=element_blank(), 
                     axis.ticks.x=element_blank(), axis.title=element_text(
                     size=16))
@@ -177,13 +177,14 @@ attributeThres=NULL){
                 colors<-colorRampPalette(c("red", "green"))(length(
                     interval_names))
                 names(colors)<-interval_names
-                dens.plot<-dens.plot+scale_fill_manual(name=paste(attribute,
-                    "interval", sep=" "), breaks=interval_names, values=colors)
-                box.plot<-box.plot+labs(x="sample")+ scale_fill_manual(name=
-                    paste(attribute, "interval", sep=" "), breaks=
+                dens.plot<-dens.plot+scale_fill_manual(name=paste(capitalize(
+                    attribute), "intervals", sep=" "), breaks=interval_names, 
+                    values=colors)
+                box.plot<-box.plot+labs(x="Sample")+ scale_fill_manual(name=
+                    paste(capitalize(attribute), "intervals", sep=" "), breaks=
                     interval_names, values=colors)
             }else{
-                dens.plot<-dens.plot+scale_fill_discrete("sample")+ theme( 
+                dens.plot<-dens.plot+scale_fill_discrete("Sample")+ theme( 
                     axis.text.x=element_blank(), axis.ticks.x=element_blank())
                 box.plot<-box.plot+theme(axis.text.x=element_blank(), 
                     axis.ticks.x=element_blank())
@@ -205,11 +206,12 @@ attributeThres=NULL){
         if(!is.null(attributeThres)){
             colors<-colorRampPalette(c("red", "green"))(length(interval_names))
             names(colors)<-interval_names
-            g<-g+scale_fill_manual(name=paste(attribute, "interval", sep=" "),
-                breaks=interval_names, values=colors)+theme( axis.text= 
-                element_text(size=12), axis.ticks= element_line(), axis.title=
-                element_text(size=16), legend.text= element_text( size=16), 
-                legend.title= element_text(size=16))+labs(x="sample")
+            g<-g+scale_fill_manual(name=paste(capitalize(attribute), 
+                "intervals", sep=" "), breaks=interval_names, values=colors)+
+                theme( axis.text= element_text(size=12), axis.ticks= 
+                element_line(), axis.title= element_text(size=16), legend.text=
+                element_text( size=16), legend.title= element_text(size=16))+
+                labs(x="Sample")
         }else{
             g<-g+scale_fill_discrete("")+theme(axis.text.x=element_blank(), 
                 axis.ticks.x=element_blank())

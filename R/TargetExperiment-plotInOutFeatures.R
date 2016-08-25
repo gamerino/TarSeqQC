@@ -53,18 +53,18 @@ definition=function(object, absolute=FALSE){
     }
     if (absolute){
         object<-object[,colnames(object) %in% c("chr","In", "Out")]
-        colnames(object)<-c("chromosome", "In targets", "Out targets")
+        colnames(object)<-c("Chromosome", "In targets", "Out targets")
     }else {
         object<-object[,colnames(object) %in% c("chr", "InPerc", 
             "OutPerc")]
-        colnames(object)<-c("chromosome", "In targets (%)", 
+        colnames(object)<-c("Chromosome", "In targets (%)", 
             "Out targets (%)")
     }
-    reshapeInfo<-melt(object, id.vars="chromosome")
-    chromosome<-value<-variable<-NULL
-    g<-ggplot(reshapeInfo, aes(x=chromosome, y=value, fill=variable))+geom_bar(
+    reshapeInfo<-melt(object, id.vars="Chromosome")
+    Chromosome<-value<-variable<-NULL
+    g<-ggplot(reshapeInfo, aes(x=Chromosome, y=value, fill=variable))+geom_bar(
         stat="identity", position="dodge")+theme(legend.title=element_blank())+
-        scale_fill_manual(values=c("blue", "red"))
+        scale_fill_manual(values=c("blue", "red"))+labs(y="Value")
     return(g)
 })
 #'@rdname plotInOutFeatures

@@ -81,8 +81,8 @@ definition=function(object,BPPARAM=bpparam()){
     # Count reads overlapping in targeted regions
     bamWhat(param) <-c("qname", "pos", "qwidth", "rname")
     aln<-readGAlignments(path(bamFile))
-    outCounts<-countOverlaps(aln,bamWhich(paramOut),type="within")
-    inCounts<-countOverlaps(aln,bamWhich(param))
+    outCounts<-countOverlaps(aln,GRanges(bamWhich(paramOut)),type="within")
+    inCounts<-countOverlaps(aln,GRanges(bamWhich(param)))
 
     
     #compute statistics

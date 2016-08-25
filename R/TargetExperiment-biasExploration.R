@@ -93,9 +93,12 @@ definition=function(object,source=c("length", "gc", "pool"), dens=FALSE){
     }else{
         g<-g+geom_boxplot()
     }
-    g<-g+ labs(x = "", y = attribute)+ theme(axis.title=element_text(size=22),
-        legend.text =  element_text(size=16),legend.title=element_text(size=18)
-        ) +scale_fill_hue(name=paste(source, "groups", sep=" "))
+    labName<-source
+    if(labName=="gc") labName<-"GC"
+    g<-g+labs(x = "", y = capitalize(attribute))+ theme(axis.title=
+        element_text(size=22), legend.text =  element_text(size=16),
+        legend.title=element_text(size=18)) +scale_fill_hue(name=paste(
+        capitalize(labName), "groups", sep=" "))
     return(g)    
     
 })

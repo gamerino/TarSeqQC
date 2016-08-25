@@ -51,7 +51,8 @@ definition=function(object, attributeThres=c(0,1,50,200,500, Inf)){
     df_panel<-summaryIntervals(object,attributeThres, pool)
     intervals<-cum_rel<-NULL
     if(is.data.frame(df_panel)){
-        intervalName<-names(df_panel)[1]
+        intervalName<-paste(capitalize(getAttribute(object)), 
+            "intervals", sep="_")
         names(df_panel)[1]<-"intervals"
         df_panel[,"intervals"]<-factor(df_panel[,"intervals"], 
             levels=df_panel[,"intervals"])
@@ -61,8 +62,8 @@ definition=function(object, attributeThres=c(0,1,50,200,500, Inf)){
         g<-ggplot(df_panel)+geom_bar(stat="identity", aes(x=intervals, 
             y=rel, fill=intervals))+geom_point(aes(x=intervals, y=cum_rel))+
             geom_line(aes(x=intervals, y=cum_rel, group=1, color=as.factor(
-            "cumulative frequency")))+xlab(paste(intervalName))+ylab(
-            "frequency (%)")+scale_fill_manual(values=colors, name=
+            "Cumulative frequency")))+xlab("")+ylab(
+            "Frequency (%)")+scale_fill_manual(values=colors, name=
             intervalName)+scale_color_manual(name="", values="black")
     
     
@@ -74,15 +75,16 @@ definition=function(object, attributeThres=c(0,1,50,200,500, Inf)){
             poolValues<-c(poolValues, rep(poolNames[i],  nrow(df_panel[[i]])))
         }
         df_panel<-cbind(do.call(rbind, df_panel), poolValues)
-        intervalName<-names(df_panel)[1]
+        intervalName<-paste(capitalize(getAttribute(object)), 
+            "intervals", sep="_")
         names(df_panel)[1]<-"intervals"
         df_panel[,"intervals"]<-factor(df_panel[,"intervals"], 
             levels=unique(df_panel[,"intervals"]))
         colors<-ggplotColours(object, n=(length(poolNames)))
         g<-ggplot(df_panel)+geom_point(aes(x=intervals, y=cum_rel, color=
             poolValues))+geom_line(aes(x=intervals, y=cum_rel, 
-            group=poolValues, color=poolValues))+xlab(paste(intervalName))+
-            ylab("frequency (%)")+scale_color_manual(name="pool", values=colors)
+            group=poolValues, color=poolValues))+xlab("")+
+            ylab("Frequency (%)")+scale_color_manual(name="Pool", values=colors)
         }
     
     return(g)    
