@@ -88,9 +88,9 @@ featureID, BPPARAM=bpparam()){
         geom_bar(stat="identity")
     color<-c(A="green", C="blue", T="red", G="brown")
     p<-p+scale_fill_manual(name="Nucleotides", values=color, breaks=names(
-        color)) + labs(title=title, x="", y="Ntd %")+theme(title=element_text(
-        size=22), axis.title=element_text(size=22), legend.text=element_text(
-        size=18))
+        color)) + labs(title=title, x="", y="Ntd %")+theme(plot.title=
+        element_text(size=22, hjust=0.5), axis.title=element_text(size=22),
+        legend.text=element_text(size=18))
     if("seq" %in% colnames(cts)){
         refSeq<-(cts$seq)
         melt_perc$seq<-as.character(rep(refSeq,4))

@@ -64,6 +64,10 @@ complete=TRUE, log=TRUE, featureLabs=FALSE, sepChr=FALSE, legend=TRUE){
     if(attributeThres[length(attributeThres)] !=Inf){
         attributeThres<-c(attributeThres, Inf)
     }
+    if(!(getAttribute(object) %in% c("coverage", "medianCounts"))){
+        stop("Attribute slot should be defined in order to call the
+            function")
+    }
     df_panel<-cbind(as.data.frame(getFeaturePanel(object)), feature=names(
         getFeaturePanel(object)))
     names(df_panel)[names(df_panel) == getAttribute(object)] <- "attribute"

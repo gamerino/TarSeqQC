@@ -36,9 +36,9 @@ TargetExperiment object.
 }
 \description{
 \code{TargetExperiment} creates a TargetExperiment object with the
-architecture specified by the bed and alingment BAM files. If 'scanBamP' 
+architecture specified by the bed and alignment BAM files. If 'scanBamP' 
 and/or 'pileupP' parameters are not specified, default values of their 
-constructors will be used. attribute and feature parameters can be setted 
+constructors will be used. attribute and feature parameters can be set 
 after constructor calling.
 }
 \note{

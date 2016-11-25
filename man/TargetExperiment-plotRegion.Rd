@@ -7,11 +7,12 @@
 \alias{plotRegion-methods}
 \title{Plot read profiles for a particular genomic region.}
 \usage{
-plotRegion(object, region, seqname, SNPs = TRUE, xlab = "", title = "",
-    size = 0.5, BPPARAM = bpparam())
+plotRegion(object, region, seqname, SNPs = TRUE, minAAF=0.05, minRD=10, 
+    xlab = "", title = "", size = 0.5, BPPARAM = bpparam())
 
 \S4method{plotRegion}{TargetExperiment}(object, region, seqname, SNPs = TRUE,
-    xlab = "", title = "", size = 0.5, BPPARAM = bpparam())
+    minAAF=0.05, minRD=10, xlab = "", title = "", size = 0.5, 
+    BPPARAM = bpparam())
 }
 \arguments{
 \item{object}{TargetExperiment object.}
@@ -21,6 +22,12 @@ plotRegion(object, region, seqname, SNPs = TRUE, xlab = "", title = "",
 \item{seqname}{Character indicating the chromosome of the genomic region.}
 
 \item{SNPs}{Logical flag indicating if SNPs should be plotted.}
+
+\item{minAAF}{Numeric indicating the minimum alternative allele proportion 
+necessary to call a SNP.}
+
+\item{minRD}{Numeric indicating the minimum read depth of alternative 
+alleles necessary to call a SNP.}
 
 \item{xlab}{Character containing the axis x label.}
 
@@ -37,9 +44,12 @@ ggplot2 graphics.
 include TargetExperiment-FeatPerform.R
 }
 \description{
-\code{plotRegion} plots the read profiles for a selected region. If SNPs is
-set as 'TRUE', colored bars will appear indicating the ocurrence of SNPs at 
-each genomic position.
+\code{plotRegion} plots the read profiles for a selected region. The minAAF 
+parameter set the minimum proportion value to call an SNP and the minRD the 
+minimum read depth. They are combined to  obtain a minimum read count value at
+each position used to distinguish between possible SNPs and background noise. 
+If SNPs is set as 'TRUE', colored bars will appear indicating the occurrence of
+possible SNPs surpassing the minAAF and minRD, at each genomic position.
 }
 \note{
 see full example in \code{\link{TargetExperiment-class}}

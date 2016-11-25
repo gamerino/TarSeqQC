@@ -1,13 +1,20 @@
 #'Plot read profiles for a particular feature.
 #'
-#'\code{plotFeature} plots the achieved performance for each feature/gene.
-#'The resulting graph shows one bar per each feature/gene with heights
-#'according to its attribute value. If complete is set as TRUE two bar plots
-#'(feature and gene level) will be stored in the resulting ggplot object.
+#'\code{plotFeature} plots the read profiles for a selected feature The minAAF 
+#'parameter set the minimum proportion value
+#'to call an SNP and the minRD the minimum read depth. They are combined to 
+#'obtain a minimum read count value at each position used to distinguish 
+#'between possible SNPs and background noise. If SNPs is
+#'set as 'TRUE', colored bars will appear indicating the occurrence of possible 
+#'SNPs surpassing the minAAF and minRD, at each genomic position.
 #'
 #'@param object TargetExperiment object.
 #'@param featureID Character indicating the ID of the feature.
 #'@param SNPs Logical flag indicating if SNPs should be plotted.
+#'@param minAAF Numeric indicating the minimum alternative allele proportion 
+#'necessary to call a SNP.
+#'@param minRD Numeric indicating the minimum read depth of alternative 
+#'alleles necessary to call a SNP.
 #'@param xlab Character containing the axis x label.
 #'@param title Character containing the plot title.
 #'@param size Numeric indicating the size of line plots.
@@ -43,7 +50,7 @@
 #'g
 #'}
 setGeneric(name="plotFeature", def=function(object,featureID, SNPs=TRUE, 
-xlab="", title="",size=0.5, BPPARAM=bpparam()){
+minAAF=0.05, minRD=10, xlab="", title="",size=0.5, BPPARAM=bpparam()){
     standardGeneric("plotFeature")
 })
 #'
@@ -54,8 +61,8 @@ xlab="", title="",size=0.5, BPPARAM=bpparam()){
 #'@aliases plotFeature,TargetExperiment-method
 #'@inheritParams plotFeature
 setMethod(f="plotFeature", signature=signature(object="TargetExperiment"),
-definition=function(object, featureID, SNPs=TRUE,  xlab="", title=featureID, 
-size=0.5, BPPARAM=bpparam()){
+definition=function(object, featureID, SNPs=TRUE,  minAAF=0.05, minRD=10, 
+xlab="", title=featureID, size=0.5, BPPARAM=bpparam()){
     bpprogressbar(BPPARAM)<-TRUE
     bed_file<-getBedFile(object)
     
@@ -70,7 +77,8 @@ size=0.5, BPPARAM=bpparam()){
         featureID, sep =""))
     }
     p<-plotRegion(object,region=c(start(bed_feature), end(bed_feature)), 
-        seqname=runValue(seqnames(bed_feature)), SNPs,  xlab, title, size, 
+        seqname=runValue(seqnames(bed_feature)), SNPs,  minAAF, minRD, xlab,
+        title, size, 
         BPPARAM)
 
     return(p)

@@ -1,15 +1,15 @@
 #'Function to obtain the pileup counts for a bam file.
 #'
-#'\code{pileupCounts} waits a TargetExperiment object containing the bed file
-#'information in order to obtain pileup counts only for the specified genomic
-#'regions. The resulting object is a data.frame instance, in which each row 
-#'represents one position of the specified features across the bed file. The 
-#'first three columns called 'pos', 'seqnames' and 'which_label,' represent the
-#'position in the seqnames (e.g. pos=10183795 and seqnames=chr3) and the 
-#'associated feature. According to the 'pileupP' parameters setted before, the 
-#'number of next columns could change. If 'distinguish_nucleotide' was set as
+#'\code{pileupCounts} waits for a TargetExperiment object containing the bed
+#' file information in order to obtain pileup counts only for the specified 
+#'genomic regions. The resulting object is a data.frame instance, in which each
+#'row represents one position of the specified features across the bed file. 
+#'The first three columns called 'pos', 'seqnames' and 'which_label,' represent
+#'the position in the seqnames (e.g. pos=10183795 and seqnames=chr3) and the 
+#'associated feature. According to the 'pileupP' parameters set before, the 
+#'number of next columns could change. If 'distinguish_nucleotide' was set to
 #'TRUE, then one column per ntd will appear containing the counts obtained for
-#'each of them. Same will occur when 'distinguish_strands' is set as TRUE. The
+#'each of them. Same will occur when 'distinguish_strands' is set to TRUE. The
 #'last column, called 'counts', contains the total counts obtained for the
 #'corresponding position.
 #'

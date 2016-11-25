@@ -33,9 +33,9 @@
 
 \item{spaceChr}{Numeric. Space between chromosomes.}
 
-\item{innerRadius}{Numeric. Radius of inner circle.}
+\item{innerRadius}{Numeric. Radius of the inner circle.}
 
-\item{outerRadius}{Numeric. Radius of outer circle.}
+\item{outerRadius}{Numeric. Radius of the outer circle.}
 
 \item{guides}{A vector with percentages to use for the white guide lines.}
 
@@ -44,7 +44,7 @@
 \item{circleProportion}{Numeric proportion of the circle to cover.}
 
 \item{direction}{Character indicating if the increasing count goes from or
-    to the centre.}
+    to the center.}
 
 \item{chrLabels}{Logical. Chromosome names must be plotted?.}
 
@@ -63,12 +63,12 @@ a ggplot2 graph.
 \description{
 \code{plot} allows a fast and simple representation of one feature panel
 using a polar histogram plot. Histogram bar reflects the percentage of 
-features that have shown the analyzed attribute in a user setted interval.
+features that have shown the analyzed attribute in a user set interval.
 The resulting graph can be busy and might be better off saved.
 
 For TargetExperimentList objects, \code{plot} allows a fast and simple 
 representation of several feature panels using a heatmap plot. Along the
-x-axis feature are represented and patients/samples along the y-axis. 
+x-axis, the features are represented and patients/samples along the y-axis. 
 Finally, each cell is colored according to the attribute interval.
 }
 \note{

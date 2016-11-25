@@ -7,14 +7,21 @@
 \alias{plotGeneAttrPerFeat-methods}
 \title{Plot the attribute value for all the features of a selected gene.}
 \usage{
-plotGeneAttrPerFeat(object, geneID)
+plotGeneAttrPerFeat(object, geneID, overlap=FALSE, level="feature")
 
-\S4method{plotGeneAttrPerFeat}{TargetExperiment}(object, geneID)
+\S4method{plotGeneAttrPerFeat}{TargetExperiment}(object, geneID, overlap=FALSE,
+level="feature")
 }
 \arguments{
 \item{object}{TargetExperiment object.}
 
 \item{geneID}{Character indicating the ID of the selected gene.}
+
+\item{overlap}{Logical indicating if the amplicons should be collapsed in 
+overlapped regions.}
+\item{level}{ Character indicating the level of the plot. Can be 'feature', to
+plot the features' attribute; 'region', to plot overlapped regions'
+attribute or 'both'to generate the two previos plots}
 }
 \value{
 ggplot2 graphics.
@@ -30,9 +37,17 @@ see full example in \code{\link{TargetExperiment-class}}
 \examples{
 ## Loading the TargetExperiment object
 data(ampliPanel, package="TarSeqQC")
-
-# Exploring amplicon attribute values for a particular gene
+## Exploring amplicon attribute values for a particular gene
+# Ignoring amplicon overlapping 
 g<-plotGeneAttrPerFeat(ampliPanel, geneID="gene4")
+# Adjust text size
+g<-g+theme(title=element_text(size=16), axis.title=element_text(size=16),
+legend.text=element_text(size=14))
+if(interactive()){
+g
+}
+# Considering amplicon overlapping 
+g<-plotGeneAttrPerFeat(ampliPanel, geneID="gene4", overlap=TRUE, level="both")
 # Adjust text size
 g<-g+theme(title=element_text(size=16), axis.title=element_text(size=16),
 legend.text=element_text(size=14))

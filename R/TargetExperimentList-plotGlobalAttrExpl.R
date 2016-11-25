@@ -132,7 +132,7 @@ medianMarg=NULL){
         g<-g+geom_violin(aes(x=names, y=value,fill=scores), alpha=0.5, 
             draw_quantiles = c(0.25, 0.5,0.75), trim=FALSE)+labs(
             title="", x=x_lab,y=y_lab)+theme(
-            plot.title =element_text(size=rel(1.5), colour ="black"), 
+            plot.title =element_text(size=rel(1.5), colour ="black",hjust=0.5), 
             title=element_text(size=22), axis.title=element_text(size=22),
             legend.text = element_text(size = 18))
         g<-g+guides(fill= guide_legend(title=paste(capitalize(attribute),
@@ -141,7 +141,8 @@ medianMarg=NULL){
         g<-g+geom_boxplot(aes(x=names, y=value,fill=scores))+labs(title="", 
             x=x_lab,y=y_lab)+theme(axis.title=element_text(size=14), 
             legend.text = element_text(size = 11), axis.text.x= element_text( 
-            angle=90))+guides(fill=FALSE)
+            angle=90),plot.title =element_text(size=rel(1.5), colour ="black",
+            hjust=0.5))+guides(fill=FALSE)
         g<-g+guides(fill=guide_legend(title=paste(capitalize(attribute), 
             "_intervals",  sep="")))
     }

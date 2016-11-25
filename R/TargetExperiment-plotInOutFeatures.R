@@ -3,13 +3,13 @@
 #'
 #'\code{plotInOutFeatures} allows the graphical exploration of the data 
 #'frame obtained using \code{readFrequencies}. This data frame contains
-#'information about amount of reads mapped into the targeted regions and out of
-#'them. This information is presented in rows, one for each chromosome and in 
-#'absolute and relative amounts. After it invokation, a bar plot built as a 
+#'information about the amount of reads mapped to the targeted regions and out
+#'of them. This information is presented in rows, one for each chromosome and
+#'in absolute and relative amounts. After it invocation, a bar plot built as a 
 #'ggplot object is returned
 #'
 #'@param object a data frame or a TargetExperiment.
-#'@param absolute logical indicating if absoulte frequency should be used.
+#'@param absolute logical indicating if absolute frequency should be used.
 #'@param ... additional parameters according to the function call
 #'
 #'@return ggplot object.

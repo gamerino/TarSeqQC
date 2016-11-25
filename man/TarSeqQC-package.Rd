@@ -25,7 +25,7 @@ packages. This package includes the new following features:
     \item Customizable pileup build parameters.
     \item Incorporation of fasta sequence.
     \item Fast exploration of read profile for particular features or genomic
-            regions, coloring SNPs occurences.
+            regions, coloring SNPs occurrences.
 }
 }
 \author{

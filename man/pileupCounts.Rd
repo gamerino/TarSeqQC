@@ -29,16 +29,16 @@ back-end to be used during evaluation.}
 data.frame object.
 }
 \description{
-\code{pileupCounts} waits a TargetExperiment object containing the bed file
+\code{pileupCounts} waits for a TargetExperiment object containing the bed file
 information in order to obtain pileup counts only for the specified genomic
 regions. The resulting object is a data.frame instance, in which each row 
 represents one position of the specified features across the bed file. The 
 first three columns called 'pos', 'seqnames' and 'which_label,' represent the
 position in the seqnames (e.g. pos=10183795 and seqnames=chr3) and the 
-associated feature. According to the 'pileupP' parameters setted before, the 
-number of next columns could change. If 'distinguish_nucleotide' was set as
+associated feature. According to the 'pileupP' parameters set before, the 
+number of next columns could change. If 'distinguish_nucleotide' was set to
 TRUE, then one column per ntd will appear containing the counts obtained for
-each of them. Same will occur when 'distinguish_strands' is set as TRUE. The
+each of them. Same will occur when 'distinguish_strands' is set to TRUE. The
 last column, called 'counts', contains the total counts obtained for the
 corresponding position.
 }
@@ -47,10 +47,9 @@ corresponding position.
 data(ampliPanel, package="TarSeqQC")
 bed<-getBedFile(ampliPanel)[1]
 ## Defining bam file and fasta file names and paths
-bamFile<-system.file("extdata", "mybam.bam", 
-    package="TarSeqQC", mustWork=TRUE)
-fastaFile<-system.file("extdata", "myfasta.fa", 
-    package="TarSeqQC", mustWork=TRUE)
+bamFile<-system.file("extdata", "mybam.bam", package="TarSeqQC", mustWork=TRUE)
+fastaFile<-system.file("extdata", "myfasta.fa", package="TarSeqQC",
+    mustWork=TRUE)
 ## extracting the pileup matrix
 myCounts<-pileupCounts(bed, bamFile, fastaFile)
 head(myCounts)

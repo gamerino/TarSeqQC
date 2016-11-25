@@ -91,7 +91,12 @@ definition=function(.Object, TEList,feature=NULL, attribute="coverage"){
         panel<-GRpanel[,!(colnames(GRpanel) %in% c("coverage", "sdCoverage", 
             "medianCounts", "IQRCounts"))]
         panelNames<-colnames(panel)
-        attribute<-getAttribute(TEList[[1]])    
+        attribute<-getAttribute(TEList[[1]]) 
+        if(!(attribute %in% c("coverage", "medianCounts"))){
+            stop("Attribute slot should be defined in order to call the
+                function")
+        }
+        
         for (i in 1:length(TEList)){
             panel<-cbind(panel, mcols(getFeaturePanel(TEList[[i]]))[,
                 attribute])

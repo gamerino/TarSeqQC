@@ -38,6 +38,8 @@
 \alias{getPileupP-methods}
 \alias{getRegion}
 \alias{getRegion,TargetExperiment-method}
+\alias{getOverlappedRegions}
+\alias{getOverlappedRegions,TargetExperiment-method}
 \alias{getRegion,TargetExperimentList-method}
 \alias{getRegion-methods}
 \alias{getScanBamP}
@@ -89,6 +91,10 @@ getLowCtsFeatures(object, level, threshold = 50)
 
 \S4method{getLowCtsFeatures}{TargetExperiment}(object, level, threshold = 50)
 
+getOverlappedRegions(object, collapse = FALSE)
+
+\S4method{getOverlappedRegions}{TargetExperiment}(object, collapse = FALSE)
+
 \S4method{getBedFile}{TargetExperimentList}(object)
 
 getPanels(object)
@@ -130,7 +136,7 @@ according to the call one of the following objects can be returned
 \item{ScanBamParam}{parameters for the scan of the BAM file}
 \item{PileupParam}{parameters for the pileup building}
 \item{data.frame}{regions or low counts features}
-
+\item{data.frame}{regions definition for overlapped features}
 \item{GRanges}{feature panels with statistical information}
 }
 \description{
@@ -165,6 +171,8 @@ getPileupP(ampliPanel)
 getRegion(ampliPanel, level="gene", ID="gene7", collapse=FALSE)
 ## Get the low counts features
 getLowCtsFeatures(ampliPanel, level="feature")
+## Get the regions of overlapped features
+getOverlappedRegions(ampliPanel,collapse=FALSE)
 ## Loading the TargetExperimentList object
 data(TEList,package="TarSeqQC")
 ## Get the bedFile slot

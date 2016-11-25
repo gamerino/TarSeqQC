@@ -56,7 +56,7 @@
 #' respective TargetExperiment slots}
 #' \item{show}{generic output of the object}
 #' \item{print}{generic output of the object}
-#' \item{summary}{print statistics summary for the setted attribute}
+#' \item{summary}{print statistics summary for the set attribute}
 #' \item{freqTable}{build a frequency table of the attribute occurrence in
 #'  user configured intervals}
 #' \item{plot}{plot a summarized view of the feature panel performance}

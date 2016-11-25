@@ -7,11 +7,12 @@
 \alias{plotFeature-methods}
 \title{Plot read profiles for a particular feature.}
 \usage{
-plotFeature(object, featureID, SNPs = TRUE, xlab = "", title = "",
-    size = 0.5, BPPARAM = bpparam())
+plotFeature(object, featureID, SNPs = TRUE, minAAF=0.05, minRD=10, xlab = "",
+    title = "",  size = 0.5, BPPARAM = bpparam())
 
 \S4method{plotFeature}{TargetExperiment}(object, featureID, SNPs = TRUE,
-    xlab = "", title = featureID, size = 0.5, BPPARAM = bpparam())
+    minAAF=0.05, minRD=10, xlab = "", title = featureID, size = 0.5, 
+    BPPARAM = bpparam())
 }
 \arguments{
 \item{object}{TargetExperiment object.}
@@ -19,6 +20,12 @@ plotFeature(object, featureID, SNPs = TRUE, xlab = "", title = "",
 \item{featureID}{Character indicating the ID of the feature.}
 
 \item{SNPs}{Logical flag indicating if SNPs should be plotted.}
+
+\item{minAAF}{Numeric indicating the minimum alternative allele proportion 
+necessary to call a SNP.}
+
+\item{minRD}{Numeric indicating the minimum read depth of alternative 
+alleles necessary to call a SNP.}
 
 \item{xlab}{Character containing the axis x label.}
 
@@ -33,10 +40,12 @@ back-end to be used during evaluation.}
 ggplot2 graphics.
 }
 \description{
-\code{plotFeature} plots the achieved performance for each feature/gene.
-The resulting graph shows one bar per each feature/gene with heights
-according to its attribute value. If complete is set as TRUE two bar plots
-(feature and gene level) will be stored in the resulting ggplot object.
+\code{plotFeature} plots the read profiles for a selected feature. The minAAF 
+parameter set the minimum proportion value to call an SNP and the minRD the 
+minimum read depth. They are combined to  obtain a minimum read count value at
+each position used to distinguish between possible SNPs and background noise. 
+If SNPs is set as 'TRUE', colored bars will appear indicating the occurrence of
+possible SNPs surpassing the minAAF and minRD, at each genomic position.
 }
 \note{
 see full example in \code{\link{TargetExperiment-class}}

@@ -35,7 +35,7 @@
 #' \item{setFeature}{set the respective TargetExperimentList slot}
 #' \item{show}{generic output of the object}
 #' \item{print}{generic output of the object}
-#' \item{summary}{print statistics summary for the setted attribute}
+#' \item{summary}{print statistics summary for the set attribute}
 #' \item{plot}{plot a summarized view of the attribute values achieved by each
 #' feature in each sample}
 #' \item{plotGlobalAttrExpl}{plot the attribute distribution for each feature}
