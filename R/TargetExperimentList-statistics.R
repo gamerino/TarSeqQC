@@ -15,6 +15,10 @@ setMethod(f="summary", signature=signature(object="TargetExperimentList"),
 definition=function(object,...){
 
     df_panel<-as.data.frame(getPanels(object))
+    if(!(getAttribute(object) %in% c("coverage", "medianCounts"))){
+        stop("Attribute slot should be defined in order to call the
+            function")
+    }
     index<-do.call(c, lapply(1:ncol(df_panel), function(i){
         if(strsplit(colnames(df_panel)[i], split="_")[[1]][[1]] == 
             getAttribute(object)){

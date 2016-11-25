@@ -40,7 +40,7 @@ TargetExperiment object.
 }
 \description{
 \code{initialize} creates the TargetExperiment object architecture for the
-specified bed and alingment BAM files. If 'scanBamP' and/or 'pileupP' 
+specified bed and alignment BAM files. If 'scanBamP' and/or 'pileupP' 
 parameters are not specified, default values of their constructors will be
 used.
 }

@@ -2,10 +2,7 @@
 % Please edit documentation in R/TargetExperiment-ggplotColours.R, 
 % R/TargetExperiment-addStatSummSheet.R, R/TargetExperiment-buildReport.R
 \docType{methods}
-\name{ggplotColours}
-\alias{addStatSummSheet}
-\alias{addStatSummSheet,TargetExperiment-method}
-\alias{addStatSummSheet-methods}
+\name{buildReport}
 \alias{buildReport}
 \alias{buildReport,TargetExperiment-method}
 \alias{buildReport-methods}
@@ -13,8 +10,17 @@
 \alias{ggplotColours,TargetExperiment-method}
 \alias{ggplotColours,TargetExperimentList-method}
 \alias{ggplotColours-methods}
+\alias{addStatSummSheet}
+\alias{addStatSummSheet,TargetExperiment-method}
+\alias{addStatSummSheet-methods}
 \title{TargetExperiment auxiliar function.}
 \usage{
+buildReport(object, attributeThres = c(0, 1, 50, 200, 500, Inf),
+    imageFile = NULL, file= "Results.xlsx")
+
+\S4method{buildReport}{TargetExperiment}(object, attributeThres = c(0, 1, 50,
+    200, 500, Inf), imageFile = NULL, file = "Results.xlsx")
+
 ggplotColours(object, n)
 
 \S4method{ggplotColours}{TargetExperiment}(object, n)
@@ -26,19 +32,9 @@ addStatSummSheet(object, wb, attributeThres = c(0, 1, 50, 200, 500, Inf),
 
 \S4method{addStatSummSheet}{TargetExperiment}(object, wb,
     attributeThres = c(0, 1, 50, 200, 500, Inf), imageFile)
-
-buildReport(object, attributeThres = c(0, 1, 50, 200, 500, Inf),
-    imageFile = NULL, file= "Results.xlsx")
-
-\S4method{buildReport}{TargetExperiment}(object, attributeThres = c(0, 1, 50,
-    200, 500, Inf), imageFile = NULL, file = "Results.xlsx")
 }
 \arguments{
 \item{object}{TargetExperiment class object.}
-
-\item{n}{amount of colors.}
-
-\item{wb}{A workbook object that will contain the report.}
 
 \item{attributeThres}{Numeric indicating the intervals extreme values.}
 
@@ -46,36 +42,33 @@ buildReport(object, attributeThres = c(0, 1, 50, 200, 500, Inf),
 the plot that could be insert in the report.}
 
 \item{file}{Character indicating the name of the report.}
+
+\item{n}{amount of colors.}
+
+\item{wb}{A workbook object that will contain the report.}
 }
 \value{
-colours
-
 Workbook object.
 
-NULL.
+colours.
 }
 \description{
-\code{ggplotColours} is a function to know what color is used when  
-ggplot is called.
-
-\code{addStatSummSheet} adds the statistics summary sheet to the workbook
-that contains the Target Experiment Report.
 
 \code{buildReport} builds an excel file containing some statistical results.
 These are computed to the selected attribute (e.g. 'coverage') along features
 (e.g. 'amplicon') and genes. If 'imageFile' is null, the graph generated
 calling the generic plot function will be used.
+
+\code{ggplotColours} is a function to know what color is used when  
+ggplot is called.
+
+\code{addStatSummSheet} adds the statistics summary sheet to the workbook
+that contains the Target Experiment Report.
 }
 \note{
 see full example in \code{\link{TargetExperiment-class}}
 }
 \examples{
-## Loading the TargetExperimentList object
-data(ampliPanel, package="TarSeqQC")
-colors<-ggplotColours(ampliPanel, n=5)
-## Loading the TargetExperimentList object
-data(TEList, package="TarSeqQC")
-colors<-ggplotColours(TEList, n=5)
 ## Loading the TargetExperiment object
 data(ampliPanel,package="TarSeqQC")
 # definition of the interval extreme values
@@ -86,6 +79,13 @@ imageFile<-system.file("extdata", "plot.pdf", package="TarSeqQC",
 mustWork=TRUE)
 buildReport(ampliPanel, attributeThres=attributeThres, imageFile=imageFile,
 file="results.xlsx")
+
+## Loading the TargetExperimentList object
+data(ampliPanel, package="TarSeqQC")
+colors<-ggplotColours(ampliPanel, n=5)
+## Loading the TargetExperimentList object
+data(TEList, package="TarSeqQC")
+colors<-ggplotColours(TEList, n=5)
 
 }
 \author{

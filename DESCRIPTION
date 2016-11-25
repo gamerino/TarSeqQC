@@ -1,7 +1,7 @@
 Package: TarSeqQC
 Type: Package
-Version: 1.4.0
-Date: 2016-08-24
+Version: 1.4.1
+Date: 2016-11-16
 Title: TARgeted SEQuencing Experiment Quality Control
 Author: Gabriela A. Merino, Cristobal Fresno, Yanina Murua, Andrea S. Llera
     and Elmer A. Fernandez
@@ -42,6 +42,7 @@ Collate:
     'TarSeqQC-package.R'
     'TargetExperiment.R'
     'TargetExperimentList.R'
+    'checkBedFasta.R'
     'TargetExperiment-ampliPanel.R'
     'TargetExperiment-ampliPanel2.R'
     'TargetExperiment-getters.R'

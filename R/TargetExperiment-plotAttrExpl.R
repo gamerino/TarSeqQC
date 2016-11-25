@@ -62,6 +62,10 @@ definition=function(object,level="feature",join=TRUE, log=TRUE, color="blue"){
         df<-as.data.frame(getGenePanel(object))
     }
     pool<-"pool" %in% names(df)
+    if(!(getAttribute(object) %in% c("coverage", "medianCounts"))){
+        stop("Attribute slot should be defined in order to call the
+            function")
+    }
     y_lab<-capitalize(getAttribute(object))
     attribute<-getAttribute(object)
     # computting statistics
@@ -96,8 +100,9 @@ definition=function(object,level="feature",join=TRUE, log=TRUE, color="blue"){
         g<-g+geom_violin(alpha=0.5,draw_quantiles = c(0.25,0.5,0.75), 
             trim=FALSE)+labs(title=paste(capitalize(level), attribute, 
             sep=" "), x=x_lab, y=y_lab)+theme(plot.title =element_text(size=
-            rel(1.5), colour="black"),title=element_text(size=22),axis.title=
-            element_text(size=22),legend.text = element_text(size = 18))
+            rel(1.5), colour="black", hjust=0.5),title=element_text(size=22),
+            axis.title=element_text(size=22),legend.text = element_text(size =
+            18))
         if(pool){
         g<-g+scale_fill_hue(name="Pool")
         }else{
@@ -107,15 +112,15 @@ definition=function(object,level="feature",join=TRUE, log=TRUE, color="blue"){
     }else{
         box.plot<-g+geom_boxplot()+labs(title=paste(capitalize(level), 
             attribute,sep=" "), x=x_lab,y=y_lab)+theme(plot.title = 
-            element_text(size = rel(1.5), colour = "black"), title=
+            element_text(size = rel(1.5), colour = "black", hjust=0.5), title=
             element_text(size=22), axis.title=element_text(size=22), 
             legend.text = element_text(size = 18))+guides(fill=FALSE)
         #marginal density of y - plot on the right
         dens.plot<- dens.plot+geom_density(alpha=0.5)+coord_flip()+ 
             labs(title="Density",x=y_lab, y="")+theme(plot.title = element_text(
-            size = rel(1.5), colour = "black"), title=element_text(size=22), 
-            axis.title=  element_text(size=22),legend.text = element_text(
-            size = 18))
+            size = rel(1.5), colour = "black", hjust=0.5), title=element_text(
+            size=22), axis.title=  element_text(size=22),legend.text = 
+            element_text( size = 18))
         if(pool){
             dens.plot<-dens.plot+scale_fill_hue(name="Pool")
         }else{

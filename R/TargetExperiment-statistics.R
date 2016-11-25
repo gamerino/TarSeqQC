@@ -47,6 +47,10 @@ setGeneric(name="summaryFeatureLev", def=function(object){
 setMethod(f="summaryFeatureLev", signature=signature(object="TargetExperiment"),
 definition=function(object){
     df_panel<-as.data.frame(getFeaturePanel(object))
+    if(!(getAttribute(object) %in% c("coverage", "medianCounts"))){
+        stop("Attribute slot should be defined in order to call the
+            function")
+    }
     attrSumm<-round(summary(df_panel[,getAttribute(object)]))
     if( "pool" %in% names(df_panel)){
         pool_summary<-(ddply(df_panel, "pool", function(x){

@@ -1,13 +1,21 @@
 #'Plot read profiles for a particular genomic region.
 #'
-#'\code{plotRegion} plots the read profiles for a selected region. If SNPs is
-#'set as 'TRUE', colored bars will appear indicating the ocurrence of SNPs at 
-#'each genomic position.
+#'\code{plotRegion} plots the read profiles for a selected region. The minAAF 
+#'parameter set the minimum proportion value
+#'to call an SNP and the minRD the minimum read depth. They are combined to 
+#'obtain a minimum read count value at each position used to distinguish 
+#'between possible SNPs and background noise. If SNPs is
+#'set as 'TRUE', colored bars will appear indicating the occurrence of possible 
+#'SNPs surpassing the minAAF and minRD, at each genomic position.
 #'
 #'@param object TargetExperiment object.
 #'@param region Numeric of length two indicating the selected genomic region.
 #'@param seqname Character indicating the chromosome of the genomic region.
 #'@param SNPs Logical flag indicating if SNPs should be plotted.
+#'@param minAAF Numeric indicating the minimum alternative allele proportion 
+#'necessary to call a SNP.
+#'@param minRD Numeric indicating the minimum read depth of alternative 
+#'alleles necessary to call a SNP.
 #'@param xlab Character containing the axis x label.
 #'@param title Character containing the plot title.
 #'@param size Numeric indicating the size of line plots.
@@ -48,7 +56,7 @@
 #'}
 
 setGeneric(name="plotRegion", def=function(object, region, seqname, SNPs=TRUE, 
-xlab="", title="", size=0.5, BPPARAM=bpparam()){
+minAAF=0.05, minRD=10,xlab="", title="", size=0.5, BPPARAM=bpparam()){
     standardGeneric("plotRegion")
 })
 #'
@@ -59,9 +67,9 @@ xlab="", title="", size=0.5, BPPARAM=bpparam()){
 #'@aliases plotRegion,TargetExperiment-method
 #'@inheritParams plotRegion
 setMethod(f="plotRegion", signature=signature(object="TargetExperiment"), 
-definition=function(object,region, seqname, SNPs=TRUE,  xlab="", title="", 
-size=0.5, BPPARAM=bpparam()){
-#     bpprogressbar(BPPARAM)<-TRUE
+definition=function(object,region, seqname, SNPs=TRUE,  minAAF=0.05, minRD=10,
+xlab="", title="", size=0.5, BPPARAM=bpparam()){
+#   bpprogressbar(BPPARAM)<-TRUE
     bedFile<-getBedFile(object)
     scanBamP<-getScanBamP(object)
     pileupP<-getPileupP(object)
@@ -105,11 +113,29 @@ size=0.5, BPPARAM=bpparam()){
     color<-c(ref_consensus="darkmagenta")
     # adding SNP information
     if(SNPs){
-        nosnps<-cts[,c("A", "C", "T", "G")] == cts$ref_consensus
+        nosnps<-cts[,c("A", "C", "T", "G")] == cts[,"ref_consensus"]
         cts[nosnps[,1], "A"]<-0
         cts[nosnps[,2], "C"]<-0
         cts[nosnps[,3], "T"]<-0
         cts[nosnps[,4], "G"]<-0
+        if(minAAF > 0 | minRD >0){
+        idx<-(rowSums(cts[,c("A","C","G","T")])>0)
+        if(any(idx) ){
+            idx<-which(idx)
+            possibleSNP<-do.call(rbind, bplapply(idx, function(x){
+                aux<-cts[x,]
+                thres<-max(c(minRD, round(aux[,"counts"]*minAAF)))
+                ref<-as.character(aux[,"seq"])
+                alts<-c("A","C","G","T")[c("A","C","G","T") != ref]
+                alts<-alts[aux[,alts] !=0]
+                for(i in alts){
+                    if(aux[,i] < thres) aux[,i]<-0
+                }
+                return(aux)
+            }, BPPARAM=BPPARAM))
+            cts[idx,]<-possibleSNP
+        }
+        }
         names(cts)[names(cts) == "T"]<-"Te"
         #only for BiocCheck T detection
         cts[nosnps[,4], "G"]<-0
@@ -161,9 +187,9 @@ size=0.5, BPPARAM=bpparam()){
         panel.grid.minor=element_line(color="tomato", linetype = "dashed"),
         legend.text = element_text(size = 18),legend.title = element_text(
         size = 16, face = "bold"), axis.text=element_text(size=12), 
-        axis.title=element_text(size=14), title=element_text(size=22), 
-        axis.title=element_text(size=22)) + guides(color = guide_legend(
-        order = 1), fill = guide_legend(order = 2))
+        plot.title=element_text(size=22, hjust=0.5), axis.title=element_text(
+        size=22)) + guides(color = guide_legend(order = 1), fill = 
+        guide_legend(order = 2))
 
     return(p)
 })

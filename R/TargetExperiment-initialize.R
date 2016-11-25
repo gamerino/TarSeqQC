@@ -1,7 +1,7 @@
 #'TargetExperiment object constructor.
 #'
 #'\code{initialize} creates the TargetExperiment object architecture for the
-#'specified bed and alingment BAM files. If 'scanBamP' and/or 'pileupP' 
+#'specified bed and alignment BAM files. If 'scanBamP' and/or 'pileupP' 
 #'parameters are not specified, default values of their constructors will be
 #'used.
 #'
@@ -116,7 +116,14 @@ pileupP=NULL, feature=NULL, attribute=NULL, BPPARAM=bpparam()){
         }
         .Object@fastaFile<-fasta
         # scanBamP slot
-        if(is.null(scanBamP)) scanBamP<-ScanBamParam(which=bed)
+        flag<-scanBamFlag(isUnmappedQuery = FALSE)
+        if(is.null(scanBamP)){
+            scanBamP<-ScanBamParam(which=bed, flag = flag)
+        }else{
+            if (is.na(bamFlag(scanBamP)["isUnmappedQuery"])){
+                bamFlag(scanBamP)["isUnmappedQuery"]<-FALSE
+            }
+        }
         if(length(bamWhich(scanBamP)) == 0) {
             warning("The 'scanBamP' should have the regions to scan in its 
                 'which' parameter \n", immediate. =TRUE)

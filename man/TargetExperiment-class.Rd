@@ -75,7 +75,7 @@ TargetExperiment S4 class includes the following functions:
     respective TargetExperiment slots}
 \item{show}{generic output of the object}
 \item{print}{generic output of the object}
-\item{summary}{print statistics summary for the setted attribute}
+\item{summary}{print statistics summary for the set attribute}
 \item{freqTable}{build a frequency table of the attribute occurrence in
     user configured intervals}
 \item{plot}{plot a summarized view of the feature panel performance}
@@ -124,7 +124,7 @@ feature<-"amplicon"
 # Defining attribute parameter
 attribute<-"coverage"
 ampliPanel<-TargetExperiment(bedFile, bamFile, fastaFile, attribute=attribute,
-feature=feature)
+    feature=feature)
 
 ## Alternative object creation
 # Creating the TargetExperiment object

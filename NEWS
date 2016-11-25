@@ -1,3 +1,16 @@
+Changes in version 1.4.1
+CODE
+    * Fix error of duplicated parameter in plotRegion function
+    * Changes in TargetExperiment contstructor to avoid errors related
+    to unmapped reads in the alignment BAM files
+    * The checkBedFasta function was added to perform a control of the 
+    Bed and Fasta file consistency
+    * Changes in plotRegion methods to allow filter noise SNPs
+    * Changes in plotGeneAttrPerFeat method to incorporate the
+    exploration of overlapped amplicons
+VIGNETTE
+    * Troubleshoot explaining the way to exclude unmapped reads with older
+    TarSeqQC versions
 Changes in version 1.3.13
 CODE
     * Modification in readFrequencies method to fix countOverlaps error

@@ -2,7 +2,7 @@
 #'
 #'\code{plotAttrPerform} plots the achieved performance for the selected 
 #'attribute. The resulting graph shows one bar per each attribute interval and
-#'its height is defined according to the amount of features achieving attribute
+#'its height is defined according to the number of features achieving attribute
 #'values within that interval.
 #'
 #'@param object TargetExperiment class object.
@@ -50,6 +50,10 @@ definition=function(object, attributeThres=c(0,1,50,200,500, Inf)){
     pool<-"pool" %in% names(mcols(getFeaturePanel(object)))
     df_panel<-summaryIntervals(object,attributeThres, pool)
     intervals<-cum_rel<-NULL
+    if(!(getAttribute(object) %in% c("coverage", "medianCounts"))){
+        stop("Attribute slot should be defined in order to call the
+            function")
+    }
     if(is.data.frame(df_panel)){
         intervalName<-paste(capitalize(getAttribute(object)), 
             "intervals", sep="_")
@@ -82,10 +86,11 @@ definition=function(object, attributeThres=c(0,1,50,200,500, Inf)){
             levels=unique(df_panel[,"intervals"]))
         colors<-ggplotColours(object, n=(length(poolNames)))
         g<-ggplot(df_panel)+geom_point(aes(x=intervals, y=cum_rel, color=
-            poolValues))+geom_line(aes(x=intervals, y=cum_rel, 
-            group=poolValues, color=poolValues))+xlab("")+
-            ylab("Frequency (%)")+scale_color_manual(name="Pool", values=colors)
-        }
+            poolValues, shape=poolValues))+geom_line(aes(x=intervals, 
+            y=cum_rel, group=poolValues, color=poolValues))+xlab("")+ ylab(
+            "Frequency (%)")+scale_color_manual(name="Pool", values=colors)+
+            scale_shape("Pool")
+    }
     
     return(g)    
 })

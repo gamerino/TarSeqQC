@@ -27,7 +27,7 @@ density function should be plotted together using the ggplot2 geom_violin
 method.}
 
 \item{absolute}{Logical indicating if the frequencies of the selected 
-categorical metadata column should be in absolute scale. If absoulte is FALSE
+categorical metadata column should be in absolute scale. If absolute is FALSE
 the frequencies are in relative percentages.}
 
 \item{color}{A character indicating a valid name color.}
@@ -36,8 +36,8 @@ the frequencies are in relative percentages.}
 ggplot2 graphics.
 }
 \description{
-\code{plotMetaDataExpl} plots density and box-plot of an specific metadata 
-column. If the characteristic is non numerical, then  a frequency plot is 
+\code{plotMetaDataExpl} plots density and box-plot of a specific metadata 
+column. If the characteristic is nonnumerical, then  a frequency plot is 
 built.
 }
 \note{

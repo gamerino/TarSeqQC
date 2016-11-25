@@ -20,7 +20,7 @@ plotInOutFeatures(object, ...)
 
 \item{...}{additional parameters according to the function call}
 
-\item{absolute}{logical indicating if absoulte frequency should be used.}
+\item{absolute}{logical indicating if absolute frequency should be used.}
 
 \item{BPPARAM}{An optional BiocParallelParam instance defining the parallel
 back-end to be used during evaluation.}
@@ -31,9 +31,9 @@ ggplot object.
 \description{
 \code{plotInOutFeatures} allows the graphical exploration of the data 
 frame obtained using \code{readFrequencies}. This data frame contains
-information about amount of reads mapped into the targeted regions and out of
+information about the amount of reads mapped to the targeted regions and out of
 them. This information is presented in rows, one for each chromosome and in 
-absolute and relative amounts. After it invokation, a bar plot built as a 
+absolute and relative amounts. After it invocation, a bar plot built as a 
 ggplot object is returned
 }
 \note{

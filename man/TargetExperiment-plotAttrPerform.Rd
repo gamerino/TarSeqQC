@@ -23,7 +23,7 @@ ggplot2 graphics
 \description{
 \code{plotAttrPerform} plots the achieved performance for the selected 
 attribute. The resulting graph shows one bar per each attribute interval and
-its height is defined according to the amount of features achieving attribute
+its height is defined according to the number of features achieving attribute
 values within that interval.
 }
 \note{

@@ -2,7 +2,7 @@
 #'
 #'\code{plot} allows a fast and simple representation of one feature panel
 #'using a polar histogram plot. Histogram bar reflects the percentage of 
-#'features that have shown the analyzed attribute in a user setted interval.
+#'features that have shown the analyzed attribute in a user set interval.
 #'The resulting graph can be busy and might be better off saved.
 #'
 #'@param x TargetExperiment/TargetExperimentList class object.
@@ -12,13 +12,13 @@
 #'as 1, as other parameters are relative to it.
 #'@param spaceGene Numeric. Space between bins.
 #'@param spaceChr Numeric. Space between chromosomes.
-#'@param innerRadius Numeric. Radius of inner circle.
-#'@param outerRadius Numeric. Radius of outer circle. 
+#'@param innerRadius Numeric. Radius of the inner circle.
+#'@param outerRadius Numeric. Radius of the outer circle. 
 #'@param guides A vector with percentages to use for the white guide lines.
 #'@param alphaStart Numeric offset from 12 o'clock in radians.
 #'@param circleProportion Numeric proportion of the circle to cover.
 #'@param direction Character indicating if the increasing count goes from or
-#'to the centre.
+#'to the center.
 #'@param chrLabels Logical. Chromosome names must be plotted?.
 #'
 #'@return a ggplot2 graph.
@@ -66,6 +66,10 @@ circleProportion=0.95, direction="inwards",  chrLabels=FALSE,...){
     df_panel<-as.data.frame(getFeaturePanel(x))
     df_panel[,"names"]<-rownames(df_panel)
     attribute<-getAttribute(x)
+    if(!(attribute %in% c("coverage", "medianCounts"))){
+        stop("Attribute slot should be defined in order to call biasExploration
+            function")
+    }
     # creating a 'score' variable to group features according to the attribute
     #'intervals
     df_panel[,"score"]<-cut(df_panel[,attribute], breaks=attributeThres, 

@@ -23,7 +23,7 @@
 #' \item{ScanBamParam}{parameters for the scan of the BAM file}
 #' \item{PileupParam}{parameters for the pileup building}
 #' \item{data.frame}{regions or low counts features}
-#'
+#' \item{data.frame}{regions definition for overlapped features}
 #'@include TargetExperiment-ampliPanel2.R
 #'@exportMethod getBedFile
 #'@docType methods
@@ -301,3 +301,60 @@ definition=function(object, level, threshold=50){
         start = start(aux), end=end(aux), mcols(aux))
     return(lowCts)
 })
+#'@exportMethod getOverlappedRegions
+#'@name getOverlappedRegions
+#'@rdname TargetExperiment-getters
+#'@inheritParams getBedFile
+#'@aliases getOverlappedRegions-methods
+#'@examples
+#'## Get the regions defined by overlapped features
+#'getOverlappedRegions(ampliPanel)
+setGeneric(name="getOverlappedRegions", def=function(object, collapse=FALSE){
+    standardGeneric("getOverlappedRegions")
+})
+#'
+#'@name getOverlappedRegions
+#'@rdname TargetExperiment-getters
+#'@aliases getOverlappedRegions,TargetExperiment-method
+#'@inheritParams getOverlappedRegions
+#'
+setMethod(f="getOverlappedRegions", signature=signature(
+    object= "TargetExperiment"), definition=function(object, collapse=FALSE){
+        
+        featurePanel<-getFeaturePanel(object)
+        df_panel<-as.data.frame(featurePanel)
+        attribute<-getAttribute(object)
+        feature<-getFeature(object)
+        df_panel<-cbind(feature_id=row.names(df_panel), df_panel)
+        names(df_panel)[names(df_panel) == attribute]<-"attr"
+        overlapPanel<-reduce(featurePanel)
+        dfover<-lapply(1:length(overlapPanel), function(x){
+            start<-which(df_panel[,"start"] == start(overlapPanel)[x])
+            end<-which(df_panel[,"end"] == end(overlapPanel)[x])
+            width<-max(end)-min(start)+1
+            chr<-as.character(df_panel[start[1], "seqnames"])
+            gene<-df_panel[start[1], "gene"]
+            starReg<-df_panel[start,"start"]
+            endReg<-df_panel[end,"end"]
+            attr<-mean(df_panel[c(start,end), "attr"])
+            region_id<-paste("Region",x,sep="")
+            return(cbind(chr=chr, start=starReg, end=endReg, gene=gene, 
+                region_id=rep(region_id, width),attr_region=rep(attr, width)))
+        })
+        dfover<-as.data.frame(do.call(rbind,dfover))
+        dfover[,"region_id"]<-factor(as.character(dfover[, "region_id"]),
+            levels=paste("Region", 1:length(overlapPanel),sep=""))
+        dfover[,"attr_region"]<-as.numeric(as.character(dfover[, 
+            "attr_region"]))
+        names(dfover)[names(dfover) == "attr_region"]<-paste("region_",
+            attribute, sep="")
+        df_panel<-cbind(df_panel, dfover[,c("region_id", paste("region_",
+            attribute, sep=""))])
+        if(collapse){
+            df_panel<-unique(dfover)
+        }
+        return(df_panel)
+}   
+)
+    
+        

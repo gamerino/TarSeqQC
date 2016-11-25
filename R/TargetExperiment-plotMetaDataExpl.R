@@ -1,7 +1,7 @@
 #'Graphical exploration of a specific metadata column.
 #'
-#'\code{plotMetaDataExpl} plots density and box-plot of an specific metadata 
-#'column. If the characteristic is non numerical, then  a frequency plot is 
+#'\code{plotMetaDataExpl} plots density and box-plot of a specific metadata 
+#'column. If the characteristic is nonnumerical, then  a frequency plot is 
 #'built.
 #'@param object TargetExperiment class object.
 #'@param name a character indicating the metadata column name that should
@@ -12,7 +12,7 @@
 #'@param log Logical indicating if the numerical metadata column should be 
 #'considered in log10 scale.
 #'@param absolute Logical indicating if the frequencies of the selected 
-#'categorical metadata column should be in absolute scale. If absoulte is FALSE
+#'categorical metadata column should be in absolute scale. If absolute is FALSE
 #'the frequencies are in relative percentages.
 #'@param color A character indicating a valid name color.
 #'
@@ -103,21 +103,21 @@ absolute=FALSE, color="blue"){
                 alpha=0.5, draw_quantiles = c(0.25, 0.5,0.75),trim=FALSE)+ 
                 labs(title=paste(x_lab, "distribution", sep=" "), x=stat_lab, 
                 y=y_lab)+theme(plot.title = element_text(size=rel(1.5), colour=
-                "black"), title= element_text(size=14),axis.title= 
+                "black", hjust = 0.5), title= element_text(size=14),axis.title= 
                 element_text(size=13), legend.text = element_text(size = 13))+
                 guides(fill=FALSE) +  scale_fill_manual(values= color)+ 
                 scale_x_discrete(breaks=c(1),  labels=c(""))
         }else{
             box.plot<-g+geom_boxplot(aes(x=1, y=source, fill=as.factor(1)))+
                 labs(title= "", y=y_lab,x= stat_lab)+ theme(plot.title = 
-                element_text(size = rel(1.5), colour = "black"), title=
-                element_text(size=14),axis.title= element_text(size=13), 
+                element_text(size = rel(1.5), colour = "black",hjust = 0.5),
+                title=element_text(size=14),axis.title= element_text(size=13), 
                 legend.position="none")+guides(fill=FALSE) + scale_fill_manual(
                 values=color) + scale_x_continuous(breaks=1,labels="")
             dens.plot<- g+geom_density(aes(x=source, fill=as.factor(1)), 
                 alpha=0.5)+ coord_flip()+ labs(title="", x=y_lab, y="Density")+
                 theme(plot.title = element_text(size = rel(1.5), colour = 
-                "black"), title= element_text(size=14), axis.title= 
+                "black",hjust=0.5), title= element_text(size=14), axis.title= 
                 element_text(size=13), legend.position = "none")+
                 scale_fill_manual(values=color)
             p<-cowplot::plot_grid(box.plot, dens.plot, ncol=2, nrow=1)
@@ -135,7 +135,7 @@ absolute=FALSE, color="blue"){
         p<-ggplot(DF, aes(x=Var1, y=PorcFreq, fill=as.factor(1))) +geom_bar(
         stat="identity")+ labs(title=paste(x_lab, "frequencies", sep=" "),x=
         x_lab, y=y_lab)+ theme(plot.title =  element_text(size = rel(1.5), 
-        colour = "black"), title=element_text(size=14), axis.title=  
+        colour = "black",hjust=0.5), title=element_text(size=14), axis.title=  
         element_text(size=13), legend.position = "none")+scale_fill_manual(
         values=color)    
     }

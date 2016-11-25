@@ -2,7 +2,7 @@
 #'
 #'For TargetExperimentList objects, \code{plot} allows a fast and simple 
 #'representation of several feature panels using a heatmap plot. Along the
-#'x-axis feature are represented and patients/samples along the y-axis. 
+#'x-axis, the features are represented and patients/samples along the y-axis. 
 #'Finally, each cell is colored according to the attribute interval.
 #'
 #'@param pool Logical indicating if the plots should be performed for each
