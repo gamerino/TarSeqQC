@@ -1,0 +1,146 @@
+Changes in version 1.5.1
+CODE
+    * Fix error of duplicated parameter in plotRegion function
+    * Changes in TargetExperiment contstructor to avoid errors related
+    to unmapped reads in the alignment BAM files
+    * The checkBedFasta function was added to perform a control of the 
+    Bed and Fasta file consistency
+    * Changes in plotRegion methods to allow filter noise SNPs
+    * Changes in plotGeneAttrPerFeat method to incorporate the
+    exploration of overlapped amplicons
+VIGNETTE
+    * Troubleshoot explaining the way to exclude unmapped reads with older
+    TarSeqQC versions
+----------------------------------------------------------------
+Changes in version 1.3.13
+CODE
+    * Modification in readFrequencies method to fix countOverlaps error
+    * Modification in plot methods to capitalize axis names and titles
+----------------------------------------------------------------
+Changes in version 1.3.12
+CODE
+    * Modification in readFrequencies method in order to count only those
+    reads falling out the features and non the overlapped.
+    * Modification in plotRegion method to correclty plot overlapped features
+----------------------------------------------------------------
+Changes in version 1.3.1
+----------------------------------------------------------------
+CODE
+    * Addition of a new class called TargetExperimentList that allows the 
+    the comparisson of several TargetExperiment objects obtained using the 
+    same bed file
+Changes in version 1.1.6
+----------------------------------------------------------------
+CODE
+    * Changes in summaryIntervals in order to allow the exploration at
+    pool levels, useful when a targeted sequencing involving several PCR
+    pools was performed.
+    * plotAttrPerform method was added. This function produces a ggplot 
+    graph illustrating relative and cumulative frequencies of features
+    in attribute intervals. If the panel has several pools, then the graph
+    shows the mentioned results for each pool.
+Changes in version 1.1.2
+----------------------------------------------------------------
+CODE
+
+    * Changes in buildFeaturePanel in order to reduce the run time. Now, the
+    pileupCounts is not called, thus the pileup matrix is not built. Instead 
+    it, coverage and others Rsamtools and IRanges methods are used.
+    * readPercentages and plotInOutFeatures methods were added in order to
+    explore experiment efficiency.
+    * biasExploration and plotMetaDataExpl were added in order to perform bias
+    sources exploration. The first allows the gc content, feature length or 
+    other source distribution exploration. The second implement a plot in which
+    attribute distribution for each source bias quartile or group is explored. 
+
+VIGNETTE
+    * English correction and new methods incorporation
+Changes in version 1.1.1
+----------------------------------------------------------------
+CODE
+
+    * In setters and initialize functions, examples were updated
+    to shorten elapsed times (only interactive). Thanks to V. Obenchain
+
+VIGNETTE
+    
+    * Elapsed times reduction using TarSeqQC data example instead of 
+    building myPanel from scratch. Thanks to V. Obenchain
+
+Changes in version 1.1.0
+----------------------------------------------------------------
+DOCUMENTATION
+
+    * Bumped version number of all packages after creation of 3.2 branch
+    
+Changes in version 1.0.0
+----------------------------------------------------------------
+DOCUMENTATION
+
+    * First release
+
+Changes in version 0.99.9
+----------------------------------------------------------------
+CODE
+
+    * Modifications in pileupCounts in order to consider stranded counts
+    * Changes in plot methods. arrangeGrob from gridExtra was changed by 
+    plot_grid form cowplot package.
+    * Update the package vignette.
+    
+Changes in version 0.99.8
+----------------------------------------------------------------
+CODE
+
+    * Modifications in pileupCounts and buildFeaturePanel in order to process
+    overlapped features.
+    * Wrap plotting examples.
+
+Changes in version 0.99.7
+----------------------------------------------------------------
+CODE
+
+    * Modifications in pileupCounts and buildFeaturePanel in order to process
+    overlapped features. 
+    * Modifications in bedFile building in order to remove duplicated features
+    based on duplicated start, end and chromosome definitions.
+
+Changes in version 0.99.6
+----------------------------------------------------------------
+CODE
+
+    * Definition of pileupCounts as a function instead a TargetExperiment S4
+    method.
+    * Adaptation and optimization of pileupCounts and bplapply usage in the
+    buildFeaturePanel method. 
+Changes in version 0.99.4
+----------------------------------------------------------------
+DESCRIPTION file
+
+    * Modification of the Rsatmools version dependency.
+
+Changes in version 0.99.3
+----------------------------------------------------------------
+CODE
+
+    * Modifications in buildFeaturePanel and summarizePanel for a correct 
+    implementation of parallel computing.
+
+Changes in version 0.99.2
+----------------------------------------------------------------
+CODE
+
+    * BiocParallel was used instead of parallel package for parallel computing.
+
+Changes in version 0.99.1
+----------------------------------------------------------------
+DOCUMENTATION
+
+    * The example data has been compiled using Bioconductor 3.2
+    packages.
+
+Changes in version 0.99.0
+----------------------------------------------------------------
+DOCUMENTATION
+
+    * `NEWS` file was added.

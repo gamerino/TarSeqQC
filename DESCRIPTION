@@ -1,0 +1,90 @@
+Package: TarSeqQC
+Type: Package
+Version: 1.6.0
+Date: 2016-11-29
+Title: TARgeted SEQuencing Experiment Quality Control
+Author: Gabriela A. Merino, Cristobal Fresno, Yanina Murua, Andrea S. Llera
+    and Elmer A. Fernandez
+Maintainer: Gabriela Merino <gmerino@bdmg.com.ar>
+Description: The package allows the representation of targeted
+    experiment in R. This is based on current packages and
+    incorporates functions to do a quality control over this kind
+    of experiments and a fast exploration of the sequenced regions.
+    An xlsx file is generated as output.
+URL: http://www.bdmg.com.ar
+License: GPL (>=2)
+Depends:
+    R (>= 3.2.1),
+    methods,
+    GenomicRanges,
+    Rsamtools (>= 1.20.4),
+    ggplot2,
+    plyr,
+    openxlsx
+Imports:
+    grDevices,
+    stats,
+    utils,
+    S4Vectors,
+    IRanges,
+    BiocGenerics,
+    reshape2,
+    GenomeInfoDb,
+    BiocParallel,
+    Biostrings,
+    cowplot,
+    graphics,
+    GenomicAlignments,
+    Hmisc
+Suggests:
+    RUnit
+Collate:
+    'TarSeqQC-package.R'
+    'TargetExperiment.R'
+    'TargetExperimentList.R'
+    'checkBedFasta.R'
+    'TargetExperiment-ampliPanel.R'
+    'TargetExperiment-ampliPanel2.R'
+    'TargetExperiment-getters.R'
+    'TargetExperiment-setters.R'
+    'TargetExperiment-show.R'
+    'TargetExperiment-print.R'
+    'TargetExperiment-pileupCounts.R'
+    'TargetExperiment-buildFeaturePanel.R'
+    'TargetExperiment-summarizePanel.R'
+    'TargetExperiment-initialize.R'
+    'TargetExperiment-constructor.R'
+    'TargetExperiment-statistics.R'
+    'TargetExperiment-plot.R'
+    'TargetExperiment-ggplotColours.R'
+    'TargetExperiment-addStatSummSheet.R'
+    'TargetExperiment-plotRegion.R'
+    'TargetExperiment-plotFeature.R'
+    'TargetExperiment-plotGeneAttrPerFeat.R'
+    'TargetExperiment-plotNtdPercentage.R'
+    'TargetExperiment-readFrequencies.R'
+    'TargetExperiment-myCounts.R'
+    'TargetExperiment-plotInOutFeatures.R'
+    'TargetExperiment-biasExploration.R'
+    'TargetExperiment-buildReport.R'
+    'TargetExperiment-plotAttrPerform.R'
+    'TargetExperiment-plotAttrExpl.R'
+    'TargetExperiment-plotFeatPerform.R'
+    'TargetExperiment-plotMetaDataExpl.R'
+    'TargetExperimentList-TEList.R'
+    'TargetExperimentList-initialize.R'
+    'TargetExperimentList-constructor.R'
+    'TargetExperimentList-getters.R'
+    'TargetExperimentList-setters.R'
+    'TargetExperimentList-show.R'
+    'TargetExperimentList-print.R'
+    'TargetExperimentList-statistics.R'
+    'TargetExperimentList-plot.R'
+    'TargetExperimentList-plotGlobalAttrExpl.R'
+    'TargetExperimentList-plotAttrExpl.R'
+    'TargetExperimentList-plotPoolPerformance.R'
+biocViews: Software, Sequencing, TargetedResequencing, QualityControl,
+    Visualization, Coverage, Alignment, DataImport
+NeedsCompilation: no
+Packaged: 2016-03-14 05:20:13 UTC; biocbuild
+RoxygenNote: 5.0.1
