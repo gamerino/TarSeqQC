@@ -1,0 +1,27 @@
+citEntry(entry="article",
+    title = "TarSeqQC: Quality control on targeted sequencing experiments in
+        R",
+    author = personList( as.person("Gabriela A. Merino"), 
+        as.person("Yanina A. Murua"),
+        as.person("Cristobal Fresno"),
+        as.person("Juan M. Sendoya"),
+        as.person("Mariano Golubicki"),
+        as.person("Soledad Iseas"),
+        as.person("Mariana Coraglio"),
+        as.person("Osvaldo L. Podhajcer"),
+        as.person("Andrea S. Llera"),
+        as.person("Elmer A. Fernandez")),
+        year = 2017,
+        journal = "Human Mutation",
+        volume = "38",
+        issue="6",
+        pages = "494-502",
+        doi = "10.1002/humu.23204",
+        url = "http://onlinelibrary.wiley.com/doi/10.1002/humu.23204/abstract",
+
+        textVersion = paste("Merino GA, Murua YA, Fresno C, Sendoya JM, 
+            Golubicki M, Iseas S, Coraglio M, Podhajcer OL, Llera AS and 
+            Fernandez EA (2017):",
+            "TarSeqQC: Quality control on targeted sequencing experiments in
+            R.", "Human Mutation 38 (5), 494-502"))
+
