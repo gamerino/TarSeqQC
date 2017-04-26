@@ -1,3 +1,7 @@
+Changes in version 1.7.1
+    * CITATION file was added to include the new publication describing
+    TarSeqQC application on real datasets
+--------------------------------------------------------------
 Changes in version 1.5.1
 CODE
     * Fix error of duplicated parameter in plotRegion function
