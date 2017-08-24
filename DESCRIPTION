@@ -1,7 +1,7 @@
 Package: TarSeqQC
 Type: Package
-Version: 1.7.1
-Date: 2017-04-26
+Version: 1.7.2
+Date: 2017-07-23
 Title: TARgeted SEQuencing Experiment Quality Control
 Author: Gabriela A. Merino, Cristobal Fresno, Yanina Murua, Andrea S. Llera
     and Elmer A. Fernandez
@@ -14,7 +14,7 @@ Description: The package allows the representation of targeted
 URL: http://www.bdmg.com.ar
 License: GPL (>=2)
 Depends:
-    R (>= 3.2.1),
+    R (>= 3.4.1),
     methods,
     GenomicRanges,
     Rsamtools (>= 1.20.4),

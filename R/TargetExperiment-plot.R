@@ -76,8 +76,8 @@ circleProportion=0.95, direction="inwards",  chrLabels=FALSE,...){
         include.lowest=TRUE, right=FALSE, dig.lab = 6)
     score_levels<-levels(df_panel[,"score"])
 
-    df_panel<-df_panel[order(df_panel[,"seqnames"], df_panel[,"gene"], 
-        df_panel[,"score"]),]
+    df_panel<-df_panel[order(df_panel[,"seqnames"],df_panel[,"start"],
+        df_panel[,"gene"], df_panel[,"score"]),]
     geneFeat<-sapply(unique(df_panel[,"gene"]), function(gene){
         paste(gene, "(",length(which(df_panel[,"gene"] == gene)), ")", sep="")
     })
@@ -107,7 +107,7 @@ circleProportion=0.95, direction="inwards",  chrLabels=FALSE,...){
         return(data.frame(seqnames=seqnames, gene=gene, score=score, 
             values=values))
     }))
-    levels(df_panel[,"score"])<-score_levels
+    df_panel[,"score"]<-factor(as.character(df_panel[,"score"]),score_levels)
     df_panel<-ddply(df_panel,c("seqnames","gene"),transform,values= cumsum(
         values/(sum(values))))
     if(any(is.na(df_panel[,"values"]))){
