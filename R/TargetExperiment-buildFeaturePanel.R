@@ -79,9 +79,11 @@ definition=function(object,BPPARAM=bpparam()){
         # select cromosome counts and features
             chrCounts <- count[[chr]]
             featRange <- ranges(bed_file[index2])[i]
-            aux1 <- lapply(featRange, function(x){
-                if(all(x <= length(chrCounts))){
-                    return(chrCounts[x])
+            aux1 <- lapply(1:length(featRange), function(j){
+                aux<-start(featRange)[j]:end(featRange)[j]
+                if(all(aux <= length(
+                    chrCounts))){
+                        return(chrCounts[aux])
                 }else{ return(c(0,0))}
             }) 
     # compute average median SD and IQR for counts per feature
