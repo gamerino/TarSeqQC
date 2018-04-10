@@ -1,11 +1,11 @@
 Package: TarSeqQC
 Type: Package
-Version: 1.9.1
-Date: 2018-03-01
+Version: 1.9.2
+Date: 2018-04-09
 Title: TARgeted SEQuencing Experiment Quality Control
 Author: Gabriela A. Merino, Cristobal Fresno, Yanina Murua, Andrea S. Llera
     and Elmer A. Fernandez
-Maintainer: Gabriela Merino <gmerino@bdmg.com.ar>
+Maintainer: Gabriela Merino <merino.gabriela33@gmail.com>
 Description: The package allows the representation of targeted
     experiment in R. This is based on current packages and
     incorporates functions to do a quality control over this kind
