@@ -169,8 +169,9 @@ you will need to be using the latest version of R. \tarseq{} is part of the
 Bioconductor project at http://www.bioconductor.org. To get the \tarseq{}
 package you can use:\\
 <<echo=TRUE, eval=FALSE>>=
-source("http://www.bioconductor.org/biocLite.R")
-biocLite("TarSeqQC")
+if (!requireNamespace("BiocManager", quietly=TRUE))
+    install.packages("BiocManager")
+BiocManager::install("TarSeqQC")
 @ 
 Like other Bioconductor packages, there are always two available versions of 
 \tarseq{}. Most users will use the current official release version, which
