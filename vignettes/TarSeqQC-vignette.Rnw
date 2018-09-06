@@ -175,11 +175,11 @@ BiocManager::install("TarSeqQC")
 @ 
 Like other Bioconductor packages, there are always two available versions of 
 \tarseq{}. Most users will use the current official release version, which
-will be installed by biocLite if you are using the current version of R. There
-is also a developmental version of the package that includes new features due
-for the next official Bioconductor release. The developmental version will be
-installed if you are using the developmental version of R. Both can be found in
-the Bioconductor site.\\
+will be installed by `BiocManager::install` if you are using the current
+version of R. There is also a developmental version of the package that
+includes new features due for the next official Bioconductor release.
+The developmental version will be installed if you are using the developmental
+version of R. Both can be found in the Bioconductor site.\\
 \subsection{Citation}
 The \tarseq{} R package can be cited using:\\
 <<echo=TRUE, eval=TRUE>>=

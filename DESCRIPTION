@@ -1,6 +1,6 @@
 Package: TarSeqQC
 Type: Package
-Version: 1.11.1
+Version: 1.11.2
 Date: 2018-04-09
 Title: TARgeted SEQuencing Experiment Quality Control
 Author: Gabriela A. Merino, Cristobal Fresno, Yanina Murua, Andrea S. Llera
@@ -37,6 +37,7 @@ Imports:
     GenomicAlignments,
     Hmisc
 Suggests:
+    BiocManager,
     RUnit
 Collate:
     'TarSeqQC-package.R'
