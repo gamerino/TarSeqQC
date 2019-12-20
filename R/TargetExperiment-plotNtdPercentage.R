@@ -47,6 +47,7 @@ BPPARAM=bpparam()){
 #'@name plotNtdPercentage
 #'@rdname TargetExperiment-plotNtdPercentage
 #'@importFrom reshape2 melt
+#'@importFrom Rsamtools path
 #'@import BiocParallel
 #'@importMethodsFrom BiocParallel bpprogressbar<-
 #'@aliases plotNtdPercentage,TargetExperiment-method

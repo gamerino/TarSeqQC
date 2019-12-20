@@ -41,6 +41,7 @@ BPPARAM=bpparam()){
 #'@importMethodsFrom BiocParallel bpmapply bplapply bpworkers bpprogressbar<-
 #'@importMethodsFrom GenomeInfoDb seqlengths
 #'@importMethodsFrom GenomicAlignments readGAlignments
+#'@importFrom Rsamtools path
 #'@import BiocParallel
 #'@aliases readFrequencies,TargetExperiment-method
 #'@inheritParams readFrequencies
