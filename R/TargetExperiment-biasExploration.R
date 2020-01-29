@@ -70,7 +70,7 @@ definition=function(object,source=c("length", "gc", "pool"), dens=FALSE){
         myDF[,"pool"]<-as.factor(myDF[,"pool"])
     }
     # select only one bias source
-    myDF<-myDF[,colnames(myDF)[colnames(myDF) %in% c(attribute, source)]]
+    myDF<-myDF[,colnames(myDF)[colnames(myDF) %in% c(attribute, source)], drop=FALSE]
     colnames(myDF)[colnames(myDF) == attribute]<-"attribute"
     colnames(myDF)[colnames(myDF) == source]<-"source"
     if(is.character(myDF[,"source"])){
