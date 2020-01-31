@@ -38,11 +38,10 @@ BPPARAM=bpparam()){
 #'
 #'@name readFrequencies
 #'@rdname TargetExperiment-readFrequencies
+#'@import Rsamtools BiocParallel
 #'@importMethodsFrom BiocParallel bpmapply bplapply bpworkers bpprogressbar<-
 #'@importMethodsFrom GenomeInfoDb seqlengths
 #'@importMethodsFrom GenomicAlignments readGAlignments
-#'@importFrom Rsamtools path
-#'@import BiocParallel
 #'@aliases readFrequencies,TargetExperiment-method
 #'@inheritParams readFrequencies
 setMethod(f="readFrequencies", signature="TargetExperiment",

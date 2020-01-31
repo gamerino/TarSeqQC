@@ -54,7 +54,7 @@ definition=function(object,BPPARAM=bpparam()){
     #extract GC content from Fasta File
     aux<-scanFa(getFastaFile(object), param=bed_file)
     gc <- round(rowSums(letterFrequency(aux, letters= c("G","C")))/width(aux),3)
-    mcols(bed_file)<-cbind(mcols(bed_file),GC=as.data.frame(gc))
+    mcols(bed_file)<-cbind(mcols(bed_file),gc=gc)
     rm(aux)
     # ensure that only those reads overlapping targeted regions are counted
     bamWhat(param) <-c("qname", "pos", "qwidth", "rname")

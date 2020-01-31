@@ -62,8 +62,7 @@ minAAF=0.05, minRD=10,xlab="", title="", size=0.5, BPPARAM=bpparam()){
 #'
 #'@name plotRegion
 #'@rdname TargetExperiment-plotRegion
-#'@import BiocParallel
-#'@importFrom Rsamtools path
+#'@import BiocParallel Rsamtools
 #'@importMethodsFrom BiocParallel bpprogressbar<-
 #'@aliases plotRegion,TargetExperiment-method
 #'@inheritParams plotRegion
